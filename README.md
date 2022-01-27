@@ -26,7 +26,7 @@
 - user data to be secure so that no one can unrightfully manipulate information.
 - have deployed site
 
-## TIER 2: E-Commerce Essentials
+## TIER 2:
 
 <details><summary>Click Here To Open</summary>
 
