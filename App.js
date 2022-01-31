@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
 import { Text, Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './Components/Home';
 
@@ -9,19 +9,13 @@ export default function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Home/>
-        <Text>Router Working</Text>
-        <StatusBar style="auto" />
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Text>Router Hello!</Text>
+          <StatusBar style="auto" />
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
