@@ -3,10 +3,11 @@
 ## Tier 1: Dog Tinder
 
 ### As a user, I want to be able to:
+
 - log-in or sign-up.
 - create/view profiles
   - name
-  - bio/tempermant
+  - bio/temperament
   - preferences
   - breed
   - age
@@ -14,16 +15,16 @@
   - picture
   - medical info/allergies
   - weight
-  - calendar for playdates
+  - calendar for play-dates
   - questions/get to know you
 - swipe/view other profiles
 - matches
 - chat
 
-
 ### As an engineer, I want to:
+
 - have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
-- user data to be secure so that no one can unrightfully manipulate information.
+- user data to be secure so that no one can illegitimately manipulate information.
 - have deployed site
 
 ## TIER 2: Extras & Add Ons
@@ -31,19 +32,20 @@
 <details><summary>Click Here To Open</summary>
 
 ### Community Chat:
- - message boards
- - product suggestions
-  
+
+- message boards
+- product suggestions
+
 ### Other Add-Ons:
- - weight history
- - breed info and suggestions
- - create/view vet info. If no vet, we want to enable location search.
-  
-- create/view caledndar:
+
+- weight history
+- breed info and suggestions
+- create/view vet info. If no vet, we want to enable location search.
+
+- create/view calendar:
   - push notifications (pwa?)
   - grooming
   - vaccines
   - medications
-  
-</details>
 
+</details>
