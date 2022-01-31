@@ -1,12 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Headline, Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to Leashed!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider>
+      <NavigationContainer>
+        <View style={styles.container}>
+          <Headline>Welcome to Leashed!</Headline>
+          <StatusBar style="auto" />
+        </View>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
