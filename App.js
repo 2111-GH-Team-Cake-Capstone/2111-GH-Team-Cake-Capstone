@@ -1,27 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { Headline, Provider as PaperProvider } from 'react-native-paper';
+import { Text, Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Home from './Components/Home';
+import Profile from './Components/Profile';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <View style={styles.container}>
-          <Headline>Welcome to Leashed!</Headline>
-          <StatusBar style="auto" />
-        </View>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
       </NavigationContainer>
+      <StatusBar style="auto" />
     </PaperProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
+
