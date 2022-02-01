@@ -4,9 +4,9 @@ import { Headline, Button } from 'react-native-paper';
 export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
-      <Headline>Welcome to Leashed!</Headline>
-      <Button mode="contained" onPress={() => navigation.navigate('')}>
-      Home
+      <Headline>Leashed</Headline>
+      <Button mode="contained" onPress={() => navigation.navigate('Home')}>
+      Log in
       </Button>
     </View>
   );
