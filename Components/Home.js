@@ -1,6 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { Headline } from 'react-native-paper';
-import { Button } from 'react-native-paper';
+import { Headline, Button } from 'react-native-paper';
 
 export default function Home({ navigation }) {
   return (
