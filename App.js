@@ -24,6 +24,7 @@ import Login from './Components/Login';
 const Stack = createNativeStackNavigator();
 
 function App() {
+
   return (
     <PaperProvider>
       <NavigationContainer>

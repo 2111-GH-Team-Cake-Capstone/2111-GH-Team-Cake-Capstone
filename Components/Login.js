@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import { Headline, Button, TextInput } from 'react-native-paper';
 
 export default function Login({ navigation }) {
@@ -7,7 +7,8 @@ export default function Login({ navigation }) {
   const [password, setPassword] = React.useState("");
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView enabled={Platform.OS === "ios"}
+      style={styles.container} behavior="padding">
         <Headline style={styles.heading}>Leashed</Headline>
         <TextInput
           style={styles.input}
