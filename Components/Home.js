@@ -1,11 +1,13 @@
 import { StyleSheet, View } from 'react-native';
-import { Headline } from 'react-native-paper';
+import { Headline, Button } from 'react-native-paper';
 
-
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Headline>Welcome to Leashed!</Headline>
+      <Button mode="contained" onPress={() => navigation.navigate('Profile')}>
+      Profile
+      </Button>
     </View>
   );
 }
