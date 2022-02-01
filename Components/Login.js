@@ -25,6 +25,9 @@ export default function Login({ navigation }) {
           secureTextEntry
         />
         <Button style={styles.input} mode="contained" onPress={() => navigation.navigate('Home')}>
+          sign up
+        </Button>
+        <Button style={styles.input} mode="outlined" onPress={() => navigation.navigate('Home')}>
           Log in
         </Button>
     </KeyboardAvoidingView>
