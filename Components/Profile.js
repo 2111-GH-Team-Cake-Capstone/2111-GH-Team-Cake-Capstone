@@ -1,7 +1,10 @@
-import { StyleSheet, View} from "react-native";
+
 import { Button, Headline } from "react-native-paper";
+import { StyleSheet, View, Text, Alert, Pressable } from "react-native";
+
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
+import React, { useState } from "react";
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -22,6 +25,8 @@ const pickImage = async () => {
     await uploadBytes(ref, bytes); //upload images
   }
 };
+
+
 
 export default function Home() {
   return (
