@@ -1,5 +1,5 @@
-import { StyleSheet, Button, View, Text } from "react-native";
-import { Headline } from "react-native-paper";
+import { StyleSheet, View} from "react-native";
+import { Button, Headline } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
 
@@ -27,8 +27,8 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Headline>Your Profile</Headline>
-      <Button onPress={pickImage} title="PickImage" color="#841584">
-        <Text> Select Your Image</Text>
+      <Button icon="camera" mode="contained" onPress={pickImage} >
+        Select an Image
       </Button>
     </View>
   );
