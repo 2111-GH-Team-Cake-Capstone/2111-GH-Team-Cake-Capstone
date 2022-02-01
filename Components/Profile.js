@@ -1,7 +1,10 @@
-import { StyleSheet, Button, View, Text } from "react-native";
-import { Headline } from "react-native-paper";
+
+import { Button, Headline } from "react-native-paper";
+import { StyleSheet, View, Text, Alert, Pressable } from "react-native";
+
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
+import React, { useState } from "react";
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,12 +26,14 @@ const pickImage = async () => {
   }
 };
 
+
+
 export default function Home() {
   return (
     <View style={styles.container}>
       <Headline>Your Profile</Headline>
-      <Button onPress={pickImage} title="PickImage" color="#841584">
-        <Text> Select Your Image</Text>
+      <Button icon="camera" mode="contained" onPress={pickImage} >
+        Select an Image
       </Button>
     </View>
   );
