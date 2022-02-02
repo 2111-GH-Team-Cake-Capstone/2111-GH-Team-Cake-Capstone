@@ -1,6 +1,13 @@
-
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, View, Text, ImageBackground, Alert, Pressable } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  ImageBackground,
+  Alert,
+  Pressable,
+} from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -27,17 +34,12 @@ const pickImage = async () => {
   }
 };
 
-
 const genderData = [{ label: "Female" }, { label: "Male" }];
 
-
-
-
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   const [dropdown, setDropdown] = useState(null);
   const [selected, setSelected] = useState([]);
   return (
-
     <ScrollView>
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
@@ -94,17 +96,22 @@ export default function Home({navigation}) {
           </Button>
           <Button
             mode="contained"
-            onPress={() => console.log("pressed")}
+            onPress={() => navigation.navigate("BrowseUsers")}
             style={{ width: 100, marginTop: 10, left: 170, bottom: 45 }}
           >
             Cancel
           </Button>
-          <Button icon="dog" mode="contained" onPress={() => navigation.navigate("BrowseUsers")}>
-            Browse Users
+
+          <Button
+icon="dog"
+            mode="contained"
+            onPress={() => navigation.navigate("BrowseUsers")}
+            style={{ bottom: 30, right: -70, width: 180 }}
+          >
+
           </Button>
         </View>
       </ImageBackground>
-
     </ScrollView>
   );
 }
@@ -112,7 +119,6 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     padding: 40,
   },
   dropdown: {

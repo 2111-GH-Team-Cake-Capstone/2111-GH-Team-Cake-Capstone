@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
@@ -15,11 +16,12 @@ export default function TinderCard() {
             <Paragraph style={styles.breed}>Hound mix</Paragraph>
           </Card.Content>
           <Card.Actions style={styles.viewButton}>
-            <Button icon="dog">View Profile</Button>
+            <Button icon="dog" onPress={() => navigation.navigate("MatchProfile")}>View Profile</Button>
           </Card.Actions>
         </Card>
+
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -29,33 +31,44 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
+
     position: "absolute",
     top: "22%",
     alignSelf: "center",
-    height: "50%",
+    height: "70%",
     width: "75%",
     backgroundColor: "#f6f6f6",
   },
   picture: {
     height: "70%",
     width: "100%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   title: {
     top: "10%",
     fontSize: 26,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   bio: {
     top: "10%",
     fontSize: 18,
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   breed: {
     top: "10%",
-    fontSize: 16
+    fontSize: 16,
   },
   viewButton: {
     justifyContent: "flex-end",
-  }
-})
+
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "stretch",
+    padding: 0,
+    margin: 0,
+  },
+});
+
+
