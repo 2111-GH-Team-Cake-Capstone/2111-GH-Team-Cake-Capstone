@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground } from "react-native";
 import Icon from 'react-native-ico';
-import CardStack from 'react-native-card-stack-swiper';
 import TinderCard from './TinderCard';
 
 const iconHeight = 75;
 const iconWidth = 75;
+
 
 export default function BrowseUsers() {
   return (
@@ -13,7 +13,7 @@ export default function BrowseUsers() {
        <ImageBackground
        source={require("../assets/capstone_bg.gif")}
        style={styles.bgImage}>
-       <TinderCard />
+       <TinderCard/>
        <View style={styles.icons}>
         <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
         <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
+    },
+    cardStack: {
+        flex: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     bgImage: {
       width: "100%",
