@@ -23,8 +23,7 @@ import Login from './Components/Login';
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 const Stack = createNativeStackNavigator();
-LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
-LogBox.ignoreAllLogs(); //Ignore all log notifications
+LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 
 function App() {
 
