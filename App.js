@@ -14,6 +14,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
 
 import { AuthProvider } from "./hooks/useAuth";
+import { LogBox } from "react-native";
 
 //Components
 import Home from "./Components/Home";
