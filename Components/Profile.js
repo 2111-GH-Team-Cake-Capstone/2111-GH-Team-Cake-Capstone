@@ -28,13 +28,16 @@ const pickImage = async () => {
 
 
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Headline>Your Profile</Headline>
       <Button icon="camera" mode="contained" onPress={pickImage} >
         Select an Image
       </Button>
+      <Button mode="contained" onPress={() => navigation.navigate("TinderCard")}>
+				Browse Users
+			</Button>
     </View>
   );
 }
