@@ -1,20 +1,18 @@
-<<<<<<< HEAD
-import { Button, Headline } from "react-native-paper";
-import { StyleSheet, View, Text, Alert, Pressable } from "react-native";
-
-import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
-import React from "react";
-=======
-
 import React, { useState } from "react";
-import { StyleSheet, ScrollView, View, Text, ImageBackground, Alert, Pressable } from "react-native";
+import {
+	StyleSheet,
+	ScrollView,
+	View,
+	Text,
+	ImageBackground,
+	Alert,
+	Pressable,
+} from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
->>>>>>> deaad9f78b82050947848a19ea36cada610ca909
 
 const pickImage = async () => {
 	let result = await ImagePicker.launchImageLibraryAsync({
@@ -36,142 +34,112 @@ const pickImage = async () => {
 	}
 };
 
-<<<<<<< HEAD
-export default function Profile({ navigation }) {
+const genderData = [{ label: "Female" }, { label: "Male" }];
+
+export default function Home({ navigation }) {
+	const [dropdown, setDropdown] = useState(null);
+	const [selected, setSelected] = useState([]);
 	return (
-		<View style={styles.container}>
-			<Headline>Your Profile</Headline>
-			<Button icon="camera" mode="contained" onPress={pickImage}>
-				Select an Image
-			</Button>
-			<Button
-				title="Go To Your Chats"
-				onPress={() => navigation.navigate("Chat")}
+		<ScrollView>
+			<ImageBackground
+				source={require("../assets/capstone_bg.gif")}
+				style={styles.bgImage}
 			>
-				Chat
-			</Button>
-		</View>
+				<View style={styles.container}>
+					<View style={{ alignItems: "center", paddingTop: 30 }}>
+						<Avatar.Image
+							size={120}
+							source={require("../assets/placeholder.jpg")}
+						/>
+						<Button onPress={pickImage} title="PickImage" icon="camera">
+							<Text> Select Your Image</Text>
+						</Button>
+					</View>
+					<Dropdown
+						style={styles.dropdown}
+						containerStyle={styles.shadow}
+						data={genderData}
+						search
+						searchPlaceholder="Search"
+						labelField="label"
+						valueField="value"
+						label="Dropdown"
+						placeholder="Select Your Gender"
+						value={dropdown}
+						onChange={(item) => {
+							setDropdown(item.value);
+							console.log("selected", item);
+						}}
+					/>
+					<TextInput mode="outlined" label="Name" />
+					<TextInput mode="outlined" label="Breed" />
+
+					<TextInput mode="outlined" label="Age" />
+					<TextInput mode="outlined" label="Weight (lbs)" />
+					<TextInput mode="outlined" label="City" />
+					<TextInput
+						mode="outlined"
+						label="Bio"
+						right={<TextInput.Affix text="/300" />}
+					/>
+
+					<Button
+						mode="contained"
+						onPress={() => console.log("pressed")}
+						style={{
+							width: 100,
+							marginTop: 10,
+							left: 50,
+						}}
+					>
+						Edit
+					</Button>
+					<Button
+						mode="contained"
+						onPress={() => console.log("pressed")}
+						style={{ width: 100, marginTop: 10, left: 170, bottom: 45 }}
+					>
+						Cancel
+					</Button>
+					<Button
+						mode="contained"
+						onPress={() => navigation.navigate("TinderCard")}
+					>
+						Browse Users
+					</Button>
+				</View>
+			</ImageBackground>
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
+
+		padding: 40,
 	},
-=======
-
-const genderData = [{ label: "Female" }, { label: "Male" }];
-
-
-
-
-export default function Home({navigation}) {
-  const [dropdown, setDropdown] = useState(null);
-  const [selected, setSelected] = useState([]);
-  return (
-
-    <ScrollView>
-      <ImageBackground
-        source={require("../assets/capstone_bg.gif")}
-        style={styles.bgImage}
-      >
-        <View style={styles.container}>
-          <View style={{ alignItems: "center", paddingTop: 30 }}>
-            <Avatar.Image
-              size={120}
-              source={require("../assets/placeholder.jpg")}
-            />
-            <Button onPress={pickImage} title="PickImage" icon="camera">
-              <Text> Select Your Image</Text>
-            </Button>
-          </View>
-          <Dropdown
-            style={styles.dropdown}
-            containerStyle={styles.shadow}
-            data={genderData}
-            search
-            searchPlaceholder="Search"
-            labelField="label"
-            valueField="value"
-            label="Dropdown"
-            placeholder="Select Your Gender"
-            value={dropdown}
-            onChange={item => {
-              setDropdown(item.value);
-              console.log("selected", item);
-            }}
-          />
-          <TextInput mode="outlined" label="Name" />
-          <TextInput mode="outlined" label="Breed" />
-
-          <TextInput mode="outlined" label="Age" />
-          <TextInput mode="outlined" label="Weight (lbs)" />
-          <TextInput mode="outlined" label="City" />
-          <TextInput
-            mode="outlined"
-            label="Bio"
-            right={<TextInput.Affix text="/300" />}
-          />
-
-          <Button
-            mode="contained"
-            onPress={() => console.log("pressed")}
-            style={{
-              width: 100,
-              marginTop: 10,
-              left: 50,
-            }}
-          >
-            Edit
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => console.log("pressed")}
-            style={{ width: 100, marginTop: 10, left: 170, bottom: 45 }}
-          >
-            Cancel
-          </Button>
-          <Button mode="contained" onPress={() => navigation.navigate("TinderCard")}>
-            Browse Users
-          </Button>
-        </View>
-      </ImageBackground>
-
-    </ScrollView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-    padding: 40,
-  },
-  dropdown: {
-    backgroundColor: "white",
-    borderBottomColor: "gray",
-    borderBottomWidth: 0.5,
-    marginTop: 20,
-  },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-  },
-  bgImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "stretch",
-    padding: 0,
-    margin: 0,
-  },
->>>>>>> deaad9f78b82050947848a19ea36cada610ca909
+	dropdown: {
+		backgroundColor: "white",
+		borderBottomColor: "gray",
+		borderBottomWidth: 0.5,
+		marginTop: 20,
+	},
+	shadow: {
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 1,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 1.41,
+		elevation: 2,
+	},
+	bgImage: {
+		width: "100%",
+		height: "100%",
+		resizeMode: "stretch",
+		padding: 0,
+		margin: 0,
+	},
 });
