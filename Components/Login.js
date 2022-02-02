@@ -11,11 +11,12 @@ export default function Login({ navigation }) {
   const [password, setPassword] = React.useState("");
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.navigate("Home");
       }
     });
+    return unsubscribe;
   }, [])
 
   async function handleSignup (){
