@@ -12,6 +12,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import merge from 'deepmerge';
 import { AuthProvider } from './hooks/useAuth';
+import { LogBox } from "react-native";
 
 //Components
 import Home from './Components/Home';
@@ -22,6 +23,8 @@ import Login from './Components/Login';
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 const Stack = createNativeStackNavigator();
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 function App() {
 

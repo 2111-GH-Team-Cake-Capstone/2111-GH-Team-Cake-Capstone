@@ -3,13 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBF4Isc9oAjTltweidrl8MykR7HQxanQ1I",
-	authDomain: "leashed-ca492.firebaseapp.com",
-	projectId: "leashed-ca492",
-	storageBucket: "leashed-ca492.appspot.com",
-	messagingSenderId: "434720549247",
-	appId: "1:434720549247:web:b35f0e47447167da2c924a",
-	measurementId: "G-9X5LRGWEGS",
+	apiKey: "AIzaSyAClGqF3upOfLux6Z_MxdrYgjxwWxHUKbw",
+  authDomain: "leashed-ca492.firebaseapp.com",
+  projectId: "leashed-ca492",
+  storageBucket: "leashed-ca492.appspot.com",
+  messagingSenderId: "434720549247",
+  appId: "1:434720549247:web:b35f0e47447167da2c924a",
+  measurementId: "G-9X5LRGWEGS",
 };
 
 const app = initializeApp(firebaseConfig);
