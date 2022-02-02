@@ -22,6 +22,7 @@
     "react-native": "0.64.3",
     "react-native-card-stack-swiper": "^1.2.5",
     "react-native-element-dropdown": "^1.6.1",
+    "react-native-ico": "^28.7.4",
     "react-native-paper": "^4.11.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
