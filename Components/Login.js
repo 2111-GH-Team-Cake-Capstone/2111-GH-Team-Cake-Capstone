@@ -1,18 +1,29 @@
 import * as React from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import { Headline, Button, TextInput } from 'react-native-paper';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,
+         signInWithEmailAndPassword,
+         onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.navigate("Home");
+      }
+    });
+  }, [])
+
   async function handleSignup (){
     try {
       const createdUser =  await createUserWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = createdUser.user;
+      navigation.navigate("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -24,7 +35,7 @@ export default function Login({ navigation }) {
       const loggedInUser =  await signInWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = loggedInUser.user;
-      console.log("logged-IN")
+      navigation.navigate("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
