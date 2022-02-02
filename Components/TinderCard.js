@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
+const iconHeight = 50;
+const iconWidth = 50;
 export default function TinderCard() {
   return (
     <View style={styles.container}>
@@ -13,7 +15,7 @@ export default function TinderCard() {
           <Paragraph style={styles.breed}>Hound mix</Paragraph>
         </Card.Content>
         <Card.Actions style={styles.viewButton}>
-          <Button>View Profile</Button>
+          <Button icon="dog">View Profile</Button>
         </Card.Actions>
       </Card>
     </View>
@@ -53,5 +55,6 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     justifyContent: "flex-end",
-  }
+  },
+
 })
