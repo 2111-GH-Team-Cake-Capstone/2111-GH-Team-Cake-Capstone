@@ -8,7 +8,7 @@ export default function TinderCard() {
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
-        <Card.Cover style={styles.picture} source={require('/Users/ash/Projects/Leashed/2111-GH-Team-Cake-Capstone/assets/ZeldaTinderPic.jpg')} />
+        <Card.Cover style={styles.picture} source={require('../assets/ZeldaTinderPic.jpg')} />
         <Card.Content>
           <Title style={styles.title}>Zelda</Title>
           <Paragraph style={styles.bio}>Just a little love-bug</Paragraph>

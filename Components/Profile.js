@@ -1,16 +1,11 @@
 
 import React, { useState } from "react";
-import { StyleSheet, View, Text, ImageBackground, Alert, Pressable } from "react-native";
+import { StyleSheet, ScrollView, View, Text, ImageBackground, Alert, Pressable } from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 
-
-
-
-
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
-import React, { useState } from "react";
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -38,12 +33,12 @@ const genderData = [{ label: "Female" }, { label: "Male" }];
 
 
 
-export default function Home() {
+export default function Home({navigation}) {
   const [dropdown, setDropdown] = useState(null);
   const [selected, setSelected] = useState([]);
   return (
 
-    <View>
+    <ScrollView>
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
         style={styles.bgImage}
@@ -104,13 +99,13 @@ export default function Home() {
           >
             Cancel
           </Button>
- <Button mode="contained" onPress={() => navigation.navigate("TinderCard")}>
-				Browse Users
-			</Button>
+          <Button mode="contained" onPress={() => navigation.navigate("TinderCard")}>
+            Browse Users
+          </Button>
         </View>
       </ImageBackground>
 
-    </View>
+    </ScrollView>
   );
 }
 
