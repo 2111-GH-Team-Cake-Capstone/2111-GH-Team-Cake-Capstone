@@ -7,13 +7,13 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
 import { AuthProvider } from "./hooks/useAuth";
+import { Provider as PaperProvider } from "react-native-paper";
 
 //Components
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
 import ChatScreen from "./Components/Chat/ChatScreen";
-import ChatList from "./Components/Chat/ChatList";
 
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -32,8 +32,7 @@ function App() {
 							name="Login"
 							component={Login}
 						/>
-						<Stack.Screen name="ChatScreen" component={ChatScreen} />
-						<Stack.Screen name="ChatList" component={ChatList} />
+						<Stack.Screen name="Chat" component={ChatScreen} />
 					</Stack.Navigator>
 				</AuthProvider>
 			</NavigationContainer>
