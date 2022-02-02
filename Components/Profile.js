@@ -99,7 +99,7 @@ export default function Home({navigation}) {
           >
             Cancel
           </Button>
-          <Button icon="dog" mode="contained" onPress={() => navigation.navigate("TinderCard")}>
+          <Button icon="dog" mode="contained" onPress={() => navigation.navigate("BrowseUsers")}>
             Browse Users
           </Button>
         </View>

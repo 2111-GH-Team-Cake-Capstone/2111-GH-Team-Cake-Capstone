@@ -17,7 +17,7 @@ import { AuthProvider } from './hooks/useAuth';
 import Home from './Components/Home';
 import Profile from './Components/Profile';
 import Login from './Components/Login';
-import TinderCard from './Components/TinderCard';
+import BrowseUsers from './Components/BrowseUsers';
 
 
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -33,7 +33,7 @@ function App() {
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="TinderCard" component={TinderCard} />
+            <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
             <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
           </Stack.Navigator>
         </AuthProvider>
