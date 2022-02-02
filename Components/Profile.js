@@ -104,8 +104,12 @@ export default function Home() {
           >
             Cancel
           </Button>
+ <Button mode="contained" onPress={() => navigation.navigate("TinderCard")}>
+				Browse Users
+			</Button>
         </View>
       </ImageBackground>
+
     </View>
   );
 }
