@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyBF4Isc9oAjTltweidrl8MykR7HQxanQ1I",
+	apiKey: "AIzaSyAClGqF3upOfLux6Z_MxdrYgjxwWxHUKbw",
 	authDomain: "leashed-ca492.firebaseapp.com",
 	projectId: "leashed-ca492",
 	storageBucket: "leashed-ca492.appspot.com",
