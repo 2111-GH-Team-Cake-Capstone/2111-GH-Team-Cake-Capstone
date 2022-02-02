@@ -1,38 +1,25 @@
-import React from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
-const iconHeight = 50;
-const iconWidth = 50;
-export default function TinderCard({ navigation }) {
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { collection, doc, getDoc } from "firebase/firestore"; 
+import db from '../firebase.js';
+
+export default function TinderCard() {
   return (
-    <View>
-      <ImageBackground
-        source={require("../assets/capstone_bg.gif")}
-        style={styles.bgImage}
-      >
-        <View style={styles.container}>
-          <Card style={styles.card}>
-            <Card.Cover
-              style={styles.picture}
-              source={require("../assets/ZeldaTinderPic.jpg")}
-            />
-            <Card.Content>
-              <Title style={styles.title}>Zelda</Title>
-              <Paragraph style={styles.bio}>Just a little love-bug</Paragraph>
-              <Paragraph style={styles.breed}>Hound mix</Paragraph>
-            </Card.Content>
-            <Card.Actions style={styles.viewButton}>
-              <Button
-                icon="dog"
-                onPress={() => navigation.navigate("MatchProfile")}
-              >
-                View Profile
-              </Button>
-            </Card.Actions>
-          </Card>
-        </View>
-      </ImageBackground>
+    <View style={styles.container}>
+        <Card style={styles.card}>
+          <Card.Cover style={styles.picture} source={require('../assets/ZeldaTinderPic.jpg')} />
+          <Card.Content>
+            <Title style={styles.title}>Zelda</Title>
+            <Paragraph style={styles.bio}>Just a little love-bug</Paragraph>
+            <Paragraph style={styles.breed}>Hound mix</Paragraph>
+          </Card.Content>
+          <Card.Actions style={styles.viewButton}>
+            <Button icon="dog" onPress={() => navigation.navigate("MatchProfile")}>View Profile</Button>
+          </Card.Actions>
+        </Card>
+
     </View>
   );
 }
@@ -40,11 +27,14 @@ export default function TinderCard({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     alignItems: "center",
     justifyContent: "center",
   },
   card: {
+
+    position: "absolute",
+    top: "22%",
+    alignSelf: "center",
     height: "70%",
     width: "75%",
     backgroundColor: "#f6f6f6",
@@ -70,6 +60,7 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     justifyContent: "flex-end",
+
   },
   bgImage: {
     width: "100%",
@@ -79,3 +70,5 @@ const styles = StyleSheet.create({
     margin: 0,
   },
 });
+
+

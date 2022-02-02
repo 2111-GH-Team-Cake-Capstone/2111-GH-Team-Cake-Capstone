@@ -101,12 +101,14 @@ export default function Home({ navigation }) {
           >
             Cancel
           </Button>
+
           <Button
+icon="dog"
             mode="contained"
-            onPress={() => navigation.navigate("TinderCard")}
+            onPress={() => navigation.navigate("BrowseUsers")}
             style={{ bottom: 30, right: -70, width: 180 }}
           >
-            Browse Users
+
           </Button>
         </View>
       </ImageBackground>
