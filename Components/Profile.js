@@ -1,9 +1,16 @@
+
 import React, { useState } from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
-import { Button, Avatar, TextInput } from "react-native-paper";
+import { StyleSheet, View, Text, ImageBackground, Alert, Pressable } from "react-native";
+import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
+
+
+
+
+
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
+import React, { useState } from "react";
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,12 +32,17 @@ const pickImage = async () => {
   }
 };
 
+
 const genderData = [{ label: "Female" }, { label: "Male" }];
+
+
+
 
 export default function Home() {
   const [dropdown, setDropdown] = useState(null);
   const [selected, setSelected] = useState([]);
   return (
+
     <View>
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
