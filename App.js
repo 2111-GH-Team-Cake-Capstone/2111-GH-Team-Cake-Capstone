@@ -12,6 +12,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import merge from 'deepmerge';
 import { AuthProvider } from './hooks/useAuth';
+import { LogBox } from "react-native";
 
 //Components
 import Home from './Components/Home';
@@ -23,6 +24,7 @@ import TinderCard from './Components/TinderCard';
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 const Stack = createNativeStackNavigator();
+LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 
 function App() {
 
