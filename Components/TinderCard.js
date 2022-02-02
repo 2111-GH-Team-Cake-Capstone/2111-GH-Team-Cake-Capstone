@@ -5,7 +5,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { collection, doc, getDoc } from "firebase/firestore"; 
 import db from '../firebase.js';
 
-export default function TinderCard() {
+export default function TinderCard({navigation}) {
   return (
     <View style={styles.container}>
         <Card style={styles.card}>
@@ -31,11 +31,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
-
     position: "absolute",
-    top: "22%",
+    top: "10%",
     alignSelf: "center",
-    height: "70%",
+    height: "65%",
     width: "75%",
     backgroundColor: "#f6f6f6",
   },
