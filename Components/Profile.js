@@ -36,7 +36,7 @@ const pickImage = async () => {
 
 const genderData = [{ label: "Female" }, { label: "Male" }];
 
-export default function Home({ navigation }) {
+export default function Profile({ navigation }) {
 	const [dropdown, setDropdown] = useState(null);
 	const [selected, setSelected] = useState([]);
 	return (
@@ -53,6 +53,12 @@ export default function Home({ navigation }) {
 						/>
 						<Button onPress={pickImage} title="PickImage" icon="camera">
 							<Text> Select Your Image</Text>
+						</Button>
+						<Button
+							mode="contained"
+							onPress={() => navigation.navigate("ChatMain")}
+						>
+							Messages
 						</Button>
 					</View>
 					<Dropdown
