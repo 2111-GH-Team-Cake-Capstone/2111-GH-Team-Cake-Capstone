@@ -96,7 +96,7 @@ export default function Home({ navigation }) {
           </Button>
           <Button
             mode="contained"
-            onPress={() => navigation.navigate("TinderCard")}
+            onPress={() => navigation.navigate("BrowseUsers")}
             style={{ width: 100, marginTop: 10, left: 170, bottom: 45 }}
           >
             Cancel
