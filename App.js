@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+
 import {
   Text,
   DarkTheme as PaperDarkTheme,
@@ -15,13 +16,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { AuthProvider } from "./hooks/useAuth";
 import { LogBox } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+
 
 //Components
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
+
+import ChatMain from "./Components/Chat/ChatMain";
+
 import BrowseUsers from './Components/BrowseUsers';
 import MatchProfile from "./Components/MatchProfile";
+
 
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -29,6 +36,7 @@ const Stack = createNativeStackNavigator();
 LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 
 function App() {
+
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -39,6 +47,7 @@ function App() {
 
            <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
             <Stack.Screen name="MatchProfile" component={MatchProfile} />
+              <Stack.Screen name="ChatMain" component={ChatMain} />
             <Stack.Screen
               options={{ headerShown: false }}
               name="Login"
@@ -51,6 +60,7 @@ function App() {
       <StatusBar style="auto" />
     </PaperProvider>
   );
+
 }
 
 export default App;

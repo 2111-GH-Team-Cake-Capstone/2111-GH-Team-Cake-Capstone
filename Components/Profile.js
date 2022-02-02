@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+
   StyleSheet,
   ScrollView,
   View,
@@ -7,6 +8,7 @@ import {
   ImageBackground,
   Alert,
   Pressable,
+
 } from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -15,28 +17,29 @@ import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
 
 const pickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 3],
-    quality: 1,
-  });
+	let result = await ImagePicker.launchImageLibraryAsync({
+		mediaTypes: ImagePicker.MediaTypeOptions.All,
+		allowsEditing: true,
+		aspect: [4, 3],
+		quality: 1,
+	});
 
-  if (!result.cancelled) {
-    const storage = getStorage(); //the storage itself
-    const ref = ref(storage, "image.jpg"); //how the image will be addressed inside the storage
+	if (!result.cancelled) {
+		const storage = getStorage(); //the storage itself
+		const ref = ref(storage, "image.jpg"); //how the image will be addressed inside the storage
 
-    //convert image to array of bytes
-    const img = await fetch(result.uri);
-    const bytes = await img.blob();
+		//convert image to array of bytes
+		const img = await fetch(result.uri);
+		const bytes = await img.blob();
 
-    await uploadBytes(ref, bytes); //upload images
-  }
+		await uploadBytes(ref, bytes); //upload images
+	}
 };
 
 const genderData = [{ label: "Female" }, { label: "Male" }];
 
-export default function Home({ navigation }) {
+
+export default function Profile({ navigation }) {
   const [dropdown, setDropdown] = useState(null);
   const [selected, setSelected] = useState([]);
   return (
@@ -54,6 +57,12 @@ export default function Home({ navigation }) {
             <Button onPress={pickImage} title="PickImage" icon="camera">
               <Text> Select Your Image</Text>
             </Button>
+            <Button
+							mode="contained"
+							onPress={() => navigation.navigate("ChatMain")}
+						>
+							Messages
+						</Button>
           </View>
           <Dropdown
             style={styles.dropdown}
@@ -144,4 +153,5 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
+
 });
