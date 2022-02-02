@@ -16,7 +16,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { AuthProvider } from "./hooks/useAuth";
 import { LogBox } from "react-native";
-import { Provider as PaperProvider } from "react-native-paper";
 
 
 //Components
