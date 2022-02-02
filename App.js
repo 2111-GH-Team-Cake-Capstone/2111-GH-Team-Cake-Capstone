@@ -1,31 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text,
+import { StatusBar } from "expo-status-bar";
+import {
+  Text,
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
-} from 'react-native-paper';
+} from "react-native-paper";
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
-} from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
-import { AuthProvider } from './hooks/useAuth';
+import { AuthProvider } from "./hooks/useAuth";
 
 //Components
-import Home from './Components/Home';
-import Profile from './Components/Profile';
-import Login from './Components/Login';
-import TinderCard from './Components/TinderCard';
-
+import Home from "./Components/Home";
+import Profile from "./Components/Profile";
+import Login from "./Components/Login";
+import TinderCard from "./Components/TinderCard";
+import MatchProfile from "./Components/MatchProfile";
 
 //const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 const Stack = createNativeStackNavigator();
 
 function App() {
-
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -34,7 +34,12 @@ function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="TinderCard" component={TinderCard} />
-            <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
+            <Stack.Screen name="MatchProfile" component={MatchProfile} />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={Login}
+            />
           </Stack.Navigator>
         </AuthProvider>
       </NavigationContainer>
