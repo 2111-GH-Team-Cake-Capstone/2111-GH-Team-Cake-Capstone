@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { collection, doc, getDoc } from "firebase/firestore"; 
+import { collection, doc, getDoc } from "firebase/firestore";
 import db from '../firebase.js';
 
 export default function TinderCard() {
@@ -31,11 +31,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
-
     position: "absolute",
-    top: "22%",
+    top: "10%",
     alignSelf: "center",
-    height: "70%",
+    height: "65%",
     width: "75%",
     backgroundColor: "#f6f6f6",
   },
