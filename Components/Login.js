@@ -46,7 +46,6 @@ export default function Login({ navigation }) {
       setError(errorCode);
     }
   }
-
   return (
     <KeyboardAvoidingView enabled={Platform.OS === "ios"}
       style={styles.container}>
