@@ -14,7 +14,6 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
 
-import { AuthProvider } from "./hooks/useAuth";
 import { LogBox } from "react-native";
 
 
@@ -39,22 +38,18 @@ function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <AuthProvider>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Profile} />
-
-           <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
-            <Stack.Screen name="MatchProfile" component={MatchProfile} />
-              <Stack.Screen name="ChatMain" component={ChatMain} />
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
+          <Stack.Screen name="MatchProfile" component={MatchProfile} />
+          <Stack.Screen name="ChatMain" component={ChatMain} />
             <Stack.Screen
               options={{ headerShown: false }}
               name="Login"
               component={Login}
             />
-
           </Stack.Navigator>
-        </AuthProvider>
       </NavigationContainer>
       <StatusBar style="auto" />
     </PaperProvider>
