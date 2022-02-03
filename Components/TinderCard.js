@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, unstable_batchedUpdates } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore"; 
-
 import db from '../firebase.js';
 
 export default function TinderCard(user, {navigation}) {
@@ -18,7 +16,7 @@ export default function TinderCard(user, {navigation}) {
               <Paragraph style={styles.breed}>{user.user.breed}</Paragraph>
             </Card.Content>
             <Card.Actions style={styles.viewButton}>
-              <Button icon="dog" onPress={() => navigation.navigate("MatchProfile")}>View Profile</Button>
+              <Button icon="dog" onPress={() => user.navigation.navigate("MatchProfile")}>View Profile</Button>
             </Card.Actions>
           </Card>
       </View>
@@ -30,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'transparent'
   },
   card: {
     position: "absolute",

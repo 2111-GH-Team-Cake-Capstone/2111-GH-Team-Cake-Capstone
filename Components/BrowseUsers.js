@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ImageBackground, Text } from "react-native";
+import Swiper from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore"; 
@@ -11,6 +12,7 @@ const iconWidth = 75;
 
 export default function BrowseUsers({navigation}) {
   const [users, setUsers] = useState([]);
+  // const [index, setIndex] = useState(0);
 
   useEffect(async () => {
     const usersCollectionRef = collection(
@@ -38,7 +40,17 @@ export default function BrowseUsers({navigation}) {
        <ImageBackground
        source={require("../assets/capstone_bg.gif")}
        style={styles.bgImage}>
-       <TinderCard user={users[0]} navigation={navigation}/>
+       <Swiper backgroundColor="transparent"
+         cards={users}
+         renderCard={(card) => {
+           return (
+             <View style={styles.cardStack}>
+              <TinderCard user={card} navigation={navigation}/>
+            </View>
+           )
+         }}
+       
+       />
        <View style={styles.icons}>
         <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
         <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
@@ -55,9 +67,8 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
     cardStack: {
-        flex: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
+      flex: 5,
+      backgroundColor: 'transparent'
     },
     bgImage: {
       width: "100%",
@@ -71,7 +82,11 @@ const styles = StyleSheet.create({
       width: "100%",
       justifyContent: "space-around",
       position: "absolute",
-      bottom: "12%",
+      bottom: "10%",
     },
+    swiper: {
+      flex:1,
+      backgroundColor: "black"
+    }
   })
   
