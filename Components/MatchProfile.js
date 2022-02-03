@@ -34,7 +34,6 @@ export default function MatchProfile({ navigation }) {
 							source={require("../assets/ZeldaTinderPic.jpg")}
 						/>
 					</View>
-
 					<Card style={styles.card}>
 						<Card.Content style={styles.fontContainer}>
 							<Badge style={styles.badge}>♥</Badge>
