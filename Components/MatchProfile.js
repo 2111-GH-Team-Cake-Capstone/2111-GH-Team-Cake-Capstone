@@ -17,10 +17,7 @@ import {
   Paragraph,
 } from "react-native-paper";
 
-import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
-
-export default function Home({ navigation }) {
+export default function MatchProfile({ navigation }) {
   return (
     <ScrollView>
       <ImageBackground
@@ -60,7 +57,7 @@ export default function Home({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={() => navigation.navigate("TinderCard")}
+            onPress={() => navigation.navigate("BrowseUsers")}
             style={{
               width: 100,
               marginTop: 10,
