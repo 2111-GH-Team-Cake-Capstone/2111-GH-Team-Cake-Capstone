@@ -15,18 +15,18 @@ export default function Login({ navigation }) {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.navigate("Home");
+        navigation.replace("Home");
       }
     });
     return unsubscribe;
   }, [])
 
-  async function handleSignup (){
+  async function handleSignup(){
     try {
       const createdUser =  await createUserWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = createdUser.user;
-      navigation.navigate("Home")
+      navigation.replace("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
       const loggedInUser =  await signInWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = loggedInUser.user;
-      navigation.navigate("Home")
+      navigation.replace("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
