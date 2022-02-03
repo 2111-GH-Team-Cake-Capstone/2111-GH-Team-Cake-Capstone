@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
-import { Headline, Button, TextInput } from 'react-native-paper';
+import { Headline, Button, TextInput, HelperText} from 'react-native-paper';
 import { createUserWithEmailAndPassword,
          signInWithEmailAndPassword,
-         onAuthStateChanged } from "firebase/auth";
+         onAuthStateChanged
+        } from "firebase/auth";
 import { auth } from '../firebase';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("")
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -28,6 +30,7 @@ export default function Login({ navigation }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
+      setError(errorCode);
     }
   }
 
@@ -40,7 +43,7 @@ export default function Login({ navigation }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("ERROR", errorMessage)
+      setError(errorCode);
     }
   }
 
@@ -63,6 +66,7 @@ export default function Login({ navigation }) {
           onChangeText={text => setPassword(text)}
           secureTextEntry
         />
+        <HelperText type="error" visible={!!error}>Error: {error.slice(5).replace(/-/g, " ")}</HelperText>
         <Button style={styles.input} mode="contained" onPress={() => handleSignup()}>
           sign up
         </Button>
