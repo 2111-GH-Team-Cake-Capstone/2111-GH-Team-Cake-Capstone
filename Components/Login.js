@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform, ImageBackground } from 'react-native';
 import { Headline, Button, TextInput, HelperText} from 'react-native-paper';
 import { createUserWithEmailAndPassword,
          signInWithEmailAndPassword,
@@ -15,18 +15,18 @@ export default function Login({ navigation }) {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.navigate("Home");
+        navigation.replace("Home");
       }
     });
     return unsubscribe;
   }, [])
 
-  async function handleSignup (){
+  async function handleSignup(){
     try {
       const createdUser =  await createUserWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = createdUser.user;
-      navigation.navigate("Home")
+      navigation.replace("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -38,8 +38,8 @@ export default function Login({ navigation }) {
     try {
       const loggedInUser =  await signInWithEmailAndPassword(auth, email, password)
       // Signed in
-      const user = {...loggedInUser.user, dogID: '95wxruaoXcuTWDizsGiQ'};
-      navigation.navigate("Home")
+      const user = loggedInUser.user;
+      navigation.replace("Home")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -48,22 +48,26 @@ export default function Login({ navigation }) {
   }
   return (
     <KeyboardAvoidingView enabled={Platform.OS === "ios"}
-      style={styles.container} behavior="padding">
-        <Headline style={styles.heading}>Leashed</Headline>
+      style={styles.container}>
+      <ImageBackground
+        source={require("../assets/capstone_bg.gif")}
+        style={styles.bgImage}
+      >
+        <Headline style={styles.heading}>Leashed Logo</Headline>
         <TextInput
-          style={styles.input}
-          mode="outlined"
-          label="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
+            style={styles.input}
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
         />
         <TextInput
-          style={styles.input}
-          mode="outlined"
-          label="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          secureTextEntry
+            style={styles.input}
+            mode="outlined"
+            label="Password"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry
         />
         <HelperText type="error" visible={!!error}>Error: {error.slice(5).replace(/-/g, " ")}</HelperText>
         <Button style={styles.input} mode="contained" onPress={() => handleSignup()}>
@@ -72,6 +76,7 @@ export default function Login({ navigation }) {
         <Button style={styles.input} mode="outlined" onPress={() => handleLogin()}>
           Log in
         </Button>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 }
@@ -79,7 +84,6 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
   },
   input: {
@@ -87,5 +91,13 @@ const styles = StyleSheet.create({
   },
   heading: {
     alignSelf: 'center',
+  },
+  bgImage: {
+    flex: 1,
+    justifyContent: 'center',
+    height: "100%",
+    resizeMode: "stretch",
+    padding: 0,
+    margin: 0,
   },
 });

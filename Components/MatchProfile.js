@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  ImageBackground,
+	StyleSheet,
+	ScrollView,
+	View,
+	Text,
+	ImageBackground,
 } from "react-native";
 import {
-  Button,
-  Avatar,
-  TextInput,
-  Headline,
-  Title,
-  Badge,
-  Card,
-  Paragraph,
+	Button,
+	Avatar,
+	TextInput,
+	Headline,
+	Title,
+	Badge,
+	Card,
+	Paragraph,
 } from "react-native-paper";
 
 import * as ImagePicker from "expo-image-picker";
@@ -76,30 +76,30 @@ export default function MatchProfile({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 60,
-  },
-  card: {
-    marginTop: 20,
-  },
-  bgImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "stretch",
-    padding: 0,
-    margin: 0,
-  },
-  badge: {
-    right: 170,
-    top: 27,
-  },
-  fontContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  font: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
+	container: {
+		flex: 1,
+		padding: 60,
+	},
+	card: {
+		marginTop: 20,
+	},
+	bgImage: {
+		width: "100%",
+		height: "100%",
+		resizeMode: "stretch",
+		padding: 0,
+		margin: 0,
+	},
+	badge: {
+		right: 170,
+		top: 27,
+	},
+	fontContainer: {
+		flex: 1,
+		alignItems: "center",
+	},
+	font: {
+		fontWeight: "bold",
+		fontSize: 18,
+	},
 });

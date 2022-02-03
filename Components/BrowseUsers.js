@@ -34,7 +34,6 @@ export default function BrowseUsers({navigation}) {
     });
     return info;
   }, []);
-  console.log(currentDog)
   if(users.length <= 0) {
     return (
     <Text>loading...</Text>
@@ -97,4 +96,3 @@ const styles = StyleSheet.create({
       backgroundColor: "black"
     }
   })
-  

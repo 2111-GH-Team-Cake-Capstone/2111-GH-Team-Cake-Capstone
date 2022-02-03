@@ -66,7 +66,5 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     padding: 0,
     margin: 0,
-  },
+  }
 });
-
-
