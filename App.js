@@ -13,6 +13,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
 import { LogBox } from "react-native";
+
 import { FirebaseAuthProvider, useFirebaseAuth } from "./context/FirebaseAuthContext";
 
 //Components
