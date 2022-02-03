@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-
 import {
   Text,
   DarkTheme as PaperDarkTheme,
@@ -13,17 +12,14 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
-
 import { LogBox } from "react-native";
-
+import { FirebaseAuthProvider, useFirebaseAuth } from "./context/FirebaseAuthContext";
 
 //Components
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
-
 import ChatMain from "./Components/Chat/ChatMain";
-
 import BrowseUsers from './Components/BrowseUsers';
 import MatchProfile from "./Components/MatchProfile";
 
@@ -37,20 +33,22 @@ function App() {
 
   return (
     <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
-          <Stack.Screen name="MatchProfile" component={MatchProfile} />
-          <Stack.Screen name="ChatMain" component={ChatMain} />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Login"
-              component={Login}
-            />
-          </Stack.Navigator>
-      </NavigationContainer>
+      <FirebaseAuthProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
+            <Stack.Screen name="MatchProfile" component={MatchProfile} />
+            <Stack.Screen name="ChatMain" component={ChatMain} />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Login"
+                component={Login}
+              />
+            </Stack.Navigator>
+        </NavigationContainer>
+      </FirebaseAuthProvider>
       <StatusBar style="auto" />
     </PaperProvider>
   );

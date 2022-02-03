@@ -10,7 +10,7 @@ const FirebaseAuthProvider = ({ children }) => {
   const value = { user };
 
   React.useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(setUser);
+    const unsubscribe = onAuthStateChanged(auth, setUser);
     return unsubscribe;
   }, []);
 
@@ -21,4 +21,14 @@ const FirebaseAuthProvider = ({ children }) => {
   );
 };
 
-export { FirebaseAuthProvider };
+function useFirebaseAuth() {
+  const context = React.useContext(FirebaseAuthContext);
+  if (context === undefined) {
+    throw new Error(
+      "useFirebaseAuth must be used within a FirebaseAuthProvider"
+    );
+  }
+  return context.user;
+}
+
+export { FirebaseAuthProvider, useFirebaseAuth };
