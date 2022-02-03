@@ -2,26 +2,49 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { collection, doc, getDoc } from "firebase/firestore"; 
+import { collection, doc, getDocs, onSnapshot } from "firebase/firestore"; 
 import db from '../firebase.js';
 
 export default function TinderCard({navigation}) {
-  return (
-    <View style={styles.container}>
-        <Card style={styles.card}>
-          <Card.Cover style={styles.picture} source={require('../assets/ZeldaTinderPic.jpg')} />
-          <Card.Content>
-            <Title style={styles.title}>Zelda</Title>
-            <Paragraph style={styles.bio}>Just a little love-bug</Paragraph>
-            <Paragraph style={styles.breed}>Hound mix</Paragraph>
-          </Card.Content>
-          <Card.Actions style={styles.viewButton}>
-            <Button icon="dog" onPress={() => navigation.navigate("MatchProfile")}>View Profile</Button>
-          </Card.Actions>
-        </Card>
+  const [users, setUsers] = useState([]);
 
-    </View>
-  );
+  useEffect(async () => {
+    const usersCollectionRef = collection(
+      db,
+      'users'
+    );
+
+    const info = onSnapshot(usersCollectionRef, async () => {
+      const userDocs = await getDocs(usersCollectionRef);
+      const userData = userDocs.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUsers(userData);
+    });
+    return info;
+  }, []);
+  if(users.length <= 0) {
+    return (
+      <Text>loading...</Text>
+    )
+  }
+    return (
+      <View style={styles.container}>
+          <Card style={styles.card}>
+            <Card.Cover style={styles.picture} source={require('../assets/placeholder.jpg')} />
+            <Card.Content>
+              <Title style={styles.title}>{users[0].name}</Title>
+              <Paragraph style={styles.bio}>{users[0].bio}</Paragraph>
+              <Paragraph style={styles.breed}>{users[0].breed}</Paragraph>
+            </Card.Content>
+            <Card.Actions style={styles.viewButton}>
+              <Button icon="dog" onPress={() => navigation.navigate("MatchProfile")}>View Profile</Button>
+            </Card.Actions>
+          </Card>
+
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
