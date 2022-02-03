@@ -3,33 +3,38 @@ import { StyleSheet, View, ImageBackground, Text } from "react-native";
 import Swiper from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
-import { collection, doc, getDocs, onSnapshot } from "firebase/firestore"; 
+import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore"; 
 import db from '../firebase.js';
+import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 const iconHeight = 75;
 const iconWidth = 75;
 
-
 export default function BrowseUsers({navigation}) {
+  const [currentDog, setCurrentDog] = useState({});
   const [users, setUsers] = useState([]);
-  // const [index, setIndex] = useState(0);
+  const currUser = useFirebaseAuth();
 
   useEffect(async () => {
     const usersCollectionRef = collection(
       db,
       'users'
     );
-
     const info = onSnapshot(usersCollectionRef, async () => {
       const userDocs = await getDocs(usersCollectionRef);
-      const userData = userDocs.docs.map((doc) => ({
+      const allUsersData = userDocs.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setUsers(userData);
+      const correctDog = allUsersData.find((dog) => 
+        dog.uid == currUser.uid
+      )
+      setCurrentDog(correctDog);
+      setUsers(allUsersData);
     });
     return info;
   }, []);
+  console.log(currentDog)
   if(users.length <= 0) {
     return (
     <Text>loading...</Text>

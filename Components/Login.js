@@ -38,7 +38,7 @@ export default function Login({ navigation }) {
     try {
       const loggedInUser =  await signInWithEmailAndPassword(auth, email, password)
       // Signed in
-      const user = loggedInUser.user;
+      const user = {...loggedInUser.user, dogID: '95wxruaoXcuTWDizsGiQ'};
       navigation.navigate("Home")
     } catch (error) {
       const errorCode = error.code;
@@ -46,7 +46,6 @@ export default function Login({ navigation }) {
       setError(errorCode);
     }
   }
-
   return (
     <KeyboardAvoidingView enabled={Platform.OS === "ios"}
       style={styles.container} behavior="padding">

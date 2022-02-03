@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, unstable_batchedUpdates } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';

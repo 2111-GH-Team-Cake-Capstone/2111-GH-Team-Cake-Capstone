@@ -28,7 +28,7 @@ function useFirebaseAuth() {
       "useFirebaseAuth must be used within a FirebaseAuthProvider"
     );
   }
-  return context.user;
+  return {...context.user, dogID: "95wxruaoXcuTWDizsGiQ", city_location: "locations/CHICAGO"};
 }
 
 export { FirebaseAuthProvider, useFirebaseAuth };
