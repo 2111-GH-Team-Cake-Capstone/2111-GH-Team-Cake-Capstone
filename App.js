@@ -12,17 +12,18 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //import merge from 'deepmerge';
-
-import { AuthProvider } from "./hooks/useAuth";
 import { LogBox } from "react-native";
+
+import {
+	FirebaseAuthProvider,
+	useFirebaseAuth,
+} from "./context/FirebaseAuthContext";
 
 //Components
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
-
 import ChatMain from "./Components/Chat/ChatMain";
-
 import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
 
@@ -34,12 +35,11 @@ LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 function App() {
 	return (
 		<PaperProvider>
-			<NavigationContainer>
-				<AuthProvider>
+			<FirebaseAuthProvider>
+				<NavigationContainer>
 					<Stack.Navigator initialRouteName="Login">
 						<Stack.Screen name="Home" component={Home} />
 						<Stack.Screen name="Profile" component={Profile} />
-
 						<Stack.Screen name="BrowseUsers" component={BrowseUsers} />
 						<Stack.Screen name="MatchProfile" component={MatchProfile} />
 						<Stack.Screen name="ChatMain" component={ChatMain} />
@@ -49,8 +49,8 @@ function App() {
 							component={Login}
 						/>
 					</Stack.Navigator>
-				</AuthProvider>
-			</NavigationContainer>
+				</NavigationContainer>
+			</FirebaseAuthProvider>
 			<StatusBar style="auto" />
 		</PaperProvider>
 	);

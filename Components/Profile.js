@@ -112,12 +112,12 @@ export default function Profile({ navigation }) {
           </Button>
 
           <Button
-icon="dog"
+            icon="dog"
             mode="contained"
             onPress={() => navigation.navigate("BrowseUsers")}
             style={{ bottom: 30, right: -70, width: 180 }}
           >
-
+            Browse users
           </Button>
         </View>
       </ImageBackground>
