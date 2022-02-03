@@ -23,7 +23,7 @@ import Login from "./Components/Login";
 import ChatMain from "./Components/Chat/ChatMain";
 import BrowseUsers from './Components/BrowseUsers';
 import MatchProfile from "./Components/MatchProfile";
-
+import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 //const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -44,7 +44,11 @@ function App() {
     <PaperProvider theme = {theme}>
       <FirebaseAuthProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login">
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+            header: CustomNavigationBar,
+          }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
