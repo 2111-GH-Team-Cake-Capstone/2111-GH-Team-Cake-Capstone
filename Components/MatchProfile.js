@@ -20,7 +20,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
 
-export default function Home({ navigation }) {
+export default function MatchProfile({ navigation }) {
   return (
     <ScrollView>
       <ImageBackground
