@@ -22,7 +22,7 @@ const cityData = [
   { label: "Seoul" },
 ];
 
-export default function Profile({ navigation }) {
+export default function EditProfile({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [gender, setGender] = useState(null);
