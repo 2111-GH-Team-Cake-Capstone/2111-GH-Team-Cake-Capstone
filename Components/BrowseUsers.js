@@ -93,6 +93,7 @@ export default function BrowseUsers({navigation}) {
          }}
          cardIndex={0}
          stackSize= {3}
+         stackSeparation={15}
        />
        <View style={styles.icons}>
         <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
     cardStack: {
-      flex: 1,
+      flex: .95,
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: 'transparent'
