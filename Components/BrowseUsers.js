@@ -3,36 +3,74 @@ import { StyleSheet, View, ImageBackground, Text } from "react-native";
 import Swiper from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
-import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore"; 
+import { collection, doc, getDocs, onSnapshot, snapshot, query, where, firebase } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 const iconHeight = 75;
 const iconWidth = 75;
 
+//grabbing user collection from our database
+const usersCollectionRef = collection(
+  db,
+  'users'
+);
+
+//grabbing swipes collection from our database
+const swipesCollectionRef = collection(
+  db,
+  'swipes'
+);
+
 export default function BrowseUsers({navigation}) {
-  const [currentDog, setCurrentDog] = useState({});
   const [users, setUsers] = useState([]);
-  const currUser = useFirebaseAuth();
+  // const currUser = useFirebaseAuth(); 
 
   useEffect(async () => {
-    const usersCollectionRef = collection(
-      db,
-      'users'
-    );
-    const info = onSnapshot(usersCollectionRef, async () => {
-      const userDocs = await getDocs(usersCollectionRef);
-      const allUsersData = userDocs.docs.map((doc) => ({
+    //query through the users collection and find all users where city = current user's city
+    const localUsersCollectionRef = query(usersCollectionRef, where("city_location", "==", "New York City"))
+    onSnapshot(localUsersCollectionRef,(snapshot) => {
+      let swipedUsers = [];
+      const allUsersData = snapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      const correctDog = allUsersData.find((dog) => 
-        dog.uid == currUser.uid
-      )
-      setCurrentDog(correctDog);
-      setUsers(allUsersData);
+      //query through the swipes collection and find all documents where our current user is dog a
+      const existingSwipesCollectionRefDogA = query(swipesCollectionRef, where("dog_a", "==", "CJnHpheCmf9UyqYP4RtV"))
+      //query through the swipes collection and find all documents where our current user is dog b
+      const existingSwipesCollectionRefDogB = query(swipesCollectionRef, where("dog_b", "==", "CJnHpheCmf9UyqYP4RtV"))
+      onSnapshot(existingSwipesCollectionRefDogA,(snapshot) => {
+        const swipesDataA = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        //if the current user is dog_a, then we want to push dog_b's ID to our swipedUsers array
+        swipesDataA.forEach(doc => {
+          swipedUsers.push(doc.dog_b)
+        })
+        onSnapshot(existingSwipesCollectionRefDogB,(snapshot) => {
+          const swipesDataB = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          //if the current user is dog_b, then we want to push dog_a's ID to our swipedUsers array
+          swipesDataB.forEach(doc => {
+            swipedUsers.push(doc.dog_a)
+          })
+        });
+        //filter thru all of our users and only return the user's who are not in the swipedUsers array (because we already saw those users)
+        //and filter to make sure we are not also displying our current user
+        const unseenUsers = allUsersData.filter(user => {
+          if(swipedUsers.includes(user.id) || user.id === "CJnHpheCmf9UyqYP4RtV") {
+            return false;
+          }
+          return true;
+        })
+        //set state of users to the users we have not seen
+        setUsers(unseenUsers);
+      });
     });
-    return info;
+
   }, []);
   if(users.length <= 0) {
     return (
