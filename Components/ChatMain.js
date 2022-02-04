@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { StyleSheet, View, ImageBackground, Text } from "react-native";
+import { Headline, Button } from "react-native-paper";
 import db from "../firebase";
 import {
 	collection,
@@ -13,10 +14,9 @@ import {
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function ChatMain() {
-	const [matches, setMatches] = useState();
+	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
 	const currentUser = useFirebaseAuth();
-	console.log(currentUser);
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -34,64 +34,71 @@ export default function ChatMain() {
 		getUsers();
 	}, []);
 
-	// const getMatches = () => {
-	// 	return users.map((user) => {
-	// 		const q = query(collection(db, "matches"), where("dog_a", "==", user.id));
-
-	// 		const querySnapshot = getDocs(q);
-	// 		return querySnapshot;
-	// 	});
-	// };
-
-	// const matchesDocA = getDocs(db, "matches", "dog_a");
-	// const matchesDocB = getDocs(db, "matches", "dog_b");
-
-	// useEffect(() => {
-	// 	const getMatches = async () => {
-	// 		const matchesColRef = collection(db, "matches");
-	// 		const matchesData = await getDocs(matchesColRef);
-
-	// 		setMatches(
-	// 			matchesData.docs.map((doc) => ({
-	// 				...doc.data(),
-	// 				dogA: doc.dog_a,
-	// 				dogB: doc.dog_b,
-	// 			}))
-	// 		);
-	// 	};
-	// 	getMatches();
-	// }, []);
-
-	// useEffect(() => {
-	// 	const getMatches = async () => {
-	// 		const matchesQ = query(
-	// 			collection(db, "matches"),
-	// 			where("messages", "==", true)
-	// 		);
-	// 		setMatches(matchesQ);
-	// 		// const matchesData = await getDocs(matchesColRef);
-
-	// 		// const querySnapshot = await getDocs(matchesQ);
-	// 		// querySnapshot.forEach((doc) => {
-	// 		// 	console.log(doc.id, " => ", doc.data());
-	// 		// });
-	// 	};
-
-	// 	getMatches();
-	// });
-
-	// find matches where either dog_a or dog_b == user.id
-	// query both users and matches
+	useEffect(
+		() =>
+			onSnapshot(
+				query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
+				(snapshot) => {
+					const matchesDogA = snapshot.docs.map((doc) => ({
+						id: doc.id,
+						...doc.data(),
+					}));
+					onSnapshot(
+						query(
+							collection(db, "matches"),
+							where("dog_b", "==", currentUser.uid)
+						),
+						(snapshot) => {
+							const matchesDogB = snapshot.docs.map((doc) => ({
+								id: doc.id,
+								...doc.data(),
+							}));
+							const combinedMatches = matchesDogA.concat(matchesDogB);
+							setMatches(combinedMatches);
+						}
+					);
+				}
+			),
+		[currentUser]
+	);
 
 	return (
-		<View>
-			<Text>
-				{users.map((user) => {
-					if (user.uid) {
-						return user.name;
-					}
-				})}
-			</Text>
+		<View style={styles.container}>
+			<ImageBackground
+				source={require("../assets/capstone_bg.gif")}
+				style={styles.bgImage}
+			>
+				<Text>
+					{users.map((user) => {
+						if (user.uid === currentUser.uid) {
+							return user.name;
+						}
+					})}
+				</Text>
+			</ImageBackground>
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	button: {
+		marginTop: 20,
+	},
+	heading: {
+		alignSelf: "center",
+	},
+	bgImage: {
+		flex: 1,
+		justifyContent: "center",
+		height: "100%",
+		width: "100%",
+		resizeMode: "stretch",
+		padding: 0,
+		margin: 0,
+	},
+});
