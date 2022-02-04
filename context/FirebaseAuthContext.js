@@ -1,15 +1,14 @@
-import * as React from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged }from "firebase/auth";
 import { auth } from '../firebase'
 
-const FirebaseAuthContext =
-  React.createContext(undefined);
+const FirebaseAuthContext = createContext(undefined);
 
 const FirebaseAuthProvider = ({ children }) => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = useState(null);
   const value = { user };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return unsubscribe;
   }, []);
@@ -22,13 +21,13 @@ const FirebaseAuthProvider = ({ children }) => {
 };
 
 function useFirebaseAuth() {
-  const context = React.useContext(FirebaseAuthContext);
+  const context = useContext(FirebaseAuthContext);
   if (context === undefined) {
     throw new Error(
       "useFirebaseAuth must be used within a FirebaseAuthProvider"
     );
   }
-  return {...context.user, dogID: "95wxruaoXcuTWDizsGiQ", city_location: "locations/CHICAGO"};
+  return context.user;
 }
 
 export { FirebaseAuthProvider, useFirebaseAuth };
