@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		marginTop: 20,
+		marginLeft: "30%",
+		marginRight: "30%",
 	},
   heading: {
     alignSelf: 'center',
