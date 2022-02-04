@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
-import db from "firebase";
+import db from "../firebase";
 
 import * as ImagePicker from "expo-image-picker";
 import { setDoc } from "firebase/firestore";
