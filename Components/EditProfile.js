@@ -61,9 +61,9 @@ export default function Profile({ navigation }) {
     return <Alert> No Access to Internal Storage</Alert>;
   }
 
-  const updateUserProfile = () => {
-    setDoc(doc(db, "users", user.uid), {});
-  };
+  // const updateUserProfile = () => {
+  //   setDoc(doc(db, "users", user.uid), {});
+  // };
 
   return (
     <ScrollView>
