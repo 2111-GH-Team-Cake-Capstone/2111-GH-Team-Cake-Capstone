@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ImageBackground, Text } from "react-native";
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';

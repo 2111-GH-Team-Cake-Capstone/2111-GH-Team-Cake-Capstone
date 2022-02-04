@@ -23,7 +23,7 @@ import {
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
-import ChatMain from "./Components/Chat/ChatMain";
+import ChatMain from "./Components/ChatMain";
 import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
 import CustomNavigationBar from "./Components/CustomNavigationBar";
