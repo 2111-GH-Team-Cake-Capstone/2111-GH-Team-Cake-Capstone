@@ -1,27 +1,29 @@
 import { StatusBar } from "expo-status-bar";
 import {
-	Text,
-	DarkTheme as PaperDarkTheme,
-	DefaultTheme as PaperDefaultTheme,
-	Provider as PaperProvider,
+  Text,
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
 } from "react-native-paper";
 import {
-	NavigationContainer,
-	DarkTheme as NavigationDarkTheme,
-	DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import merge from 'deepmerge';
+import merge from "deepmerge";
 import { LogBox } from "react-native";
 
 import {
-	FirebaseAuthProvider,
-	useFirebaseAuth,
+  FirebaseAuthProvider,
+  useFirebaseAuth,
 } from "./context/FirebaseAuthContext";
 
 //Components
 import Home from "./Components/Home";
-import Profile from "./Components/Profile";
+
+import ViewProfile from "./Components/ViewProfile";
+import EditProfile from "./Components/EditProfile";
 import Login from "./Components/Login";
 import ChatMain from "./Components/ChatMain";
 import BrowseUsers from "./Components/BrowseUsers";
@@ -34,7 +36,7 @@ const theme = {
   ...CombinedDefaultTheme,
   colors: {
     ...CombinedDefaultTheme.colors,
-    primary: '#f04c64',
+    primary: "#f04c64",
     //accent: '#f1c40f',
   },
 };
@@ -43,25 +45,27 @@ LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 
 function App() {
   return (
-    <PaperProvider theme = {theme}>
+    <PaperProvider theme={theme}>
       <FirebaseAuthProvider>
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Login"
             screenOptions={{
-            header: (props) => <CustomNavigationBar {...props} />,
-          }}>
+              header: props => <CustomNavigationBar {...props} />,
+            }}
+          >
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="ViewProfile" component={ViewProfile} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
             <Stack.Screen name="MatchProfile" component={MatchProfile} />
             <Stack.Screen name="ChatMain" component={ChatMain} />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="Login"
-                component={Login}
-              />
-            </Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={Login}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
       </FirebaseAuthProvider>
       <StatusBar style="auto" />
