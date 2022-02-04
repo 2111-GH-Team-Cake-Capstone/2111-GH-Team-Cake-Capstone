@@ -13,11 +13,11 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import merge from 'deepmerge';
 import { LogBox } from "react-native";
-
 import {
 	FirebaseAuthProvider,
 	useFirebaseAuth,
 } from "./context/FirebaseAuthContext";
+import { DogProvider, useDog } from "./context/DogContext"
 
 //Components
 import Home from "./Components/Home";
@@ -26,6 +26,7 @@ import Login from "./Components/Login";
 import ChatMain from "./Components/Chat/ChatMain";
 import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
+import Test from "./Components/Test"
 import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -45,24 +46,27 @@ function App() {
   return (
     <PaperProvider theme = {theme}>
       <FirebaseAuthProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Login"
-            screenOptions={{
-            header: (props) => <CustomNavigationBar {...props} />,
-          }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
-            <Stack.Screen name="MatchProfile" component={MatchProfile} />
-            <Stack.Screen name="ChatMain" component={ChatMain} />
-              <Stack.Screen
-                options={{ headerShown: false }}
-                name="Login"
-                component={Login}
-              />
+        <DogProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Login"
+              screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />,
+              }}>
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
+              <Stack.Screen name="MatchProfile" component={MatchProfile} />
+              <Stack.Screen name="Test" component={Test} />
+              <Stack.Screen name="ChatMain" component={ChatMain} />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="Login"
+                  component={Login}
+                />
             </Stack.Navigator>
-        </NavigationContainer>
+          </NavigationContainer>
+        </DogProvider>
       </FirebaseAuthProvider>
       <StatusBar style="auto" />
     </PaperProvider>
