@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
-import db from "../../firebase";
+import db from "../firebase";
 import {
 	collection,
 	doc,
@@ -10,27 +10,13 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { useFirebaseAuth } from "../../context/FirebaseAuthContext";
-
-// const q = query(collection(db, "matches"), where("dog_b", "==", ));
-// console.log(q)
-
-// const querySnapshot = await getDocs(q);
-// querySnapshot.forEach((doc) => {
-// 	console.log(doc.id, "=>", doc.data());
-// });
-
-// const q = query(collection(db, "cities"), where("capital", "==", true));
-
-// const querySnapshot = await getDocs(q);
-// querySnapshot.forEach((doc) => {
-//   // doc.data() is never undefined for query doc snapshots
-//   console.log(doc.id, " => ", doc.data());
-// });
+import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function ChatMain() {
 	const [matches, setMatches] = useState();
 	const [users, setUsers] = useState([]);
+	const currentUser = useFirebaseAuth();
+	console.log(currentUser);
 
 	useEffect(() => {
 		const getUsers = async () => {
