@@ -60,7 +60,7 @@ export default function MatchProfile({ navigation }) {
 
 					<Button
 						mode="contained"
-						onPress={() => navigation.navigate("TinderCard")}
+						onPress={() => navigation.navigate("BrowseUsers")}
 						style={{
 							width: 100,
 							marginTop: 10,
