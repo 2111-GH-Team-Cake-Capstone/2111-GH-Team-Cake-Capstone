@@ -69,11 +69,13 @@ export default function ChatMain() {
 				style={styles.bgImage}
 			>
 				<Text>
-					{users.map((user) => {
-						if (user.uid === currentUser.uid) {
-							return user.name;
-						}
-					})}
+					{users.map((user) =>
+						matches.map((match) => {
+							if (user.uid === match.dog_a) {
+								return user.uid;
+							}
+						})
+					)}
 				</Text>
 			</ImageBackground>
 		</View>
