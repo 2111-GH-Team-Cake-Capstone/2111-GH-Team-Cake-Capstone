@@ -47,7 +47,7 @@ function App() {
           <Stack.Navigator
             initialRouteName="Login"
             screenOptions={{
-            header: CustomNavigationBar,
+            header: (props) => <CustomNavigationBar {...props} />,
           }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Profile" component={Profile} />
