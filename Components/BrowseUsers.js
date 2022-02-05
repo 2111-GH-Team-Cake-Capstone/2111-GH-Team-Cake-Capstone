@@ -22,6 +22,7 @@ const usersCollectionRef = collection(
 const swiperRef = React.createRef();
 
 export default function BrowseUsers({navigation}) {
+  //current user hardcoded in for now
   const currentUser = {
     id: "CJnHpheCmf9UyqYP4RtV",
     name: "Zelda",
@@ -29,7 +30,6 @@ export default function BrowseUsers({navigation}) {
     swipes: ["ThVYa5ykI6VubgIHxEZ1", "AjgLmtGHd9JeJM6YDqOQ"]
   }
   const [users, setUsers] = useState([]);
-  // const currUser = useFirebaseAuth(); 
 
   useEffect(async () => {
     let allUsers = []
