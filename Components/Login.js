@@ -30,6 +30,7 @@ export default function Login({ navigation }) {
       const user = createdUser.user;
       await addDoc(collection(db, "users"), {
         uid: user.uid,
+        swipes: []
       });
       navigation.replace("Home")
     } catch (error) {
