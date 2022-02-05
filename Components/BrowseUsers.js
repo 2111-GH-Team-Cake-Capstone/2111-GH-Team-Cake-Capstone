@@ -3,7 +3,7 @@ import { StyleSheet, View, ImageBackground, Text, Pressable } from "react-native
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
-import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion } from "firebase/firestore"; 
+import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion, serverTimestamp } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
@@ -14,6 +14,11 @@ const iconWidth = 75;
 const usersCollectionRef = collection(
   db,
   'users'
+);
+
+const matchesCollectionRef = collection(
+  db,
+  'matches'
 );
 
 //creating swiper reference for buttons
@@ -66,6 +71,11 @@ export default function BrowseUsers({navigation}) {
     })
     .then(() => {
       if(swipedUser.potential_matches.includes(currentUser.id)) {
+        addDoc(matchesCollectionRef, {
+          dog_a: swipedUser.uid,
+          dog_b: currentUser.uid,
+          matched_at: serverTimestamp()
+        })
         console.log("it's a match!")
       }
     })
