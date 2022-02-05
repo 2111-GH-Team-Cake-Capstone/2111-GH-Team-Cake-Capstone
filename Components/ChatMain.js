@@ -62,6 +62,10 @@ export default function ChatMain() {
 		[currentUser]
 	);
 
+	const matchesList = matches.map((match) => {
+		return match.dog_a === currentUser.uid ? match.dog_b : match.dog_a;
+	});
+
 	return (
 		<View style={styles.container}>
 			<ImageBackground
@@ -69,13 +73,13 @@ export default function ChatMain() {
 				style={styles.bgImage}
 			>
 				<Text>
-					{users.map((user) =>
-						matches.map((match) => {
-							if (user.uid === match.dog_a) {
-								return user.uid;
+					{users.map((user) => {
+						matchesList.map((matchedUid) => {
+							if (matchedUid === user.uid) {
+								return user.name;
 							}
-						})
-					)}
+						});
+					})}
 				</Text>
 			</ImageBackground>
 		</View>
