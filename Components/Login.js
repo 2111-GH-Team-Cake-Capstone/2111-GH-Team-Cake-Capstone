@@ -5,7 +5,9 @@ import { createUserWithEmailAndPassword,
          signInWithEmailAndPassword,
          onAuthStateChanged
         } from "firebase/auth";
-import { auth } from '../firebase';
+import { collection, addDoc } from "firebase/firestore";
+import db, { auth } from '../firebase';
+import { useFirebaseAuth } from "../context/FirebaseAuthContext"
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -26,6 +28,9 @@ export default function Login({ navigation }) {
       const createdUser =  await createUserWithEmailAndPassword(auth, email, password)
       // Signed in
       const user = createdUser.user;
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+      });
       navigation.replace("Home")
     } catch (error) {
       const errorCode = error.code;
