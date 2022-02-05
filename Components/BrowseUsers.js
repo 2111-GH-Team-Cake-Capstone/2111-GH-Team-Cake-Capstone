@@ -65,7 +65,9 @@ export default function BrowseUsers({navigation}) {
       potential_matches: arrayUnion(swipedUser.id)
     })
     .then(() => {
-      console.log("you swiped right on", swipedUser.name)
+      if(swipedUser.potential_matches.includes(currentUser.id)) {
+        console.log("it's a match!")
+      }
     })
   }
   if(users.length <= 0) {
