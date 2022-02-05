@@ -24,7 +24,6 @@ const DogProvider = ({children}) => {
       const correctDog = allUsersData.find((dog) =>
         dog.uid == currUser.uid
       );
-      console.log("correct dog", correctDog)
       setDogUser(correctDog);
       return unsubscribe;
     })
