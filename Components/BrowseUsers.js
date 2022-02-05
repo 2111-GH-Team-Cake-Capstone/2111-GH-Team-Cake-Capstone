@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
+import { StyleSheet, View, ImageBackground, Text, Pressable } from "react-native";
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
@@ -21,6 +21,8 @@ const swipesCollectionRef = collection(
   db,
   'swipes'
 );
+
+const swiperRef = React.createRef();
 
 export default function BrowseUsers({navigation}) {
   const [users, setUsers] = useState([]);
@@ -102,6 +104,7 @@ export default function BrowseUsers({navigation}) {
        source={require("../assets/capstone_bg.gif")}
        style={styles.bgImage}>
        <Swiper backgroundColor="transparent"
+         ref={swiperRef}
          cards={users}
          renderCard={(card) => {
            return (
@@ -151,7 +154,9 @@ export default function BrowseUsers({navigation}) {
          }}
        />
        <View style={styles.icons}>
-        <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
+         <Pressable onPress={()=> swiperRef.current.swipeLeft()}>
+          <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
+        </Pressable>
         <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
        </View>
        </ImageBackground>
