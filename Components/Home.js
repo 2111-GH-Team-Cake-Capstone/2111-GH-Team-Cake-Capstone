@@ -27,9 +27,6 @@ export default function Home({ navigation }) {
 			<Button style={styles.button} mode="contained" onPress={() => handleLogout()}>
 				Logout
 			</Button>
-			<Button style={styles.button} 								mode="contained" onPress={() => 						navigation.navigate("Test")}>
-				Test
-			</Button>
 			</ImageBackground>
 		</View>
 	);
