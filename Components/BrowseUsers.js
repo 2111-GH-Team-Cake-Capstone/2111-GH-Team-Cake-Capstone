@@ -10,8 +10,6 @@ import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 const iconHeight = 75;
 const iconWidth = 75;
 
-// 
-
 //grabbing user collection from our database
 const usersCollectionRef = collection(
   db,
@@ -59,6 +57,17 @@ export default function BrowseUsers({navigation}) {
       console.log("you swiped left on", swipedUser.name)
     })
   }
+  const swipeRight = async (cardIndex) => {
+    const swipedUser = users[cardIndex];
+    const currentUserRef = doc(db, "users", currentUser.id);
+    updateDoc(currentUserRef, {
+      swipes: arrayUnion(swipedUser.id),
+      potential_matches: arrayUnion(swipedUser.id)
+    })
+    .then(() => {
+      console.log("you swiped right on", swipedUser.name)
+    })
+  }
   if(users.length <= 0) {
     return (
     <Text>loading...</Text>
@@ -81,7 +90,7 @@ export default function BrowseUsers({navigation}) {
          }}
          cardIndex={0}
          onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
-        //  onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
+         onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
          stackSize= {3}
          stackSeparation={15}
          animateCardOpacity
@@ -123,7 +132,9 @@ export default function BrowseUsers({navigation}) {
          <Pressable onPress={()=> swiperRef.current.swipeLeft()}>
           <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
         </Pressable>
-        <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
+        <Pressable onPress={()=> swiperRef.current.swipeRight()}>
+          <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
+        </Pressable>
        </View>
        </ImageBackground>
     </View>
