@@ -3,7 +3,7 @@ import { StyleSheet, View, ImageBackground, Text, Pressable } from "react-native
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
-import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc } from "firebase/firestore"; 
+import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
@@ -27,7 +27,8 @@ export default function BrowseUsers({navigation}) {
     id: "CJnHpheCmf9UyqYP4RtV",
     name: "Zelda",
     city_location: "New York City",
-    swipes: ["ThVYa5ykI6VubgIHxEZ1", "AjgLmtGHd9JeJM6YDqOQ"]
+    swipes: ["ThVYa5ykI6VubgIHxEZ1", "AjgLmtGHd9JeJM6YDqOQ"],
+    uid: "OrA5I2UK31focEYppdAEQEwLcjg1"
   }
   const [users, setUsers] = useState([]);
 
@@ -38,6 +39,7 @@ export default function BrowseUsers({navigation}) {
     getDocs(localUsers)
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
+          //adding ONLY the users who are not our current user and not included in our current user's swipes array
           if(doc.id !== currentUser.id && !currentUser.swipes.includes(doc.id)) {
             allUsers.push({ ...doc.data(), id: doc.id })
           }
@@ -47,35 +49,16 @@ export default function BrowseUsers({navigation}) {
   }, []);
 
   // //functions to handle swipes - 
-
-  // //NEED TO ADD IN CHECK TO SEE IF SWIPE DOCUMENT BETWEEN THESE TWO USERS EXISTS
-  // const swipeLeft = (cardIndex) => {
-  //   //swiped user is the current user dispayed on the card
-  //   const swipedUser = users[cardIndex];
-  //   const existingSwipesCollection = query(swipesCollectionRef, where("dog_b", "==", "CJnHpheCmf9UyqYP4RtV"));
-  //   if(existingSwipesCollection.length) {
-  //     updateDoc(existingSwipesCollection[0], {
-  //       dog_b_liked: false,
-  //       dog_b_swiped: true
-  //     });
-  //     return;
-  //   }
-  //   else {
-  //     //adding a new swiped document where our current dog is dog_a and swipedUser is dog_b
-  //     addDoc(swipesCollectionRef, {
-  //       dog_a: "CJnHpheCmf9UyqYP4RtV",
-  //       dog_b: swipedUser.id,
-  //       dog_a_swiped: true,
-  //       dog_a_liked: false
-  //     });
-  //     return;
-  //   }
-  // }
-
-  // const swipeRight = (cardIndex) => {
-  //   const swipedUser = users[cardIndex]
-  // }
-
+  const swipeLeft = async (cardIndex) => {
+    const swipedUser = users[cardIndex];
+    const currentUserRef = doc(db, "users", currentUser.id);
+    updateDoc(currentUserRef, {
+      swipes: arrayUnion(swipedUser.id)
+    })
+    .then(() => {
+      console.log("you swiped left on", swipedUser.name)
+    })
+  }
   if(users.length <= 0) {
     return (
     <Text>loading...</Text>
@@ -97,7 +80,7 @@ export default function BrowseUsers({navigation}) {
            )
          }}
          cardIndex={0}
-        //  onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
+         onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
         //  onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
          stackSize= {3}
          stackSeparation={15}
