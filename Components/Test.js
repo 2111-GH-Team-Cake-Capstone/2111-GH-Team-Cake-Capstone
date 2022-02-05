@@ -5,7 +5,8 @@ import { useDog } from '../context/DogContext';
 
 export default function Test() {
   return <View>
+    {console.log("TEST use dog", useDog())}
     <Headline>Hello</Headline>
-    <Text>{useDog()}</Text>
+    <Text>{useDog().name}</Text>
   </View>;
 }

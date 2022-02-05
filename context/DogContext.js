@@ -1,22 +1,33 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, getDocs, onSnapshot, collection } from "firebase/firestore";
 import db from "../firebase";
 import { useFirebaseAuth } from "./FirebaseAuthContext";
 
 const DogContext = createContext(undefined);
 
 const DogProvider = ({children}) => {
-  const [dog, setDog] = useState(null);
-  const value = { dog };
+  const [dogUser, setDogUser] = useState(null);
+  const value = dogUser;
+  const currUser = useFirebaseAuth();
 
-  useEffect(() => {
-    //we want to update state every time we update our dog document
-    //this should only be the auth user's dog
-    // const unsubscribe = onSnapshot(doc(db, "users", dogID?), (doc) => {
-    //   console.log("current dog: ", doc.data())
-    // });
-    const unsubscribe = useFirebaseAuth()
-    return unsubscribe;
+  useEffect(async () => {
+    const usersCollectionRef = collection(
+      db,
+      'users'
+    );
+    const unsubscribe = onSnapshot(usersCollectionRef, async () => {
+      const userDocs = await getDocs(usersCollectionRef);
+      const allUsersData = userDocs.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const correctDog = allUsersData.find((dog) =>
+        dog.uid == currUser.uid
+      );
+      console.log("correct dog", correctDog)
+      setDogUser(correctDog);
+      return unsubscribe;
+    })
   }, []);
 
   return (
@@ -24,7 +35,7 @@ const DogProvider = ({children}) => {
       {children}
     </DogContext.Provider>
   );
-};
+}
 
 function useDog(){
   const context = useContext(DogContext);
@@ -33,7 +44,7 @@ function useDog(){
       "useDog must be used within a DogProvider"
     );
   }
-  return context.dog;
+  return context;
 }
 
 export { DogProvider, useDog };
