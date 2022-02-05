@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import db from "../firebase";
+import { useFirebaseAuth } from "./FirebaseAuthContext";
 
 const DogContext = createContext(undefined);
 
@@ -9,11 +10,12 @@ const DogProvider = ({children}) => {
   const value = { dog };
 
   useEffect(() => {
-    //we want to update state everytime we update our dog document
+    //we want to update state every time we update our dog document
     //this should only be the auth user's dog
-    const unsubscribe = onSnapshot(doc(db, "users", dogID?), (doc) => {
-      console.log("current dog: ", doc.data())
-    });
+    // const unsubscribe = onSnapshot(doc(db, "users", dogID?), (doc) => {
+    //   console.log("current dog: ", doc.data())
+    // });
+    const unsubscribe = useFirebaseAuth()
     return unsubscribe;
   }, []);
 
@@ -31,7 +33,7 @@ function useDog(){
       "useDog must be used within a DogProvider"
     );
   }
-  return context.user;
+  return context.dog;
 }
 
 export { DogProvider, useDog };
