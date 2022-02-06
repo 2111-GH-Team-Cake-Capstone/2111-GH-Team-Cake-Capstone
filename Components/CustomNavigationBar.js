@@ -22,7 +22,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
       <Appbar.Action
         icon="account-circle"
         onPress={toProfile}
-        disabled={!!(route.name === "Profile")}
+        disabled={!!(route.name === "ViewProfile")}
       />
       <Appbar.Action
         icon="dog"
