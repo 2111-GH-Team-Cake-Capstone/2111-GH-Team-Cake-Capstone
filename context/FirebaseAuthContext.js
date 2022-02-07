@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase'
+import { auth } from "../firebase";
 
 const FirebaseAuthContext = createContext(undefined);
 
 const FirebaseAuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const value = { user };
-
+  console.log(value);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return unsubscribe;
@@ -30,4 +30,4 @@ function useFirebaseAuth() {
   return context.user;
 }
 
-export { FirebaseAuthProvider, useFirebaseAuth }
+export { FirebaseAuthProvider, useFirebaseAuth, FirebaseAuthContext };
