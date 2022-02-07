@@ -20,7 +20,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes } from "firebase/storage"; //access the storage database
 
-export default function MatchProfile({ navigation }) {
+export default function MatchProfile(props) {
+	const potentialMatch = props.route.params.user;
 	return (
 		<ScrollView>
 			<ImageBackground
@@ -38,29 +39,29 @@ export default function MatchProfile({ navigation }) {
 					<Card style={styles.card}>
 						<Card.Content style={styles.fontContainer}>
 							<Badge style={styles.badge}>♥</Badge>
-							<Title style={{ fontSize: 30 }}>Zelda</Title>
-							<Text style={styles.font}>Gender</Text>
+							<Title style={{ fontSize: 30 }}>{potentialMatch.name}</Title>
+							<Text style={styles.font}>{potentialMatch.gender}</Text>
 							<Text style={{ paddingBottom: 10, fontSize: 16 }}>Female</Text>
 							<Text style={styles.font}>Age</Text>
-							<Text style={{ paddingBottom: 10 }}>2</Text>
+							<Text style={{ paddingBottom: 10 }}>{potentialMatch.age}</Text>
 							<Text style={styles.font}>Breed</Text>
-							<Text style={{ paddingBottom: 10, fontSize: 16 }}>Hound mix</Text>
+							<Text style={{ paddingBottom: 10, fontSize: 16 }}>{potentialMatch.breed}</Text>
 							<Text style={styles.font}>City</Text>
 							<Text style={{ paddingBottom: 10, fontSize: 16 }}>
-								New York City
+							{potentialMatch.city_location}
 							</Text>
-							<Text style={styles.font}>Weight</Text>
+							<Text style={styles.font}>{potentialMatch.weight}</Text>
 							<Text style={{ paddingBottom: 10, fontSize: 16 }}>15 lbs</Text>
 							<Text style={styles.font}>Biography</Text>
 							<Text style={{ paddingBottom: 10, fontSize: 16 }}>
-								Just a little love-bug
+							{potentialMatch.bio}
 							</Text>
 						</Card.Content>
 					</Card>
 
 					<Button
 						mode="contained"
-						onPress={() => navigation.navigate("BrowseUsers")}
+						onPress={() => props.navigation.navigate("BrowseUsers")}
 						style={{
 							width: 100,
 							marginTop: 10,

@@ -22,6 +22,7 @@ const DogProvider = ({children}) => {
         id: doc.id,
       }));
       const correctDog = allUsersData.find((dog) =>
+      // console.log("pleaseeee", currUser)
         dog.uid == currUser.uid
       );
       setDogUser(correctDog);
