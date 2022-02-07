@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
-import { Headline, Button } from "react-native-paper";
+import {
+	StyleSheet,
+	View,
+	ImageBackground,
+	ScrollView,
+	SafeAreaView,
+	FlatList,
+} from "react-native";
+import { Avatar, Text, Divider, Paragraph, Title } from "react-native-paper";
 import db from "../firebase";
 import {
 	collection,
-	doc,
-	getDoc,
 	getDocs,
 	onSnapshot,
 	query,
@@ -13,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
-export default function ChatMain() {
+export default function ChatMain({ navigation }) {
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
 	const currentUser = useFirebaseAuth();
@@ -34,6 +39,9 @@ export default function ChatMain() {
 		getUsers();
 	}, []);
 
+	// console.log("users", users);
+
+	// useEffect below has an implicit return to serve as cleanup
 	useEffect(
 		() =>
 			onSnapshot(
@@ -62,9 +70,13 @@ export default function ChatMain() {
 		[currentUser]
 	);
 
+	// console.log("matches", matches);
+
 	const matchesList = matches.map((match) => {
 		return match.dog_a === currentUser.uid ? match.dog_b : match.dog_a;
 	});
+
+	// console.log(matchesList);
 
 	return (
 		<View style={styles.container}>
@@ -72,15 +84,37 @@ export default function ChatMain() {
 				source={require("../assets/capstone_bg.gif")}
 				style={styles.bgImage}
 			>
-				<Text>
-					{users.map((user) => {
-						matchesList.map((matchedUid) => {
-							if (matchedUid === user.uid) {
-								return user.name;
+				<View style={styles.chats}>
+					{users.map((user) =>
+						matchesList.map((match) => {
+							if (match === user.uid) {
+								return (
+									<View key={user.id}>
+										<Text
+											onPress={() =>
+												navigation.navigate("ChatMessage", { match })
+											}
+										>
+											<Avatar.Image
+												style={styles.avatarImg}
+												source={require("../assets/placeholder.jpg")}
+											/>
+											<Title>{user.name}</Title>
+										</Text>
+										<Paragraph
+											style={{
+												marginLeft: 70,
+											}}
+										>
+											Say hi!
+										</Paragraph>
+										<Divider />
+									</View>
+								);
 							}
-						});
-					})}
-				</Text>
+						})
+					)}
+				</View>
 			</ImageBackground>
 		</View>
 	);
@@ -89,22 +123,21 @@ export default function ChatMain() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	button: {
-		marginTop: 20,
-	},
-	heading: {
-		alignSelf: "center",
+		alignSelf: "flex-start",
 	},
 	bgImage: {
 		flex: 1,
-		justifyContent: "center",
-		height: "100%",
 		width: "100%",
+		height: "100%",
 		resizeMode: "stretch",
 		padding: 0,
 		margin: 0,
+	},
+	chats: {
+		flex: 1,
+		marginTop: 30,
+		marginLeft: 20,
+		marginBottom: 70,
+		justifyContent: "space-around",
 	},
 });
