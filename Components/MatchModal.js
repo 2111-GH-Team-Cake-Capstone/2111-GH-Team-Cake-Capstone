@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Button, View, Text, Alert, Modal, Pressable } from "react-native";
 
 const MatchModal = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
   return (
     <Modal transparent={true} animationType="slide" visible={modalVisible} onRequestClose={() => {
     Alert.alert("Modal has been closed.");
