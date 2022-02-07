@@ -13,11 +13,11 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import merge from "deepmerge";
 import { LogBox } from "react-native";
-
 import {
   FirebaseAuthProvider,
   useFirebaseAuth,
 } from "./context/FirebaseAuthContext";
+import { DogProvider, useDog } from "./context/DogContext"
 
 //Components
 import Home from "./Components/Home";
@@ -46,7 +46,8 @@ LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 function App() {
   return (
     <PaperProvider theme={theme}>
-      <FirebaseAuthProvider>
+      <FirebaseAuthProvider>       
+      <DogProvider>
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Login"
@@ -67,6 +68,7 @@ function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
+        </DogProvider>
       </FirebaseAuthProvider>
       <StatusBar style="auto" />
     </PaperProvider>
