@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
+import { StyleSheet, View, ImageBackground, Text, Pressable } from "react-native";
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
-import { collection, doc, getDocs, onSnapshot, snapshot, query, where, addDoc } from "firebase/firestore"; 
+import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion, serverTimestamp } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
@@ -16,81 +16,70 @@ const usersCollectionRef = collection(
   'users'
 );
 
-//grabbing swipes collection from our database
-const swipesCollectionRef = collection(
+const matchesCollectionRef = collection(
   db,
-  'swipes'
+  'matches'
 );
 
+//creating swiper reference for buttons
+const swiperRef = React.createRef();
+
 export default function BrowseUsers({navigation}) {
+  //current user hardcoded in for now
+  const currentUser = {
+    id: "CJnHpheCmf9UyqYP4RtV",
+    name: "Zelda",
+    city_location: "New York City",
+    swipes: ["ThVYa5ykI6VubgIHxEZ1", "AjgLmtGHd9JeJM6YDqOQ"],
+    uid: "OrA5I2UK31focEYppdAEQEwLcjg1"
+  }
   const [users, setUsers] = useState([]);
-  // const currUser = useFirebaseAuth(); 
 
   useEffect(async () => {
-    //query through the users collection and find all users where city = current user's city
-    const localUsersCollectionRef = query(usersCollectionRef, where("city_location", "==", "New York City"))
-    onSnapshot(localUsersCollectionRef,(snapshot) => {
-      let swipedUsers = [];
-      const allUsersData = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      //query through the swipes collection and find all documents where our current user is dog a and they have already swiped on dog_b
-      const existingSwipesCollectionRefDogA = query(swipesCollectionRef, where("dog_a", "==", "CJnHpheCmf9UyqYP4RtV"), where("dog_a_swiped", "==", true))
-      //query through the swipes collection and find all documents where our current user is dog b and they have already swiped on dog_b
-      const existingSwipesCollectionRefDogB = query(swipesCollectionRef, where("dog_b", "==", "CJnHpheCmf9UyqYP4RtV"), where("dog_b_swiped", "==", true))
-      onSnapshot(existingSwipesCollectionRefDogA,(snapshot) => {
-        const swipesDataA = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        //if the current user is dog_a, then we want to push dog_b's ID to our swipedUsers array
-        swipesDataA.forEach(doc => {
-          swipedUsers.push(doc.dog_b)
-        })
-        onSnapshot(existingSwipesCollectionRefDogB,(snapshot) => {
-          const swipesDataB = snapshot.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          //if the current user is dog_b, then we want to push dog_a's ID to our swipedUsers array
-          swipesDataB.forEach(doc => {
-            swipedUsers.push(doc.dog_a)
-          })
-        });
-        //filter thru all of our users and only return the user's who are not in the swipedUsers array (because we already saw those users)
-        //and filter to make sure we are not also displying our current user
-        const unseenUsers = allUsersData.filter(user => {
-          if(swipedUsers.includes(user.id) || user.id === "CJnHpheCmf9UyqYP4RtV") {
-            return false;
+    let allUsers = []
+    // get all docs in the users collection where city = current user's city
+    const localUsers = query(usersCollectionRef, (where("city_location", "==", currentUser.city_location)))
+    getDocs(localUsers)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          //adding ONLY the users who are not our current user and not included in our current user's swipes array
+          if(doc.id !== currentUser.id && !currentUser.swipes.includes(doc.id)) {
+            allUsers.push({ ...doc.data(), id: doc.id })
           }
-          return true;
         })
-        //set state of users to the users we have not seen
-        setUsers(unseenUsers);
-      });
-    });
+        setUsers(allUsers);
+      })
   }, []);
 
-  //functions to handle swipes - 
-
-  //NEED TO ADD IN CHECK TO SEE IF SWIPE DOCUMENT BETWEEN THESE TWO USERS EXISTS
-  const swipeLeft = (cardIndex) => {
-    //swiped user is the current user dispayed on the card
+  // //functions to handle swipes - 
+  const swipeLeft = async (cardIndex) => {
     const swipedUser = users[cardIndex];
-    //adding a new swiped document where our current dog is dog_a and swipedUser is dog_b
-    addDoc(swipesCollectionRef, {
-      dog_a: "CJnHpheCmf9UyqYP4RtV",
-      dog_b: swipedUser.id,
-      dog_a_swiped: true,
-      dog_a_liked: false
-    });
+    const currentUserRef = doc(db, "users", currentUser.id);
+    updateDoc(currentUserRef, {
+      swipes: arrayUnion(swipedUser.id)
+    })
+    .then(() => {
+      console.log("you swiped left on", swipedUser.name)
+    })
   }
-
-  const swipeRight = (cardIndex) => {
-    const swipedUser = users[cardIndex]
+  const swipeRight = async (cardIndex) => {
+    const swipedUser = users[cardIndex];
+    const currentUserRef = doc(db, "users", currentUser.id);
+    updateDoc(currentUserRef, {
+      swipes: arrayUnion(swipedUser.id),
+      potential_matches: arrayUnion(swipedUser.id)
+    })
+    .then(() => {
+      if(swipedUser.potential_matches.includes(currentUser.id)) {
+        addDoc(matchesCollectionRef, {
+          dog_a: swipedUser.uid,
+          dog_b: currentUser.uid,
+          matched_at: serverTimestamp()
+        })
+        console.log("it's a match!")
+      }
+    })
   }
-
   if(users.length <= 0) {
     return (
     <Text>loading...</Text>
@@ -102,6 +91,7 @@ export default function BrowseUsers({navigation}) {
        source={require("../assets/capstone_bg.gif")}
        style={styles.bgImage}>
        <Swiper backgroundColor="transparent"
+         ref={swiperRef}
          cards={users}
          renderCard={(card) => {
            return (
@@ -151,8 +141,12 @@ export default function BrowseUsers({navigation}) {
          }}
        />
        <View style={styles.icons}>
-        <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
-        <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
+         <Pressable onPress={()=> swiperRef.current.swipeLeft()}>
+          <Icon name="cancel-button" group="material-design" height={iconHeight} width={iconWidth} color="#F72119"/>
+        </Pressable>
+        <Pressable onPress={()=> swiperRef.current.swipeRight()}>
+          <Icon name="paw-black-shape" group="coolicons" height={iconHeight} width={iconWidth} color="chartreuse"/>
+        </Pressable>
        </View>
        </ImageBackground>
     </View>
