@@ -30,4 +30,4 @@ function useFirebaseAuth() {
   return context.user;
 }
 
-export { FirebaseAuthProvider, useFirebaseAuth }
+export { FirebaseAuthProvider, useFirebaseAuth, FirebaseAuthContext }
