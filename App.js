@@ -17,7 +17,7 @@ import {
 	FirebaseAuthProvider,
 	useFirebaseAuth,
 } from "./context/FirebaseAuthContext";
-import { DogProvider, useDog } from "./context/DogContext"
+import { DogProvider, useDog } from "./context/DogContext";
 
 //Components
 import Home from "./Components/Home";
@@ -61,6 +61,7 @@ function App() {
               <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
+                <Stack.Screen name="ChatMessage" component={ChatMessage} />
               <Stack.Screen
                 options={{ headerShown: false }}
                 name="Login"

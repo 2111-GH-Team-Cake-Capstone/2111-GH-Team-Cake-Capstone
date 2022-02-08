@@ -19,9 +19,7 @@ const DogProvider = ({ children }) => {
       })
     }
   }, [currUser]);
-
-  console.log(dogUser)
-
+  
   return (
     <DogContext.Provider value={value}>
       {children}
