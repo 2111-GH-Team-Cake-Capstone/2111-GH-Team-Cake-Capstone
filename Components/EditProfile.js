@@ -10,11 +10,18 @@ import {
 } from "react-native";
 import { Button, Avatar, TextInput, Headline } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
-import db from "../firebase";
 
 import * as ImagePicker from "expo-image-picker";
-import { setDoc } from "firebase/firestore";
+import { storage } from "../firebase";
 import { useDog } from "../context/DogContext";
+import {
+  uploadBytesResumable,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+import db from "../firebase";
 
 const genderData = [
   { label: "female", value: "female" },
@@ -32,13 +39,15 @@ export default function EditProfile({ navigation }) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(currentDog.picture);
   const [gender, setGender] = useState(currentDog.gender);
-  const [city, setCity] = useState(currentDog.city_location);
+  const [city_location, setCity] = useState(currentDog.city_location);
   const [name, setName] = useState(currentDog.name);
   const [breed, setBreed] = useState(currentDog.breed);
   const [age, setAge] = useState(String(currentDog.age));
   const [weight, setWeight] = useState(String(currentDog.weight));
   const [bio, setBio] = useState(currentDog.bio);
+  const [url, setUrl] = useState(null);
 
+  // Accessing the library of the current device
   useEffect(() => {
     (async () => {
       const galleryStatus =
@@ -47,6 +56,7 @@ export default function EditProfile({ navigation }) {
     })();
   }, []);
 
+  // Pick the image from the library with uri info and set the avatar with the picked image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -55,14 +65,75 @@ export default function EditProfile({ navigation }) {
       quality: 1,
     });
 
+    let response = await fetch(result.uri);
+
+    let photoBlob = await response.blob();
+    console.log("photoBlob", photoBlob);
+
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(photoBlob);
     }
   };
 
   if (hasGalleryPermission === false) {
     return <Alert> No Access to Internal Storage</Alert>;
   }
+
+  const handlePublish = e => {
+    const imageREf = ref(storage, "image");
+    uploadBytes(imageREf, image)
+      .then(() => {
+        getDownloadURL(imageREf)
+          .then(url => {
+            setImage(url);
+          })
+          .catch(error => {
+            console.log("getting image url error", error);
+          });
+      })
+      .catch(error => console.log("upload error", error));
+  };
+  // const handlePublish = e => {
+  //   if (!name || !age || !breed || !gender || !city_location) {
+  //     Alert.alert("Please fill out all the * fields");
+  //     return;
+  //   }
+  //   const storageRef = ref(
+  //     storage,
+  //     `/profile_images/${Date.now()}${image.name}`
+  //   );
+
+  //   const uploadImage = uploadBytesResumable(storageRef, image);
+
+  //   uploadImage.on(
+  //     "state_changed",
+  //     snapshot => {
+  //       const progressPercent = Math.round(
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       );
+  //       setProgress(progressPercent);
+  //     },
+  //     err => {
+  //       console.log("UploadImageon Error", err);
+  //     },
+
+  //     () => {
+  //       setName({ name, name });
+
+  //       getDownloadURL(uploadImage.snapshot.ref)
+  //         .then(url => {
+  //           const dogref = collection(db, "users");
+  //           addDoc(dogref, {
+  //             image: url,
+  //           }).then(() => console.log("Image added successfully"));
+  //           setProgress(0);
+  //         })
+  //         .catch(err => {
+  //           console.log("Error", err);
+  //         });
+  //     }
+  //   );
+  // };
 
   return (
     <ScrollView>
@@ -88,9 +159,7 @@ export default function EditProfile({ navigation }) {
             label="Dropdown"
             placeholder="Select Your Gender"
             value={gender}
-            onChange={item => {
-              setGender(item.value);
-            }}
+            onChange={e => setGender(e)}
           />
           <Dropdown
             style={styles.dropdown}
@@ -102,29 +171,29 @@ export default function EditProfile({ navigation }) {
             valueField="value"
             label="Dropdown"
             placeholder="Select Your City"
-            value={city}
-            onChange={item => {
-              setCity(item.value);
+            value={city_location}
+            onChange={e => {
+              setCity(e);
             }}
           />
           <TextInput
             mode="outlined"
-            label="Name"
+            label="*Name"
             value={name}
-            onChangeText={text => setName(text)}
+            onChangeText={e => setName(e)}
           />
           <TextInput
             mode="outlined"
-            label="Breed"
+            label="*Breed"
             value={breed}
-            onChangeText={text => setBreed(text)}
+            onChangeText={e => setBreed(e)}
           />
 
           <TextInput
             mode="outlined"
-            label="Age"
+            label="*Age"
             value={age}
-            onChangeText={text => setAge(text)}
+            onChangeText={e => handleChange(e)}
             keyboardType="numeric"
             maxLength={2}
           />
@@ -133,19 +202,19 @@ export default function EditProfile({ navigation }) {
             label="Weight (lbs)"
             value={weight}
             keyboardType="numeric"
-            onChangeText={text => setWeight(text)}
+            onChangeText={e => setWeight(e)}
           />
 
           <TextInput
             mode="outlined"
             label="Bio"
             value={bio}
-            onChangeText={text => setBio(text)}
+            onChangeText={e => setBio(e)}
           />
 
           <Button
             mode="contained"
-            onPress={() => navigation.navigate("ViewProfile")}
+            onPress={e => handlePublish(e)}
             style={{
               width: 100,
               marginTop: 10,
