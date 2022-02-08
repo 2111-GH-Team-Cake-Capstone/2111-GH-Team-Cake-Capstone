@@ -31,6 +31,10 @@
 
 <details><summary>Click Here To Open</summary>
 
+### Chat Feature:
+  - as a user, i want to be able to delete a message of mine
+  - have timestamps displayed when messages are sent
+
 ### Community Chat:
 
 - message boards
