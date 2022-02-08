@@ -15,7 +15,7 @@ export default function TinderCard(user, {navigation}) {
               <Paragraph style={styles.breed}>{user.user.breed}</Paragraph>
             </Card.Content>
             <Card.Actions style={styles.viewButton}>
-              <Button icon="dog" onPress={() => user.navigation.navigate("MatchProfile")}>View Profile</Button>
+              <Button icon="dog" onPress={() => user.navigation.navigate("MatchProfile", { user: user.user})}>View Profile</Button>
             </Card.Actions>
           </Card>
       </View>

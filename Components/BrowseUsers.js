@@ -5,7 +5,7 @@ import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
 import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion, serverTimestamp } from "firebase/firestore"; 
 import db from '../firebase.js';
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
+import { useDog } from "../context/DogContext";
 
 const iconHeight = 75;
 const iconWidth = 75;
