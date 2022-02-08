@@ -60,10 +60,9 @@ function App() {
               <Stack.Screen name="ViewProfile" component={ViewProfile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
-                <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
-                <Stack.Screen name="ChatMessage" component={ChatMessage} />
+              <Stack.Screen name="ChatMessage" component={ChatMessage} />
               <Stack.Screen
                 options={{ headerShown: false }}
                 name="Login"
