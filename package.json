@@ -25,7 +25,6 @@
     "react-native": "0.64.3",
     "react-native-deck-swiper": "^2.0.5",
     "react-native-element-dropdown": "^1.6.1",
-    "react-native-gesture-handler": "^2.2.0",
     "react-native-ico": "^28.7.4",
     "react-native-paper": "^4.11.2",
     "react-native-reanimated": "^2.3.1",
