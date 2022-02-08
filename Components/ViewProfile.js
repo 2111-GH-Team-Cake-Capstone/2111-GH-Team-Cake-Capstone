@@ -1,72 +1,10 @@
 import { StyleSheet, ScrollView, View, ImageBackground } from "react-native";
-import React, { useState, useEffect } from "react";
-import * as ImagePicker from "expo-image-picker";
-import {
-  Button,
-  Avatar,
-  Text,
-  Card,
-  Title,
-  Paragraph,
-} from "react-native-paper";
-import db from "../firebase";
-import { collection, doc, getDocs } from "firebase/firestore";
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
-import defaultImage from "../assets/placeholder.jpg";
+import { Button, Avatar, Card, Title, Paragraph } from "react-native-paper";
+import { useDog } from "../context/DogContext";
 
 const ViewProfile = ({ navigation }) => {
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [image, setImage] = useState(null);
-  const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-  const firebaseUser = useFirebaseAuth();
+  const currentDog = useDog();
 
-  useEffect(() => {
-    setCurrentUser(firebaseUser)
-  }, [firebaseUser])
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const usersColRef = collection(db, "users");
-      const usersData = await getDocs(usersColRef);
-
-      setUsers(
-        usersData.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
-      );
-    };
-    getUsers();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setHasGalleryPermission(galleryStatus.status === "granted");
-    })();
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
-  if (hasGalleryPermission === false) {
-    return <Alert> No Access to Internal Storage</Alert>;
-  }
-  if(!currentUser){
-    return null;
-  }
   return (
     <ScrollView>
       <ImageBackground
@@ -76,7 +14,7 @@ const ViewProfile = ({ navigation }) => {
       >
         <View style={styles.container}>
           <View style={{ alignItems: "center", paddingTop: 20 }}>
-            <Avatar.Image size={160} source={{ uri: image }} />
+            <Avatar.Image size={160} source={{ uri: currentDog.picture }} />
 
             <Button
               icon="dog"
@@ -99,11 +37,7 @@ const ViewProfile = ({ navigation }) => {
                 Name
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.name;
-                  }
-                })}
+                {currentDog.name}
               </Paragraph>
             </Card.Content>
             <Card.Content>
@@ -111,11 +45,7 @@ const ViewProfile = ({ navigation }) => {
                 Breed
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.breed;
-                  }
-                })}
+                {currentDog.breed}
               </Paragraph>
             </Card.Content>
             <Card.Content>
@@ -128,11 +58,7 @@ const ViewProfile = ({ navigation }) => {
                 Age
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.age;
-                  }
-                })}
+                {currentDog.age}
               </Paragraph>
             </Card.Content>
             <Card.Content>
@@ -140,11 +66,7 @@ const ViewProfile = ({ navigation }) => {
                 Weight (lbs)
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.weight;
-                  }
-                })}
+                {currentDog.weight}
               </Paragraph>
             </Card.Content>
             <Card.Content>
@@ -152,11 +74,7 @@ const ViewProfile = ({ navigation }) => {
                 City
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.city_location;
-                  }
-                })}
+                {currentDog.city}
               </Paragraph>
             </Card.Content>
             <Card.Content>
@@ -164,11 +82,7 @@ const ViewProfile = ({ navigation }) => {
                 Biography
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {users.map(user => {
-                  if (user.uid === currentUser.uid) {
-                    return user.bio;
-                  }
-                })}
+                {currentDog.bio}
               </Paragraph>
             </Card.Content>
           </Card>
