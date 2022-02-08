@@ -1,10 +1,20 @@
 import { StyleSheet, ScrollView, View, ImageBackground } from "react-native";
 import { Button, Avatar, Card, Title, Paragraph } from "react-native-paper";
 import { useDog } from "../context/DogContext";
+import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 const ViewProfile = ({ navigation }) => {
   const currentDog = useDog();
+  const firebaseUser = useFirebaseAuth();
 
+  useEffect(() => {
+    setCurrentUser(firebaseUser)
+  }, [firebaseUser])
+
+  if(!currentUser){
+    return null;
+  }
+  
   return (
     <ScrollView>
       <ImageBackground
