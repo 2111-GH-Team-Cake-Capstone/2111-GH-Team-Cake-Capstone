@@ -1,33 +1,26 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { doc, getDocs, onSnapshot, collection } from "firebase/firestore";
+import { doc, onSnapshot, collection, query, where, getDocs } from "firebase/firestore";
 import db from "../firebase";
 import { useFirebaseAuth } from "./FirebaseAuthContext";
 
 const DogContext = createContext(undefined);
 
-const DogProvider = ({children}) => {
+const DogProvider = ({ children }) => {
   const [dogUser, setDogUser] = useState(null);
   const value = dogUser;
   const currUser = useFirebaseAuth();
 
   useEffect(async () => {
-    const usersCollectionRef = collection(
-      db,
-      'users'
-    );
-    const unsubscribe = onSnapshot(usersCollectionRef, async () => {
-      const userDocs = await getDocs(usersCollectionRef);
-      const allUsersData = userDocs.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      const correctDog = allUsersData.find((dog) =>
-        dog.uid == currUser.uid
-      );
-      setDogUser(correctDog);
-      return unsubscribe;
-    })
-  }, []);
+    if(currUser && currUser.uid){
+      const q = query(collection(db, "users"), (where("uid", "==", currUser.uid)));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setDogUser(doc.data());
+      })
+    }
+  }, [currUser]);
+
+  console.log(dogUser)
 
   return (
     <DogContext.Provider value={value}>
@@ -36,7 +29,7 @@ const DogProvider = ({children}) => {
   );
 }
 
-function useDog(){
+function useDog() {
   const context = useContext(DogContext);
   if (context === undefined) {
     throw new Error(
