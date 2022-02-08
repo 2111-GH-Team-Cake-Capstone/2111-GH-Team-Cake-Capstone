@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { doc, onSnapshot, collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import db from "../firebase";
 import { useFirebaseAuth } from "./FirebaseAuthContext";
 
@@ -19,7 +19,7 @@ const DogProvider = ({ children }) => {
       })
     }
   }, [currUser]);
-  
+
   return (
     <DogContext.Provider value={value}>
       {children}
