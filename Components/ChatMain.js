@@ -38,8 +38,7 @@ export default function ChatMain({ navigation }) {
 
 		getUsers();
 	}, []);
-
-	// console.log("users", users);
+	// console.log("USERS LOOK HERE", users);
 
 	// useEffect below has an implicit return to serve as cleanup
 	useEffect(
@@ -69,14 +68,14 @@ export default function ChatMain({ navigation }) {
 			),
 		[currentUser]
 	);
-
-	// console.log("matches", matches);
+	// console.log("MATCHES LOOK HERE", matches);
 
 	const matchesList = matches.map((match) => {
-		return match.dog_a === currentUser.uid ? match.dog_b : match.dog_a;
+		return match.dog_a === currentUser.uid
+			? { id: match.id, matchedDog: match.dog_b }
+			: { id: match.id, matchedDog: match.dog_a };
 	});
-
-	// console.log(matchesList);
+	// console.log("MATCHES LIST LOOK HERE", matchesList);
 
 	return (
 		<View style={styles.container}>
@@ -86,33 +85,32 @@ export default function ChatMain({ navigation }) {
 			>
 				<View style={styles.chats}>
 					{users.map((user) =>
-						matchesList.map((match) => {
-							if (match === user.uid) {
-								return (
-									<View key={user.id}>
-										<Text
-											onPress={() =>
-												navigation.navigate("ChatMessage", { match })
-											}
-										>
-											<Avatar.Image
-												style={styles.avatarImg}
-												source={require("../assets/placeholder.jpg")}
-											/>
-											<Title>{user.name}</Title>
-										</Text>
-										<Paragraph
-											style={{
-												marginLeft: 70,
-											}}
-										>
-											Say hi!
-										</Paragraph>
-										<Divider />
-									</View>
-								);
-							}
-						})
+						matchesList.map((match) =>
+							match.matchedDog === user.uid ? (
+								<View key={user.id}>
+									<Text
+										mode="contained"
+										onPress={() =>
+											navigation.navigate("ChatMessage", { match })
+										}
+									>
+										<Avatar.Image
+											style={styles.avatarImg}
+											source={require("../assets/placeholder.jpg")}
+										/>
+										<Title>{user.name}</Title>
+									</Text>
+									<Paragraph
+										style={{
+											marginLeft: 70,
+										}}
+									>
+										Say hi!
+									</Paragraph>
+									<Divider />
+								</View>
+							) : null
+						)
 					)}
 				</View>
 			</ImageBackground>
