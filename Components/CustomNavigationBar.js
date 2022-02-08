@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 export default function CustomNavigationBar({ route, navigation, back }) {
   const toProfile = () => navigation.navigate("ViewProfile");
   const toBrowseUsers = () => navigation.navigate("BrowseUsers");
-  const toChat = () => navigation.navigate("BrowseUsers");
+  const toChat = () => navigation.navigate("ChatMain");
   async function handleLogout() {
     try {
       await signOut(auth);
@@ -32,7 +32,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
       <Appbar.Action
         icon="chat"
         onPress={toChat}
-        disabled={!!(route.name === "ChatList")}
+        disabled={!!(route.name === "ChatMain")}
       />
       <Appbar.Action icon="logout" onPress={handleLogout} />
     </Appbar.Header>
