@@ -78,7 +78,7 @@ export default function ChatMessage() {
 				style={styles.bgImage}
 			>
 				<KeyboardAvoidingView
-					behavior={Platform.OS === "ios" ? "padding" : "height"}
+					enabled={Platform.OS === "ios" ? "padding" : "height"}
 					style={{ flex: 1 }}
 					keyboardVerticalOffset={10}
 				>
