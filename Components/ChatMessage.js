@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-import { StyleSheet, View, ImageBackground, Text } from "react-native";
-import { Button, TextInput } from "react-native-paper";
 import {
+	StyleSheet,
+	View,
+	ImageBackground,
+	Text,
 	FlatList,
 	TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+} from "react-native";
+import { Button, TextInput } from "react-native-paper";
 import {
 	addDoc,
 	collection,
