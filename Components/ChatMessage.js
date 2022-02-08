@@ -7,19 +7,28 @@ import {
 	Text,
 	FlatList,
 	TouchableWithoutFeedback,
+	SafeAreaView,
+	Keyboard,
+	KeyboardAvoidingView,
+	Platform,
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import {
 	addDoc,
 	collection,
-	doc,
 	onSnapshot,
 	orderBy,
 	query,
-	where,
+	serverTimestamp,
 } from "firebase/firestore";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
+import ChatReceiverMessage from "./ChatReceiverMessage";
+import ChatSenderMessage from "./ChatSenderMessage";
 import db from "../firebase";
+
+// THINGS THAT NEED TO BE COMPLETED:
+// 1. Styling - padding between each message, fix send button, fix sender message from moving to left side when keyboard opens
+// 2. Display match name up in header, or display each name directly above every message
 
 export default function ChatMessage() {
 	const currentUser = useFirebaseAuth();
@@ -28,7 +37,7 @@ export default function ChatMessage() {
 	const { params } = useRoute();
 
 	const { match } = params;
-	console.log("MATCH PARAMS", match);
+	// console.log("MATCH PARAMS", match);
 
 	useEffect(
 		() =>
@@ -49,63 +58,91 @@ export default function ChatMessage() {
 
 		[match, db]
 	);
-	console.log("TIFF MESSAGES LOOK HERE!!!", messages);
+	// console.log("TIFF MESSAGES LOOK HERE!!!", messages);
 
-	// const sendMessage = async (err) => {
-	// err.preventDefault()
-	// 	await addDoc(collection(db, "matches", currentUser.uid))
-	// }
+	const sendMessage = (evt) => {
+		evt.preventDefault();
+		addDoc(collection(db, "matches", match.id, "messages"), {
+			timestamp: serverTimestamp(),
+			sender: currentUser.uid,
+			message: input,
+		});
+
+		setInput("");
+	};
 
 	return (
-		<View>
-			{/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-			<FlatList
-				data={messages}
-				inverted={-1}
-				keyExtractor={(item) => item.id}
-				renderItem={({ item: message }) =>
-					message.sender === currentUser.uid ? (
-						<Text>{message.message}</Text>
-					) : (
-						// <SenderMessage key={message.id} message={message} />
-						<Text>{message.message}</Text>
-						// <ReceiverMessage key={message.id} message={message} />
-					)
-				}
-			/>
-			{/* </TouchableWithoutFeedback> */}
+		<SafeAreaView style={styles.container}>
+			<ImageBackground
+				source={require("../assets/capstone_bg.gif")}
+				style={styles.bgImage}
+			>
+				<KeyboardAvoidingView
+					behavior={Platform.OS === "ios" ? "padding" : "height"}
+					style={{ flex: 1 }}
+					keyboardVerticalOffset={10}
+				>
+					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+						<FlatList
+							data={messages}
+							inverted={-1}
+							style={{ paddingLeft: 4 }}
+							keyExtractor={(item) => item.id}
+							renderItem={({ item: message }) =>
+								message.sender === currentUser.uid ? (
+									<ChatSenderMessage key={message.id} message={message} />
+								) : (
+									<ChatReceiverMessage key={message.id} message={message} />
+								)
+							}
+						/>
+					</TouchableWithoutFeedback>
 
-			<TextInput
-				label="Send message..."
-				mode="outlined"
-				value={input}
-				onChangeText={setInput}
-			/>
-		</View>
+					<View>
+						<TextInput
+							style={styles.textInput}
+							label="Send message..."
+							mode="outlined"
+							value={input}
+							onChangeText={setInput}
+							onSubmitEditing={sendMessage}
+						/>
+						<Button onPress={sendMessage} title="Send">
+							Send
+						</Button>
+					</View>
+				</KeyboardAvoidingView>
+			</ImageBackground>
+		</SafeAreaView>
 	);
 }
 
-// const styles = StyleSheet.create({
-// 	container: {
-// 		flex: 1,
-// 		alignItems: "center",
-// 		justifyContent: "center",
-// 	},
-// 	button: {
-// 		marginTop: 20,
-// 		marginLeft: "30%",
-// 		marginRight: "30%",
-// 	},
-// 	heading: {
-// 		alignSelf: "center",
-// 	},
-// 	bgImage: {
-// 		flex: 1,
-// 		justifyContent: "center",
-// 		height: "100%",
-// 		width: "100%",
-// 		resizeMode: "stretch",
-// 		padding: 0,
-// 		margin: 0,
-// 	},
-// });
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
+	textInput: {
+		height: 50,
+		backgroundColor: "white",
+	},
+	button: {
+		marginTop: 20,
+		marginLeft: "30%",
+		marginRight: "30%",
+	},
+	heading: {
+		alignSelf: "center",
+	},
+	bgImage: {
+		flex: 1,
+		justifyContent: "center",
+		height: "100%",
+		width: "100%",
+		resizeMode: "stretch",
+		padding: 0,
+		margin: 0,
+	},
+});

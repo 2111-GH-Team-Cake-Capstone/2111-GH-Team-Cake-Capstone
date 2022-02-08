@@ -18,9 +18,15 @@ import {
 } from "firebase/firestore";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
+// THINGS THAT NEED TO BE COMPLETED:
+// 1. Add "last message" if possible
+// 2. If user doesn't have any matches, then display string in chat that says they have no matches/messages (ternary op in return statement)
+// 3. STYLING!!!!
+
 export default function ChatMain({ navigation }) {
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
+	// const [lastMessage, setLastMessage] = useState("");
 	const currentUser = useFirebaseAuth();
 
 	useEffect(() => {
