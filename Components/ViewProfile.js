@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, ScrollView, View, ImageBackground } from "react-native";
 import { Button, Avatar, Card, Title, Paragraph } from "react-native-paper";
 import { useDog } from "../context/DogContext";
@@ -6,9 +6,8 @@ import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 const ViewProfile = ({ navigation }) => {
 	const currentDog = useDog();
+	const [currentUser, setCurrentUser] = useState(null);
 	const firebaseUser = useFirebaseAuth();
-
-	const [currentUser, setCurrentUser] = useState({});
 
 	useEffect(() => {
 		setCurrentUser(firebaseUser);
