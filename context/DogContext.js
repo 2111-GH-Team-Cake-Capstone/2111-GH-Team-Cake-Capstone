@@ -15,7 +15,7 @@ const DogProvider = ({ children }) => {
       const q = query(collection(db, "users"), (where("uid", "==", currUser.uid)));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        setDogUser(doc.data());
+        setDogUser({...doc.data(), id: doc.id});
       })
     }
   }, [currUser]);

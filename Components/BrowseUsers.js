@@ -28,18 +28,19 @@ const swiperRef = React.createRef();
 export default function BrowseUsers({navigation}) {
   //current user hardcoded in for now
   const currentUser = useDog();
+  console.log(currentUser)
   const [users, setUsers] = useState([]);
   const [matchMade, setMatchMade] = useState(false);
 
   useEffect(async () => {
     let allUsers = []
     // get all docs in the users collection where city = current user's city
-    const localUsers = query(usersCollectionRef, (where("city_location", "==", currentUser.city_location)), (where("uid", "!=", currentUser.uid)))
+    const localUsers = query(usersCollectionRef, (where("city_location", "==", currentUser.city_location)))
     getDocs(localUsers)
       .then((snapshot) => {
         snapshot.docs.forEach((doc) => {
-          //adding ONLY the users who are not included in our current user's swipes array
-          if(!currentUser.swipes.includes(doc.id)) {
+          //adding ONLY the users who are not our current user and not included in our current user's swipes array
+          if(doc.id !== currentUser.id && !currentUser.swipes.includes(doc.id)) {
             allUsers.push({ ...doc.data(), id: doc.id })
           }
         })
