@@ -18,7 +18,12 @@ const ViewProfile = ({ navigation }) => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [users, setUsers] = useState([]);
-  const currentUser = useFirebaseAuth();
+  const [currentUser, setCurrentUser] = useState(null);
+  const firebaseUser = useFirebaseAuth();
+
+  useEffect(() => {
+    setCurrentUser(firebaseUser)
+  }, [firebaseUser])
 
   useEffect(() => {
     const getUsers = async () => {
@@ -59,7 +64,9 @@ const ViewProfile = ({ navigation }) => {
   if (hasGalleryPermission === false) {
     return <Alert> No Access to Internal Storage</Alert>;
   }
-
+  if(!currentUser){
+    return null;
+  }
   return (
     <ScrollView>
       <ImageBackground

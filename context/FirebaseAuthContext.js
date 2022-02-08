@@ -22,6 +22,7 @@ const FirebaseAuthProvider = ({ children }) => {
 
 function useFirebaseAuth() {
   const context = useContext(FirebaseAuthContext);
+  // console.log("CONTEXT", context)
   if (context === undefined) {
     throw new Error(
       "useFirebaseAuth must be used within a FirebaseAuthProvider"
