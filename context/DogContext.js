@@ -12,7 +12,6 @@ const DogProvider = ({ children }) => {
 
   useEffect(async () => {
     if(currUser && currUser.uid){
-      const dogRef = collection(db, "users");
       const q = query(collection(db, "users"), (where("uid", "==", currUser.uid)));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
