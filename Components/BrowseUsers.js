@@ -27,13 +27,8 @@ const swiperRef = React.createRef();
 
 export default function BrowseUsers({navigation}) {
   //current user hardcoded in for now
-  const currentUser = {
-    id: "CJnHpheCmf9UyqYP4RtV",
-    name: "Zelda",
-    city_location: "New York City",
-    swipes: ["ThVYa5ykI6VubgIHxEZ1", "AjgLmtGHd9JeJM6YDqOQ"],
-    uid: "OrA5I2UK31focEYppdAEQEwLcjg1"
-  }
+  const currentUser = useDog();
+  console.log(currentUser)
   const [users, setUsers] = useState([]);
   const [matchMade, setMatchMade] = useState(false);
 
@@ -50,7 +45,6 @@ export default function BrowseUsers({navigation}) {
           }
         })
         setUsers(allUsers);
-        console.log(allUsers)
       })
   }, []);
 
