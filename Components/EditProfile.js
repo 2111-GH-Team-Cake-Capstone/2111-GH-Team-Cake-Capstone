@@ -14,27 +14,30 @@ import db from "../firebase";
 
 import * as ImagePicker from "expo-image-picker";
 import { setDoc } from "firebase/firestore";
+import { useDog } from "../context/DogContext";
 
-const genderData = [{ label: "Female" }, { label: "Male" }];
+const genderData = [
+  { label: "female", value: "female" },
+  { label: "male", value: "male" },
+];
 const cityData = [
-  { label: "Chicago" },
-  { label: "New York City" },
-  { label: "Seoul" },
+  { label: "Chicago", value: "Chicago" },
+  { label: "New York City", value: "New York City" },
+  { label: "Seoul", value: "Seoul" },
 ];
 
 export default function EditProfile({ navigation }) {
-  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
-  const [image, setImage] = useState(null);
-  const [gender, setGender] = useState(null);
-  const [city, setCity] = useState(null);
-  const [name, setName] = useState(null);
-  const [breed, setBreed] = useState(null);
-  const [age, setAge] = useState(null);
-  const [weight, setWeight] = useState(null);
-  const [bio, setBio] = useState(null);
+  const currentDog = useDog();
 
-  const [dropdown, setDropdown] = useState(null);
-  const [selected, setSelected] = useState([]);
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
+  const [image, setImage] = useState(currentDog.picture);
+  const [gender, setGender] = useState(currentDog.gender);
+  const [city, setCity] = useState(currentDog.city_location);
+  const [name, setName] = useState(currentDog.name);
+  const [breed, setBreed] = useState(currentDog.breed);
+  const [age, setAge] = useState(String(currentDog.age));
+  const [weight, setWeight] = useState(String(currentDog.weight));
+  const [bio, setBio] = useState(currentDog.bio);
 
   useEffect(() => {
     (async () => {
@@ -61,10 +64,6 @@ export default function EditProfile({ navigation }) {
     return <Alert> No Access to Internal Storage</Alert>;
   }
 
-  // const updateUserProfile = () => {
-  //   setDoc(doc(db, "users", user.uid), {});
-  // };
-
   return (
     <ScrollView>
       <ImageBackground
@@ -88,10 +87,9 @@ export default function EditProfile({ navigation }) {
             valueField="value"
             label="Dropdown"
             placeholder="Select Your Gender"
-            value={dropdown}
+            value={gender}
             onChange={item => {
-              setDropdown(item.value);
-              console.log("selected", item);
+              setGender(item.value);
             }}
           />
           <Dropdown
@@ -104,10 +102,9 @@ export default function EditProfile({ navigation }) {
             valueField="value"
             label="Dropdown"
             placeholder="Select Your City"
-            value={dropdown}
+            value={city}
             onChange={item => {
-              setDropdown(item.value);
-              console.log("selected", item);
+              setCity(item.value);
             }}
           />
           <TextInput
@@ -135,19 +132,15 @@ export default function EditProfile({ navigation }) {
             mode="outlined"
             label="Weight (lbs)"
             value={weight}
+            keyboardType="numeric"
             onChangeText={text => setWeight(text)}
           />
 
           <TextInput
             mode="outlined"
             label="Bio"
-            right={
-              <TextInput.Affix
-                text="/300"
-                value={bio}
-                onChangeText={text => setBio(text)}
-              />
-            }
+            value={bio}
+            onChangeText={text => setBio(text)}
           />
 
           <Button
