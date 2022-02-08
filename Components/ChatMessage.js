@@ -10,13 +10,10 @@ import {
 	addDoc,
 	collection,
 	doc,
-	getDoc,
-	getDocs,
 	onSnapshot,
 	orderBy,
 	query,
 	where,
-	collectionGroup,
 } from "firebase/firestore";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 import db from "../firebase";
@@ -24,26 +21,32 @@ import db from "../firebase";
 export default function ChatMessage() {
 	const currentUser = useFirebaseAuth();
 	const [input, setInput] = useState("");
-	const [messages, setMessages] = useState({});
+	const [messages, setMessages] = useState([]);
 	const { params } = useRoute();
 
 	const { match } = params;
-	// console.log(match);
+	console.log("MATCH PARAMS", match);
 
-	useEffect(() => {
-		const messagesQuery = async () => {
-			const messagesCol = collectionGroup(db, "messages");
+	useEffect(
+		() =>
+			onSnapshot(
+				query(
+					collection(db, "matches", match.id, "messages"),
+					orderBy("timestamp", "desc")
+				),
 
-			const querySnapshot = await getDocs(messagesCol);
-			querySnapshot.forEach((doc) => {
-				setMessages(doc.data());
-			});
-		};
+				(snapshot) =>
+					setMessages(
+						snapshot.docs.map((doc) => ({
+							id: doc.id,
+							...doc.data(),
+						}))
+					)
+			),
 
-		messagesQuery();
-	});
-
-	// console.log(messages);
+		[match, db]
+	);
+	console.log("TIFF MESSAGES LOOK HERE!!!", messages);
 
 	// const sendMessage = async (err) => {
 	// err.preventDefault()
@@ -52,20 +55,22 @@ export default function ChatMessage() {
 
 	return (
 		<View>
-			{/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-				<FlatList
-					data={messages}
-					inverted={-1}
-					keyExtractor={(item) => item.id}
-					renderItem={({ item: message }) =>
-						message.userId === currentUser.uid ? (
-							<SenderMessage key={message.id} message={message} />
-						) : (
-							<ReceiverMessage key={message.id} message={message} />
-						)
-					}
-				/>
-			</TouchableWithoutFeedback> */}
+			{/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+			<FlatList
+				data={messages}
+				inverted={-1}
+				keyExtractor={(item) => item.id}
+				renderItem={({ item: message }) =>
+					message.sender === currentUser.uid ? (
+						<Text>{message.message}</Text>
+					) : (
+						// <SenderMessage key={message.id} message={message} />
+						<Text>{message.message}</Text>
+						// <ReceiverMessage key={message.id} message={message} />
+					)
+				}
+			/>
+			{/* </TouchableWithoutFeedback> */}
 
 			<TextInput
 				label="Send message..."
