@@ -28,6 +28,7 @@ import ChatMain from "./Components/ChatMain";
 import ChatMessage from "./Components/ChatMessage";
 import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
+import MatchModal from "./Components/MatchModal";
 import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -59,6 +60,7 @@ function App() {
               <Stack.Screen name="ViewProfile" component={ViewProfile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
+                <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
                 <Stack.Screen name="ChatMessage" component={ChatMessage} />

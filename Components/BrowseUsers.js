@@ -6,6 +6,7 @@ import TinderCard from './TinderCard';
 import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion, serverTimestamp } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useDog } from "../context/DogContext";
+import MatchModal from "./MatchModal";
 
 const iconHeight = 75;
 const iconWidth = 75;
@@ -34,6 +35,7 @@ export default function BrowseUsers({navigation}) {
     uid: "OrA5I2UK31focEYppdAEQEwLcjg1"
   }
   const [users, setUsers] = useState([]);
+  const [matchMade, setMatchMade] = useState(false);
 
   useEffect(async () => {
     let allUsers = []
@@ -48,6 +50,7 @@ export default function BrowseUsers({navigation}) {
           }
         })
         setUsers(allUsers);
+        console.log(allUsers)
       })
   }, []);
 
@@ -76,6 +79,7 @@ export default function BrowseUsers({navigation}) {
           dog_b: currentUser.uid,
           matched_at: serverTimestamp()
         })
+        setMatchMade(true)
         console.log("it's a match!")
       }
     })
@@ -149,6 +153,7 @@ export default function BrowseUsers({navigation}) {
         </Pressable>
        </View>
        </ImageBackground>
+       {matchMade ? <MatchModal /> : null }
     </View>
   )
 }
