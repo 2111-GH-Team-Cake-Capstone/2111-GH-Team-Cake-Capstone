@@ -20,12 +20,12 @@ export default function CustomNavigationBar({ route, navigation, back }) {
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content title="Leashed" />
       <Appbar.Action
-        icon="account-circle"
+        icon="dog"
         onPress={toProfile}
         disabled={!!(route.name === "ViewProfile")}
       />
       <Appbar.Action
-        icon="dog"
+        icon="heart"
         onPress={toBrowseUsers}
         disabled={!!(route.name === "BrowseUsers")}
       />
