@@ -11,16 +11,16 @@ const MatchModal = () => {
     }}>
       <View style={styles.centeredView}> 
         <View style={styles.modalView}>
-          <Headline style={{fontWeight: "bold", marginVertical: '5%'}}>Puppy Love</Headline>
-          <Text style={{fontSize: 20}}>You and Zelda have matched!</Text>
+          <Headline style={{fontWeight: "bold", marginVertical: '5%'}}>Puppy Love!</Headline>
+          <Text style={{fontSize: 14}}>Cannoli and Zelda have matched</Text>
           <View style={styles.avatars}>
             <Avatar.Image
-                size={150}
+                size={120}
                 justifyContent={"float-start"}
                 source={require("../assets/placeholder.jpg")}
               />
               <Avatar.Image
-                size={150}
+                size={120}
                 source={require("../assets/ZeldaTinderPic.jpg")}
               />
           </View>
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "80%",
     height: "50%",
-    opacity: 0.8,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,

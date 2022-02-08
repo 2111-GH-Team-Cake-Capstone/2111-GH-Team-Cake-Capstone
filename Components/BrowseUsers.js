@@ -50,6 +50,7 @@ export default function BrowseUsers({navigation}) {
           }
         })
         setUsers(allUsers);
+        console.log(allUsers)
       })
   }, []);
 
