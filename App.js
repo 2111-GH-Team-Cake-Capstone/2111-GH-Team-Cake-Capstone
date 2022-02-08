@@ -47,32 +47,6 @@ LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
 function App() {
   return (
     <PaperProvider theme={theme}>
-<<<<<<< HEAD
-      <FirebaseAuthProvider>       
-      <DogProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Login"
-            screenOptions={{
-              header: props => <CustomNavigationBar {...props} />,
-            }}
-          >
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="ViewProfile" component={ViewProfile} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
-            <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
-            <Stack.Screen name="MatchProfile" component={MatchProfile} />
-            <Stack.Screen name="MatchModal" component={MatchModal} />
-            <Stack.Screen name="ChatMain" component={ChatMain} />
-            <Stack.Screen name="ChatMessage" component={ChatMessage} />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="Login"
-              component={Login}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-=======
       <FirebaseAuthProvider>
         <DogProvider>
           <NavigationContainer>
@@ -96,7 +70,6 @@ function App() {
               />
             </Stack.Navigator>
           </NavigationContainer>
->>>>>>> main
         </DogProvider>
       </FirebaseAuthProvider>
       <StatusBar style="auto" />
