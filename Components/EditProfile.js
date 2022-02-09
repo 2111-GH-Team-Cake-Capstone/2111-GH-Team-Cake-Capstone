@@ -45,11 +45,12 @@ export default function EditProfile({ navigation }) {
 
   // Accessing the library of the current device
   useEffect(() => {
-    (async () => {
-      const galleryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const galleryStatus = async () => {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasGalleryPermission(galleryStatus.status === "granted");
-    })();
+    };
+
+    galleryStatus();
   }, []);
 
   const uploadImageAsync = async uri => {
@@ -82,7 +83,7 @@ export default function EditProfile({ navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.2,
     });
     handleImagePicked(result);
   };
@@ -94,7 +95,7 @@ export default function EditProfile({ navigation }) {
       if (!result.cancelled) {
         // Here we have download URL as uploadURl -> this info has to be stored in our database as picture
         const uploadUrl = await uploadImageAsync(result.uri);
-        setImage({ image: uploadUrl });
+        setImage(uploadUrl);
 
         // this will set uploadUrl data into url variable
         setUrl(uploadUrl);
@@ -209,10 +210,7 @@ export default function EditProfile({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={() => {
-              editUpdate;
-              navigation.navigate("ViewProfile");
-            }}
+            onPress={editUpdate}
             style={{
               width: 100,
               marginTop: 10,
