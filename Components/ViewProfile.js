@@ -29,7 +29,7 @@ const ViewProfile = ({ navigation }) => {
 						<Avatar.Image size={160} source={{ uri: currentDog.picture }} />
 
 						<Button
-							icon="dog"
+							icon="heart"
 							onPress={() => navigation.navigate("BrowseUsers")}
 						>
 							Browse Users
@@ -86,7 +86,7 @@ const ViewProfile = ({ navigation }) => {
 								City
 							</Title>
 							<Paragraph style={{ textAlign: "center" }}>
-								{currentDog.city}
+								{currentDog.city_location}
 							</Paragraph>
 						</Card.Content>
 						<Card.Content>
