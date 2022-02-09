@@ -43,38 +43,38 @@ export default function ChatMain({ navigation }) {
 	// console.log("USERS LOOK HERE", users);
 
 	// useEffect below has an implicit return to serve as cleanup
-	useEffect(
-		() => {
-			if(currentUser){ //for navBar logout
-				onSnapshot(
-					query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
-					(snapshot) => {
-						const matchesDogA = snapshot.docs.map((doc) => ({
-							id: doc.id,
-							...doc.data(),
-						}));
-						onSnapshot(
-							query(
-								collection(db, "matches"),
-								where("dog_b", "==", currentUser.uid)
-							),
-							(snapshot) => {
-								const matchesDogB = snapshot.docs.map((doc) => ({
-									id: doc.id,
-									...doc.data(),
-								}));
-								const combinedMatches = matchesDogA.concat(matchesDogB);
-								setMatches(combinedMatches);
-							}
-						);
-					}
-				)}},
-		[currentUser]
-	);
+	useEffect(() => {
+		if (currentUser) {
+			//for navBar logout
+			onSnapshot(
+				query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
+				(snapshot) => {
+					const matchesDogA = snapshot.docs.map((doc) => ({
+						id: doc.id,
+						...doc.data(),
+					}));
+					onSnapshot(
+						query(
+							collection(db, "matches"),
+							where("dog_b", "==", currentUser.uid)
+						),
+						(snapshot) => {
+							const matchesDogB = snapshot.docs.map((doc) => ({
+								id: doc.id,
+								...doc.data(),
+							}));
+							const combinedMatches = matchesDogA.concat(matchesDogB);
+							setMatches(combinedMatches);
+						}
+					);
+				}
+			);
+		}
+	}, [currentUser]);
 	// console.log("MATCHES LOOK HERE", matches);
 
 	//for navBar logout:
-	if (!currentUser){
+	if (!currentUser) {
 		return null;
 	}
 
@@ -116,7 +116,7 @@ export default function ChatMain({ navigation }) {
 						)
 					)
 				) : (
-					<View>
+					<View style={styles.noMessages}>
 						<Title>No Messages :(</Title>
 						<Text>
 							Go Match With{" "}
@@ -155,6 +155,10 @@ const styles = StyleSheet.create({
 		marginLeft: 90,
 		alignSelf: "flex-start",
 		justifyContent: "space-between",
+	},
+	noMessages: {
+		alignItems: "center",
+		marginTop: 220,
 	},
 	link: {
 		fontWeight: "bold",
