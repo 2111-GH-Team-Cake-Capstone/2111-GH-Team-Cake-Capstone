@@ -18,12 +18,11 @@ const MatchModal = (props) => {
     <Modal transparent={true} animationType="slide">
       <View style={styles.centeredView}> 
         <View style={styles.modalView}>
-          <Headline style={{fontWeight: "bold", marginVertical: '5%'}}>Puppy Love!</Headline>
-          <Text style={{fontSize: 14}}>{currentUser.name} and {swipedUser.name} have matched</Text>
+          <Headline style={{textAlign: "center", fontWeight: "bold", marginVertical: '5%'}}>Puppy Love!</Headline>
+          <Text style={{textAlign: "center", fontSize: 14}}>{currentUser.name} and {swipedUser.name} have matched</Text>
           <View style={styles.avatars}>
             <Avatar.Image
                 size={120}
-                justifyContent={"float-start"}
                 source={require("../assets/placeholder.jpg")}
               />
               <Avatar.Image
@@ -35,7 +34,7 @@ const MatchModal = (props) => {
             Message {swipedUser.name}
           </Button>
           <Pressable style={[styles.button, styles.buttonClose]} onPress={() => handleExit()}>
-            <Text style={styles.textStyle}>Exit</Text>
+            <Text style={{textAlign: "center", marginVertical:"5%"}}>Exit</Text>
           </Pressable>
         </View>
       </View>
@@ -50,35 +49,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
-  avatars: {
-    position: "relative",
-    marginVertical: "15%",
-    flexDirection: "row",
-    alignSelf: "center",
-    justifyContent: "space-evenly"
-  },
   modalView: {
-    position: "relative",
-    width: "80%",
-    height: "50%",
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 10,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-    },
-    button: {
-      marginVertical: 10,
-      fontWeight: 'bold',
-      color: 'blue'
-    },
-    
+    shadowOpacity: 0.12,
+    shadowRadius: 60,
+  },
+  avatars: {
+    position: "relative",
+    marginVertical: "10%",
+    marginHorizontal: "10%",
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "space-evenly"
+  } 
 })
 export default MatchModal;

@@ -27,7 +27,6 @@ const ViewProfile = ({ navigation }) => {
         <View style={styles.container}>
           <View style={{ alignItems: "center", paddingTop: 20 }}>
             <Avatar.Image size={160} source={{ uri: currentDog.picture }} />
-
             <Button
               icon="heart"
               onPress={() => navigation.navigate("BrowseUsers")}

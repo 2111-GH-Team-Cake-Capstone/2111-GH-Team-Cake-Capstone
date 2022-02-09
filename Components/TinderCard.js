@@ -11,8 +11,8 @@ export default function TinderCard(user, {navigation}) {
             <Card.Cover style={styles.picture} source={require('../assets/placeholder.jpg')} />
             <Card.Content>
               <Title style={styles.title}>{user.user.name}</Title>
-              <Paragraph style={styles.bio}>{user.user.bio}</Paragraph>
               <Paragraph style={styles.breed}>{user.user.breed}</Paragraph>
+              <Paragraph style={styles.bio}>{user.user.bio}</Paragraph>
             </Card.Content>
             <Card.Actions style={styles.viewButton}>
               <Button icon="dog" onPress={() => user.navigation.navigate("MatchProfile", { user: user.user})}>View Profile</Button>
@@ -31,34 +31,33 @@ const styles = StyleSheet.create({
   },
   card: {
     position: "absolute",
-    top: "10%",
-    alignSelf: "center",
+    top: "2%",
     height: "65%",
-    width: "75%",
+    width: "85%",
     backgroundColor: "#f6f6f6",
   },
   picture: {
-    height: "70%",
+    height: "60%",
     width: "100%",
     alignSelf: "center",
   },
   title: {
     top: "10%",
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
   },
   bio: {
     top: "10%",
-    fontSize: 18,
+    fontSize: 16,
     fontStyle: "italic",
   },
   breed: {
     top: "10%",
-    fontSize: 16,
+    fontSize: 14,
   },
   viewButton: {
-    justifyContent: "flex-end",
-
+    top: "10%",
+    paddingLeft: "45%"
   },
   bgImage: {
     width: "100%",
