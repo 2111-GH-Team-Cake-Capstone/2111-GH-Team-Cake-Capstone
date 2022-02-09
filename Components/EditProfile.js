@@ -139,79 +139,10 @@ export default function EditProfile({ navigation }) {
       console.log("success!");
     });
 
-    // setDoc(currentDog, value, { merge: merge })
-    //   .then(() => {
-    //     Alert.alert("Update Success!");
-    //   })
-    //   .catch(error => {
-    //     console.log("Update Error", error);
-    //   });
+  
   };
 
-  // const handlePublish = e => {
-  //   if (!name || !age || !breed || !gender || !city_location) {
-  //     Alert.alert("Please fill out all the * fields");
-  //     return;
-  //   }
-
-  //   // storing the images inside of profile_images with date and image name to prevent overwriting
-  //   const storageRef = ref(
-  //     storage,
-  //     `/profile_images/${Date.now()}${image.name}`
-  //   );
-
-  //   // specify typical file properties
-  //   const metadata = {
-  //     contentType: "image/jpeg",
-  //   };
-  //   const uploadImage = uploadBytesResumable(storageRef, image, metadata);
-
-  //   // progress of upload
-  //   uploadImage.on(
-  //     "state_changed",
-  //     snapshot => {
-  //       const progressPercent = Math.round(
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //       );
-  //       setProgress(progressPercent);
-  //     },
-  //     err => {
-  //       console.log("UploadImageon Error", err);
-  //     },
-
-  //     // After finishing uploading the image, empty out the input
-  //     () => {
-  //       setName({ name: "" });
-  //       setAge({ age: "" });
-  //       setBio({ bio: "" });
-  //       setBreed({ breed: "" });
-  //       setWeight({ weight: "" });
-  //       setGender({ gender: "" });
-  //       setCity({ city_location: "" });
-
-  //       // once it has URL it will create new data with following info you put in -> this has to change to update
-  //       getDownloadURL(uploadImage.snapshot.ref)
-  //         .then(url => {
-  //           const dogref = collection(db, "users");
-
-  //           addDoc(dogref, {
-  //             name: name,
-  //             age: age,
-  //             bio: bio,
-  //             breed: breed,
-  //             gender: gender,
-  //             city_location: city_location,
-  //             weight: weight,
-  //             picture: url,
-  //           }).then(() => console.log("Image added successfully"));
-  //           setProgress(0);
-  //         })
-  //         .catch(err => {
-  //           console.log("Error", err);
-  //         });
-  //     }
-  //   );
-  // };
+ 
 
   return (
     <ScrollView>
