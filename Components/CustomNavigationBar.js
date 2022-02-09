@@ -34,7 +34,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
         onPress={toChat}
         disabled={!!(route.name === "ChatMain")}
       />
-      <Appbar.Action icon="logout" onPress={handleLogout} /*disabled={!!(route.name === "ChatMain")}*//>
+      <Appbar.Action icon="logout" onPress={handleLogout} />
     </Appbar.Header>
   );
 }
