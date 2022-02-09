@@ -98,7 +98,9 @@ export default function ChatMain({ navigation }) {
 								<TouchableOpacity key={user.id}>
 									<Avatar.Image
 										style={styles.avatarImg}
-										source={require("../assets/placeholder.jpg")}
+										source={{
+											uri: user.picture,
+										}}
 									/>
 									<Text
 										style={styles.chats}
