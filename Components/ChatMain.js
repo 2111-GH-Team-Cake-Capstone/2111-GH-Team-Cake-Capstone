@@ -48,33 +48,39 @@ export default function ChatMain({ navigation }) {
 
 	// useEffect below has an implicit return to serve as cleanup
 	useEffect(
-		() =>
-			onSnapshot(
-				query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
-				(snapshot) => {
-					const matchesDogA = snapshot.docs.map((doc) => ({
-						id: doc.id,
-						...doc.data(),
-					}));
-					onSnapshot(
-						query(
-							collection(db, "matches"),
-							where("dog_b", "==", currentUser.uid)
-						),
-						(snapshot) => {
-							const matchesDogB = snapshot.docs.map((doc) => ({
-								id: doc.id,
-								...doc.data(),
-							}));
-							const combinedMatches = matchesDogA.concat(matchesDogB);
-							setMatches(combinedMatches);
-						}
-					);
-				}
-			),
+		() => {
+			if(currentUser){ //for navBar logout
+				onSnapshot(
+					query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
+					(snapshot) => {
+						const matchesDogA = snapshot.docs.map((doc) => ({
+							id: doc.id,
+							...doc.data(),
+						}));
+						onSnapshot(
+							query(
+								collection(db, "matches"),
+								where("dog_b", "==", currentUser.uid)
+							),
+							(snapshot) => {
+								const matchesDogB = snapshot.docs.map((doc) => ({
+									id: doc.id,
+									...doc.data(),
+								}));
+								const combinedMatches = matchesDogA.concat(matchesDogB);
+								setMatches(combinedMatches);
+							}
+						);
+					}
+				)}},
 		[currentUser]
 	);
 	// console.log("MATCHES LOOK HERE", matches);
+
+	//for navBar logout:
+	if (!currentUser){
+		return null;
+	}
 
 	const matchesList = matches.map((match) => {
 		return match.dog_a === currentUser.uid
