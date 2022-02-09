@@ -29,6 +29,7 @@ import ChatMessage from "./Components/ChatMessage";
 import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
 import MatchModal from "./Components/MatchModal";
+import TinderCard from "./Components/TinderCard";
 import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -60,6 +61,10 @@ function App() {
               <Stack.Screen name="ViewProfile" component={ViewProfile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
+              <Stack.Screen name="TinderCard" component={TinderCard} />
+              <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false}}>
+                <Stack.Screen name="MatchModal" component={MatchModal} />
+              </Stack.Group>
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
               <Stack.Screen name="ChatMessage" component={ChatMessage} />

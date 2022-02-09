@@ -28,9 +28,7 @@ const swiperRef = React.createRef();
 export default function BrowseUsers({navigation}) {
   //current user hardcoded in for now
   const currentUser = useDog();
-  console.log(currentUser)
   const [users, setUsers] = useState([]);
-  const [matchMade, setMatchMade] = useState(false);
 
   useEffect(async () => {
     let allUsers = []
@@ -73,7 +71,9 @@ export default function BrowseUsers({navigation}) {
           dog_b: currentUser.uid,
           matched_at: serverTimestamp()
         })
-        setMatchMade(true)
+        navigation.navigate("MatchModal", {
+          swipedUser, currentUser
+        })
         console.log("it's a match!")
       }
     })
@@ -147,7 +147,6 @@ export default function BrowseUsers({navigation}) {
         </Pressable>
        </View>
        </ImageBackground>
-       {matchMade ? <MatchModal /> : null }
     </View>
   )
 }
