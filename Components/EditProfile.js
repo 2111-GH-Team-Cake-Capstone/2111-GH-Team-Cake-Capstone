@@ -19,9 +19,12 @@ import {
   getDownloadURL,
   ref,
   uploadBytes,
+  getStorage,
 } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import uuid from "uuid";
+import { addDoc, collection, setDoc, updateDoc, doc } from "firebase/firestore";
 import db from "../firebase";
+import * as FileSystem from "expo-file-system";
 
 const genderData = [
   { label: "female", value: "female" },
@@ -35,6 +38,7 @@ const cityData = [
 
 export default function EditProfile({ navigation }) {
   const currentDog = useDog();
+  console.log("currentDog Update>>", currentDog);
 
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(currentDog.picture);
@@ -47,6 +51,9 @@ export default function EditProfile({ navigation }) {
   const [bio, setBio] = useState(currentDog.bio);
   const [url, setUrl] = useState(null);
 
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   // Accessing the library of the current device
   useEffect(() => {
     (async () => {
@@ -56,6 +63,30 @@ export default function EditProfile({ navigation }) {
     })();
   }, []);
 
+  const uploadImageAsync = async uri => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), uuid.v4());
+    const result = await uploadBytes(fileRef, blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    return await getDownloadURL(fileRef);
+  };
+
   // Pick the image from the library with uri info and set the avatar with the picked image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -64,76 +95,54 @@ export default function EditProfile({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     });
+    handleImagePicked(result);
+  };
 
-    let response = await fetch(result.uri);
+  const handleImagePicked = async result => {
+    try {
+      setLoading(true);
 
-    let photoBlob = await response.blob();
-    console.log("photoBlob", photoBlob);
+      if (!result.cancelled) {
+        // Here we have download URL as uploadURl -> this info has to be stored in our database as picture
+        const uploadUrl = await uploadImageAsync(result.uri);
+        setImage({ image: uploadUrl });
 
-    if (!result.cancelled) {
-      setImage(photoBlob);
+        // this will set uploadUrl data into url variable
+        setUrl(uploadUrl);
+      }
+    } catch (error) {
+      console.log("Upload Image Fail", error);
+      Alert.alert("Upload Image failed :(");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (hasGalleryPermission === false) {
-    return <Alert> No Access to Internal Storage</Alert>;
-  }
+  const editUpdate = () => {
+    // console.log(docRef);
+    if (!name || !age || !breed || !gender || !city_location) {
+      Alert.alert("Please fill out all the * fields");
+      return;
+    }
+    const docRef = doc(db, "users", currentDog.id);
 
-  const handlePublish = e => {
-    const imageREf = ref(storage, "image");
-    uploadBytes(imageREf, image)
-      .then(() => {
-        getDownloadURL(imageREf)
-          .then(url => {
-            setImage(url);
-          })
-          .catch(error => {
-            console.log("getting image url error", error);
-          });
-      })
-      .catch(error => console.log("upload error", error));
+    updateDoc(docRef, {
+      name: name,
+      age: age,
+      breed: breed,
+      gender: gender,
+      city_location: city_location,
+      bio: bio,
+      weight: weight,
+      picture: url,
+    }).then(() => {
+      console.log("success!");
+    });
+
+  
   };
-  // const handlePublish = e => {
-  //   if (!name || !age || !breed || !gender || !city_location) {
-  //     Alert.alert("Please fill out all the * fields");
-  //     return;
-  //   }
-  //   const storageRef = ref(
-  //     storage,
-  //     `/profile_images/${Date.now()}${image.name}`
-  //   );
 
-  //   const uploadImage = uploadBytesResumable(storageRef, image);
-
-  //   uploadImage.on(
-  //     "state_changed",
-  //     snapshot => {
-  //       const progressPercent = Math.round(
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //       );
-  //       setProgress(progressPercent);
-  //     },
-  //     err => {
-  //       console.log("UploadImageon Error", err);
-  //     },
-
-  //     () => {
-  //       setName({ name, name });
-
-  //       getDownloadURL(uploadImage.snapshot.ref)
-  //         .then(url => {
-  //           const dogref = collection(db, "users");
-  //           addDoc(dogref, {
-  //             image: url,
-  //           }).then(() => console.log("Image added successfully"));
-  //           setProgress(0);
-  //         })
-  //         .catch(err => {
-  //           console.log("Error", err);
-  //         });
-  //     }
-  //   );
-  // };
+ 
 
   return (
     <ScrollView>
@@ -159,7 +168,9 @@ export default function EditProfile({ navigation }) {
             label="Dropdown"
             placeholder="Select Your Gender"
             value={gender}
-            onChange={e => setGender(e)}
+            onChange={e => {
+              setGender(e.value);
+            }}
           />
           <Dropdown
             style={styles.dropdown}
@@ -173,7 +184,7 @@ export default function EditProfile({ navigation }) {
             placeholder="Select Your City"
             value={city_location}
             onChange={e => {
-              setCity(e);
+              setCity(e.value);
             }}
           />
           <TextInput
@@ -193,7 +204,7 @@ export default function EditProfile({ navigation }) {
             mode="outlined"
             label="*Age"
             value={age}
-            onChangeText={e => handleChange(e)}
+            onChangeText={e => setAge(e)}
             keyboardType="numeric"
             maxLength={2}
           />
@@ -214,7 +225,10 @@ export default function EditProfile({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={e => handlePublish(e)}
+            onPress={
+              editUpdate
+              // navigation.navigate("ViewProfile");
+            }
             style={{
               width: 100,
               marginTop: 10,
