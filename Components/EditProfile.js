@@ -19,7 +19,9 @@ import {
   getDownloadURL,
   ref,
   uploadBytes,
+  getStorage,
 } from "firebase/storage";
+import uuid from "uuid";
 import { addDoc, collection, setDoc, updateDoc, doc } from "firebase/firestore";
 import db from "../firebase";
 import * as FileSystem from "expo-file-system";
@@ -36,6 +38,7 @@ const cityData = [
 
 export default function EditProfile({ navigation }) {
   const currentDog = useDog();
+  console.log("currentDog Update>>", currentDog);
 
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(currentDog.picture);
@@ -47,8 +50,9 @@ export default function EditProfile({ navigation }) {
   const [weight, setWeight] = useState(String(currentDog.weight));
   const [bio, setBio] = useState(currentDog.bio);
   const [url, setUrl] = useState(null);
-  const [progress, setProgress] = useState(0);
+
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Accessing the library of the current device
   useEffect(() => {
@@ -59,6 +63,30 @@ export default function EditProfile({ navigation }) {
     })();
   }, []);
 
+  const uploadImageAsync = async uri => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const fileRef = ref(getStorage(), uuid.v4());
+    const result = await uploadBytes(fileRef, blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    return await getDownloadURL(fileRef);
+  };
+
   // Pick the image from the library with uri info and set the avatar with the picked image
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -67,43 +95,38 @@ export default function EditProfile({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     });
+    handleImagePicked(result);
+  };
 
-    // Fetch the photo with it's local URI
-    let file = await FileSystem.readAsStringAsync(result.uri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
+  const handleImagePicked = async result => {
+    try {
+      setLoading(true);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-      setFile(file);
+      if (!result.cancelled) {
+        // Here we have download URL as uploadURl -> this info has to be stored in our database as picture
+        const uploadUrl = await uploadImageAsync(result.uri);
+        setImage({ image: uploadUrl });
+
+        // this will set uploadUrl data into url variable
+        setUrl(uploadUrl);
+      }
+    } catch (error) {
+      console.log("Upload Image Fail", error);
+      Alert.alert("Upload Image failed :(");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (hasGalleryPermission === false) {
-    Alert.alert("No Access to Internal Storage");
-  }
-
-  // const handlePublish = e => {
-  //   const imageREf = ref(storage, "image");
-  //   uploadBytes(imageREf, image)
-  //     .then(() => {
-  //       getDownloadURL(imageREf)
-  //         .then(url => {
-  //           setImage(url);
-  //         })
-  //         .catch(error => {
-  //           console.log("getting image url error", error);
-  //         });
-  //     })
-  //     .catch(error => console.log("upload error", error));
-  // };
-
   const editUpdate = () => {
-    // const docRef = doc(db, "users", TextInput.value);
-
     // console.log(docRef);
+    if (!name || !age || !breed || !gender || !city_location) {
+      Alert.alert("Please fill out all the * fields");
+      return;
+    }
+    const docRef = doc(db, "users", currentDog.id);
 
-    updateDoc(currentDog, {
+    updateDoc(docRef, {
       name: name,
       age: age,
       breed: breed,
@@ -111,6 +134,7 @@ export default function EditProfile({ navigation }) {
       city_location: city_location,
       bio: bio,
       weight: weight,
+      picture: url,
     }).then(() => {
       console.log("success!");
     });
@@ -123,66 +147,71 @@ export default function EditProfile({ navigation }) {
     //     console.log("Update Error", error);
     //   });
   };
-  const handlePublish = e => {
-    if (!name || !age || !breed || !gender || !city_location) {
-      Alert.alert("Please fill out all the * fields");
-      return;
-    }
 
-    // storing the images inside of profile_images with date and image name to prevent overwriting
-    const storageRef = ref(storage, `/profile_images/${Date.now()}${file}`);
+  // const handlePublish = e => {
+  //   if (!name || !age || !breed || !gender || !city_location) {
+  //     Alert.alert("Please fill out all the * fields");
+  //     return;
+  //   }
 
-    const metadata = {
-      contentType: "image/jpeg",
-    };
-    const uploadImage = uploadBytesResumable(storageRef, file, metadata);
+  //   // storing the images inside of profile_images with date and image name to prevent overwriting
+  //   const storageRef = ref(
+  //     storage,
+  //     `/profile_images/${Date.now()}${image.name}`
+  //   );
 
-    // progress of upload
-    uploadImage.on(
-      "state_changed",
-      snapshot => {
-        const progressPercent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progressPercent);
-      },
-      err => {
-        console.log("UploadImageon Error", err);
-      },
+  //   // specify typical file properties
+  //   const metadata = {
+  //     contentType: "image/jpeg",
+  //   };
+  //   const uploadImage = uploadBytesResumable(storageRef, image, metadata);
 
-      // After finishing uploading the image, empty out the input
-      () => {
-        setName({ name: "" });
-        setAge({ age: "" });
-        setBio({ bio: "" });
-        setBreed({ breed: "" });
-        setWeight({ weight: "" });
-        setGender({ gender: "" });
-        setCity({ city_location: "" });
+  //   // progress of upload
+  //   uploadImage.on(
+  //     "state_changed",
+  //     snapshot => {
+  //       const progressPercent = Math.round(
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       );
+  //       setProgress(progressPercent);
+  //     },
+  //     err => {
+  //       console.log("UploadImageon Error", err);
+  //     },
 
-        // once it has URL it will create new data with following info you put in -> this has to change to update
-        getDownloadURL(uploadImage.snapshot.ref)
-          .then(url => {
-            const dogref = collection(db, "users");
+  //     // After finishing uploading the image, empty out the input
+  //     () => {
+  //       setName({ name: "" });
+  //       setAge({ age: "" });
+  //       setBio({ bio: "" });
+  //       setBreed({ breed: "" });
+  //       setWeight({ weight: "" });
+  //       setGender({ gender: "" });
+  //       setCity({ city_location: "" });
 
-            addDoc(dogref, {
-              name: name,
-              age: age,
-              bio: bio,
-              breed: breed,
-              gender: gender,
-              city_location: city_location,
-              weight: weight,
-              picture: url,
-            }).then(() => console.log("Image added successfully"));
-            setProgress(0);
-          })
-          .catch(err => {
-            console.log("Error", err);
-          });
-      }
-    );
-  };
+  //       // once it has URL it will create new data with following info you put in -> this has to change to update
+  //       getDownloadURL(uploadImage.snapshot.ref)
+  //         .then(url => {
+  //           const dogref = collection(db, "users");
+
+  //           addDoc(dogref, {
+  //             name: name,
+  //             age: age,
+  //             bio: bio,
+  //             breed: breed,
+  //             gender: gender,
+  //             city_location: city_location,
+  //             weight: weight,
+  //             picture: url,
+  //           }).then(() => console.log("Image added successfully"));
+  //           setProgress(0);
+  //         })
+  //         .catch(err => {
+  //           console.log("Error", err);
+  //         });
+  //     }
+  //   );
+  // };
 
   return (
     <ScrollView>
@@ -208,7 +237,9 @@ export default function EditProfile({ navigation }) {
             label="Dropdown"
             placeholder="Select Your Gender"
             value={gender}
-            onChange={e => setGender(e)}
+            onChange={e => {
+              setGender(e.value);
+            }}
           />
           <Dropdown
             style={styles.dropdown}
@@ -222,7 +253,7 @@ export default function EditProfile({ navigation }) {
             placeholder="Select Your City"
             value={city_location}
             onChange={e => {
-              setCity(e);
+              setCity(e.value);
             }}
           />
           <TextInput
@@ -242,7 +273,7 @@ export default function EditProfile({ navigation }) {
             mode="outlined"
             label="*Age"
             value={age}
-            onChangeText={e => handleChange(e)}
+            onChangeText={e => setAge(e)}
             keyboardType="numeric"
             maxLength={2}
           />
@@ -263,10 +294,10 @@ export default function EditProfile({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={e => {
-              handlePublish(e);
-              navigation.navigate("ViewProfile");
-            }}
+            onPress={
+              editUpdate
+              // navigation.navigate("ViewProfile");
+            }
             style={{
               width: 100,
               marginTop: 10,

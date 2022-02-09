@@ -86,7 +86,7 @@ const ViewProfile = ({ navigation }) => {
                 City
               </Title>
               <Paragraph style={{ textAlign: "center" }}>
-                {currentDog.city}
+                {currentDog.city_location}
               </Paragraph>
             </Card.Content>
             <Card.Content>
