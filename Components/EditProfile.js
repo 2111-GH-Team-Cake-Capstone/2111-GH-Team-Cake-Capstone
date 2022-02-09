@@ -20,8 +20,9 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc, updateDoc, doc } from "firebase/firestore";
 import db from "../firebase";
+import * as FileSystem from "expo-file-system";
 
 const genderData = [
   { label: "female", value: "female" },
@@ -46,6 +47,8 @@ export default function EditProfile({ navigation }) {
   const [weight, setWeight] = useState(String(currentDog.weight));
   const [bio, setBio] = useState(currentDog.bio);
   const [url, setUrl] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [file, setFile] = useState(null);
 
   // Accessing the library of the current device
   useEffect(() => {
@@ -65,75 +68,121 @@ export default function EditProfile({ navigation }) {
       quality: 1,
     });
 
-    let response = await fetch(result.uri);
-
-    let photoBlob = await response.blob();
-    console.log("photoBlob", photoBlob);
+    // Fetch the photo with it's local URI
+    let file = await FileSystem.readAsStringAsync(result.uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
 
     if (!result.cancelled) {
-      setImage(photoBlob);
+      setImage(result.uri);
+      setFile(file);
     }
   };
 
   if (hasGalleryPermission === false) {
-    return <Alert> No Access to Internal Storage</Alert>;
+    Alert.alert("No Access to Internal Storage");
   }
 
-  const handlePublish = e => {
-    const imageREf = ref(storage, "image");
-    uploadBytes(imageREf, image)
-      .then(() => {
-        getDownloadURL(imageREf)
-          .then(url => {
-            setImage(url);
-          })
-          .catch(error => {
-            console.log("getting image url error", error);
-          });
-      })
-      .catch(error => console.log("upload error", error));
-  };
   // const handlePublish = e => {
-  //   if (!name || !age || !breed || !gender || !city_location) {
-  //     Alert.alert("Please fill out all the * fields");
-  //     return;
-  //   }
-  //   const storageRef = ref(
-  //     storage,
-  //     `/profile_images/${Date.now()}${image.name}`
-  //   );
-
-  //   const uploadImage = uploadBytesResumable(storageRef, image);
-
-  //   uploadImage.on(
-  //     "state_changed",
-  //     snapshot => {
-  //       const progressPercent = Math.round(
-  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-  //       );
-  //       setProgress(progressPercent);
-  //     },
-  //     err => {
-  //       console.log("UploadImageon Error", err);
-  //     },
-
-  //     () => {
-  //       setName({ name, name });
-
-  //       getDownloadURL(uploadImage.snapshot.ref)
+  //   const imageREf = ref(storage, "image");
+  //   uploadBytes(imageREf, image)
+  //     .then(() => {
+  //       getDownloadURL(imageREf)
   //         .then(url => {
-  //           const dogref = collection(db, "users");
-  //           addDoc(dogref, {
-  //             image: url,
-  //           }).then(() => console.log("Image added successfully"));
-  //           setProgress(0);
+  //           setImage(url);
   //         })
-  //         .catch(err => {
-  //           console.log("Error", err);
+  //         .catch(error => {
+  //           console.log("getting image url error", error);
   //         });
-  //     }
-  //   );
+  //     })
+  //     .catch(error => console.log("upload error", error));
   // };
+
+  const editUpdate = () => {
+    // const docRef = doc(db, "users", TextInput.value);
+
+    // console.log(docRef);
+
+    updateDoc(currentDog, {
+      name: name,
+      age: age,
+      breed: breed,
+      gender: gender,
+      city_location: city_location,
+      bio: bio,
+      weight: weight,
+    }).then(() => {
+      console.log("success!");
+    });
+
+    // setDoc(currentDog, value, { merge: merge })
+    //   .then(() => {
+    //     Alert.alert("Update Success!");
+    //   })
+    //   .catch(error => {
+    //     console.log("Update Error", error);
+    //   });
+  };
+  const handlePublish = e => {
+    if (!name || !age || !breed || !gender || !city_location) {
+      Alert.alert("Please fill out all the * fields");
+      return;
+    }
+
+    // storing the images inside of profile_images with date and image name to prevent overwriting
+    const storageRef = ref(storage, `/profile_images/${Date.now()}${file}`);
+
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const uploadImage = uploadBytesResumable(storageRef, file, metadata);
+
+    // progress of upload
+    uploadImage.on(
+      "state_changed",
+      snapshot => {
+        const progressPercent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progressPercent);
+      },
+      err => {
+        console.log("UploadImageon Error", err);
+      },
+
+      // After finishing uploading the image, empty out the input
+      () => {
+        setName({ name: "" });
+        setAge({ age: "" });
+        setBio({ bio: "" });
+        setBreed({ breed: "" });
+        setWeight({ weight: "" });
+        setGender({ gender: "" });
+        setCity({ city_location: "" });
+
+        // once it has URL it will create new data with following info you put in -> this has to change to update
+        getDownloadURL(uploadImage.snapshot.ref)
+          .then(url => {
+            const dogref = collection(db, "users");
+
+            addDoc(dogref, {
+              name: name,
+              age: age,
+              bio: bio,
+              breed: breed,
+              gender: gender,
+              city_location: city_location,
+              weight: weight,
+              picture: url,
+            }).then(() => console.log("Image added successfully"));
+            setProgress(0);
+          })
+          .catch(err => {
+            console.log("Error", err);
+          });
+      }
+    );
+  };
 
   return (
     <ScrollView>
@@ -214,7 +263,10 @@ export default function EditProfile({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={e => handlePublish(e)}
+            onPress={e => {
+              handlePublish(e);
+              navigation.navigate("ViewProfile");
+            }}
             style={{
               width: 100,
               marginTop: 10,
