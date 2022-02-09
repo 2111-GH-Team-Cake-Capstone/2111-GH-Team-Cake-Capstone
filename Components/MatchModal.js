@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, Alert, Modal, Pressable, Image } from "react-native";
 import { Button, Avatar, Headline } from "react-native-paper";
 
-const MatchModal = () => {
-  const [modalVisible, setModalVisible] = useState(true);
+const MatchModal = (props) => {
+  const swipedUser = props.route.params.swipedUser;
+  const currentUser = props.route.params.currentUser;
+
+  const handleExit = () => {
+    props.navigation.goBack();
+    props.navigation.navigate("BrowseUsers")
+  }
+  const handleMessage = () => {
+    props.navigation.goBack();
+    props.navigation.navigate("ChatMain")
+  }
   return (
-    <Modal transparent={true} animationType="slide" visible={modalVisible} onRequestClose={() => {
-    Alert.alert("Modal has been closed.");
-    setModalVisible(!modalVisible);
-    }}>
+    <Modal transparent={true} animationType="slide">
       <View style={styles.centeredView}> 
         <View style={styles.modalView}>
           <Headline style={{fontWeight: "bold", marginVertical: '5%'}}>Puppy Love!</Headline>
-          <Text style={{fontSize: 14}}>Cannoli and Zelda have matched</Text>
+          <Text style={{fontSize: 14}}>{currentUser.name} and {swipedUser.name} have matched</Text>
           <View style={styles.avatars}>
             <Avatar.Image
                 size={120}
@@ -24,10 +31,10 @@ const MatchModal = () => {
                 source={require("../assets/ZeldaTinderPic.jpg")}
               />
           </View>
-          <Button>
-            Message Zelda
+          <Button onPress={() => handleMessage()}>
+            Message {swipedUser.name}
           </Button>
-          <Pressable style={[styles.button, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+          <Pressable style={[styles.button, styles.buttonClose]} onPress={() => handleExit()}>
             <Text style={styles.textStyle}>Exit</Text>
           </Pressable>
         </View>
@@ -47,7 +54,8 @@ const styles = StyleSheet.create({
     position: "relative",
     marginVertical: "15%",
     flexDirection: "row",
-    alignSelf: "center"
+    alignSelf: "center",
+    justifyContent: "space-evenly"
   },
   modalView: {
     position: "relative",
