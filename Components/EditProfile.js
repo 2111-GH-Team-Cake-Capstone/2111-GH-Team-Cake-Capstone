@@ -125,7 +125,7 @@ export default function EditProfile({ navigation }) {
       weight: weight,
       picture: url,
     }).then(() => {
-      console.log("success!");
+      navigation.navigate("ViewProfile");
     });
   };
 
