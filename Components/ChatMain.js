@@ -3,9 +3,7 @@ import {
 	StyleSheet,
 	View,
 	ImageBackground,
-	ScrollView,
-	SafeAreaView,
-	FlatList,
+	TouchableOpacity,
 } from "react-native";
 import { Avatar, Text, Divider, Paragraph, Title } from "react-native-paper";
 import db from "../firebase";
@@ -20,8 +18,6 @@ import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 // THINGS THAT NEED TO BE COMPLETED:
 // 1. Add "last message" if possible
-// 2. If user doesn't have any matches, then display string in chat that says they have no matches/messages (ternary op in return statement)
-// 3. STYLING!!!!
 
 export default function ChatMain({ navigation }) {
 	const [matches, setMatches] = useState([]);
@@ -84,51 +80,55 @@ export default function ChatMain({ navigation }) {
 	// console.log("MATCHES LIST LOOK HERE", matchesList);
 
 	return (
-		<View style={styles.container}>
-			<ImageBackground
-				source={require("../assets/capstone_bg.gif")}
-				style={styles.bgImage}
-			>
-				<View style={styles.chats}>
-					{users.map((user) =>
+		<ImageBackground
+			source={require("../assets/capstone_bg.gif")}
+			style={styles.bgImage}
+		>
+			<View>
+				{matchesList.length > 0 ? (
+					users.map((user) =>
 						matchesList.map((match) =>
 							match.matchedDog === user.uid ? (
-								<View key={user.id}>
+								<TouchableOpacity key={user.id}>
+									<Avatar.Image
+										style={styles.avatarImg}
+										source={require("../assets/placeholder.jpg")}
+									/>
 									<Text
+										style={styles.chats}
 										mode="contained"
 										onPress={() =>
 											navigation.navigate("ChatMessage", { match })
 										}
 									>
-										<Avatar.Image
-											style={styles.avatarImg}
-											source={require("../assets/placeholder.jpg")}
-										/>
 										<Title>{user.name}</Title>
 									</Text>
-									<Paragraph
-										style={{
-											marginLeft: 70,
-										}}
-									>
-										Say hi!
-									</Paragraph>
-									<Divider />
-								</View>
+									<Paragraph style={styles.chats}>Say hi!</Paragraph>
+									<Divider style={styles.divider} />
+								</TouchableOpacity>
 							) : null
 						)
-					)}
-				</View>
-			</ImageBackground>
-		</View>
+					)
+				) : (
+					<View>
+						<Title>No Messages :(</Title>
+						<Text>
+							Go Match With{" "}
+							<Text
+								style={styles.link}
+								onPress={() => navigation.navigate("BrowseUsers")}
+							>
+								Other Dogs!
+							</Text>
+						</Text>
+					</View>
+				)}
+			</View>
+		</ImageBackground>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignSelf: "flex-start",
-	},
 	bgImage: {
 		flex: 1,
 		width: "100%",
@@ -137,11 +137,26 @@ const styles = StyleSheet.create({
 		padding: 0,
 		margin: 0,
 	},
+	avatarImg: {
+		borderRadius: 60,
+		height: 1,
+		width: 1,
+		marginLeft: 15,
+		marginBottom: 10,
+		marginTop: 12,
+	},
 	chats: {
-		flex: 1,
-		marginTop: 30,
-		marginLeft: 20,
-		marginBottom: 70,
-		justifyContent: "space-around",
+		marginLeft: 90,
+		alignSelf: "flex-start",
+		justifyContent: "space-between",
+	},
+	link: {
+		fontWeight: "bold",
+		fontSize: 15,
+		color: "#8D6CB3",
+	},
+	divider: {
+		color: "#f04c64",
+		marginTop: 5,
 	},
 });
