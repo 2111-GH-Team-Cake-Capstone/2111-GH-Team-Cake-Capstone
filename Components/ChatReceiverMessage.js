@@ -12,7 +12,7 @@ export default function ChatReceiverMessage({ message }) {
 const styles = StyleSheet.create({
 	receiverMessage: {
 		alignSelf: "flex-start",
-		backgroundColor: "#944BE8",
+		backgroundColor: "#A06ADD",
 		borderTopLeftRadius: 0,
 		borderBottomLeftRadius: 20,
 		borderRadius: 15,

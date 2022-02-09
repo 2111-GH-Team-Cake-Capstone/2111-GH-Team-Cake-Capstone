@@ -4,7 +4,6 @@ import {
 	StyleSheet,
 	View,
 	ImageBackground,
-	Text,
 	FlatList,
 	TouchableWithoutFeedback,
 	SafeAreaView,
@@ -27,8 +26,7 @@ import ChatSenderMessage from "./ChatSenderMessage";
 import db from "../firebase";
 
 // THINGS THAT NEED TO BE COMPLETED:
-// 1. Styling - padding between each message, fix send button, fix sender message from moving to left side when keyboard opens
-// 2. Display match name up in header, or display each name directly above every message
+// 1. Display match name up in header, or display each name directly above every message
 
 export default function ChatMessage() {
 	const currentUser = useFirebaseAuth();
@@ -62,6 +60,7 @@ export default function ChatMessage() {
 
 	const sendMessage = (evt) => {
 		evt.preventDefault();
+
 		addDoc(collection(db, "matches", match.id, "messages"), {
 			timestamp: serverTimestamp(),
 			sender: currentUser.uid,
@@ -101,7 +100,7 @@ export default function ChatMessage() {
 					<View>
 						<TextInput
 							style={styles.textInput}
-							label="Send message..."
+							label="Message..."
 							mode="outlined"
 							value={input}
 							onChangeText={setInput}
