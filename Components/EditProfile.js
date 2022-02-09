@@ -6,29 +6,21 @@ import {
   Text,
   ImageBackground,
   Alert,
-  Pressable,
 } from "react-native";
-import { Button, Avatar, TextInput, Headline } from "react-native-paper";
+import { Button, Avatar, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
 
 import * as ImagePicker from "expo-image-picker";
 import { storage } from "../firebase";
 import { useDog } from "../context/DogContext";
-import {
-  uploadBytesResumable,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  getStorage,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, getStorage } from "firebase/storage";
 import uuid from "uuid";
-import { addDoc, collection, setDoc, updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import db from "../firebase";
-import * as FileSystem from "expo-file-system";
 
 const genderData = [
-  { label: "female", value: "female" },
-  { label: "male", value: "male" },
+  { label: "Female", value: "female" },
+  { label: "Male", value: "male" },
 ];
 const cityData = [
   { label: "Chicago", value: "Chicago" },
@@ -38,7 +30,6 @@ const cityData = [
 
 export default function EditProfile({ navigation }) {
   const currentDog = useDog();
-  console.log("currentDog Update>>", currentDog);
 
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [image, setImage] = useState(currentDog.picture);
@@ -50,8 +41,6 @@ export default function EditProfile({ navigation }) {
   const [weight, setWeight] = useState(String(currentDog.weight));
   const [bio, setBio] = useState(currentDog.bio);
   const [url, setUrl] = useState(null);
-
-  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // Accessing the library of the current device
@@ -119,7 +108,6 @@ export default function EditProfile({ navigation }) {
   };
 
   const editUpdate = () => {
-    // console.log(docRef);
     if (!name || !age || !breed || !gender || !city_location) {
       Alert.alert("Please fill out all the * fields");
       return;
@@ -138,11 +126,7 @@ export default function EditProfile({ navigation }) {
     }).then(() => {
       console.log("success!");
     });
-
-  
   };
-
- 
 
   return (
     <ScrollView>
@@ -225,10 +209,10 @@ export default function EditProfile({ navigation }) {
 
           <Button
             mode="contained"
-            onPress={
-              editUpdate
-              // navigation.navigate("ViewProfile");
-            }
+            onPress={() => {
+              editUpdate;
+              navigation.navigate("ViewProfile");
+            }}
             style={{
               width: 100,
               marginTop: 10,
