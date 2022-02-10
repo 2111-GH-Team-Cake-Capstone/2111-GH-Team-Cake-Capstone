@@ -39,12 +39,11 @@ export default function EditProfile({ navigation }) {
   const [city_location, setCity] = useState(currentDog.city_location);
   const [name, setName] = useState(currentDog.name);
   const [breed, setBreed] = useState(currentDog.breed);
-  const [age, setAge] = useState(String(currentDog.age));
-  const [weight, setWeight] = useState(String(currentDog.weight));
+  const [age, setAge] = useState(currentDog.age);
+  const [weight, setWeight] = useState(currentDog.weight);
   const [bio, setBio] = useState(currentDog.bio);
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState(currentDog.picture);
   const [loading, setLoading] = useState(false);
-
   // Accessing the library of the current device
   useEffect(() => {
     const galleryStatus = async () => {
