@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace("Home");
+        navigation.replace("ViewProfile");
       }
     });
     return unsubscribe;
@@ -31,9 +31,10 @@ export default function Login({ navigation }) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         swipes: [],
-        potential_matches: []
+        potential_matches: [],
+        picture: "placeholder.jpg"
       });
-      navigation.replace("Home")
+      navigation.replace("EditProfile")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
