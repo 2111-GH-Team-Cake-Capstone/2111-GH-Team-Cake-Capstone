@@ -1,7 +1,9 @@
+import * as React from 'react';
 import { StyleSheet, View, ImageBackground } from "react-native";
 import { Headline, Button } from "react-native-paper";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useFonts } from 'expo-font';
 
 export default function Home({ navigation }) {
   async function handleLogout() {
@@ -12,6 +14,15 @@ export default function Home({ navigation }) {
       console.log("signout error", error);
     }
   }
+
+  const [loaded] = useFonts({
+    Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -51,6 +62,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     alignSelf: "center",
+    color: "#816874",
+    fontFamily: 'Lobster',
+    fontSize: 40,
+    padding: "5%"
   },
   bgImage: {
     flex: 1,
