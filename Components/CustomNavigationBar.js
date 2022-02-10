@@ -1,8 +1,13 @@
 import { Appbar } from "react-native-paper";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useDog } from "../context/DogContext";
+import { Alert } from "react-native";
 
 export default function CustomNavigationBar({ route, navigation, back }) {
+  const currentDog = useDog();
+  console.log("currentDog", typeof currentDog, currentDog);
+
   const toProfile = () => navigation.navigate("ViewProfile");
   const toBrowseUsers = () => navigation.navigate("BrowseUsers");
   const toChat = () => navigation.navigate("ChatMain");
@@ -24,11 +29,20 @@ export default function CustomNavigationBar({ route, navigation, back }) {
         onPress={toProfile}
         disabled={!!(route.name === "ViewProfile")}
       />
-      <Appbar.Action
-        icon="heart"
-        onPress={toBrowseUsers}
-        disabled={!!(route.name === "BrowseUsers")}
-      />
+      {!currentDog.name ? (
+        <Appbar.Action
+          icon="heart"
+          onPress={() => Alert.alert("Put your user info")}
+          disabled={!!(route.name === "BrowseUsers")}
+        />
+      ) : (
+        <Appbar.Action
+          icon="heart"
+          onPress={toBrowseUsers}
+          disabled={!!(route.name === "BrowseUsers")}
+        />
+      )}
+
       <Appbar.Action
         icon="chat"
         onPress={toChat}
