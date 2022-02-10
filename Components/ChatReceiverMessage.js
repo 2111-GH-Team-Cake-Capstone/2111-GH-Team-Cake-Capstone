@@ -1,25 +1,48 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React from "react";
+import { Avatar, Text } from "react-native-paper";
 
-export default function ChatReceiverMessage({ message }) {
+export default function ChatReceiverMessage({ message, user }) {
 	return (
-		<View style={styles.receiverMessage}>
-			<Text style={styles.text}>{message.message}</Text>
+		<View style={styles.container}>
+			<Avatar.Image
+				size={55}
+				source={{
+					uri: user.picture,
+				}}
+			/>
+
+			<View style={styles.receiverMessageContainer}>
+				<Text style={styles.name}>{user.name}</Text>
+				<Text style={styles.receiverMessage}>{message.message}</Text>
+			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	receiverMessage: {
+	container: {
 		alignSelf: "flex-start",
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	receiverMessageContainer: {
+		flexShrink: 1,
+	},
+	name: {
+		marginLeft: 5,
+		color: "black",
+		fontSize: 10,
+	},
+	receiverMessage: {
 		backgroundColor: "#A06ADD",
 		borderTopLeftRadius: 0,
 		borderBottomLeftRadius: 20,
 		borderRadius: 15,
 		padding: 10,
-		margin: 5,
-	},
-	text: {
+		marginBottom: 5,
+		marginLeft: 5,
+		marginRight: 5,
 		color: "white",
 		fontSize: 17,
 	},
