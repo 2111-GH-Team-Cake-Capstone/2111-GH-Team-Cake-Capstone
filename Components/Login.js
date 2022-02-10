@@ -31,8 +31,7 @@ export default function Login({ navigation }) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         swipes: [],
-        potential_matches: [],
-        //picture: "placeholder.jpg"
+        potential_matches: []
       });
       navigation.replace("EditProfile")
     } catch (error) {
