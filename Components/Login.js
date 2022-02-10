@@ -33,7 +33,7 @@ export default function Login({ navigation }) {
         swipes: [],
         potential_matches: []
       });
-      navigation.replace("Home")
+      navigation.replace("EditProfile")
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
