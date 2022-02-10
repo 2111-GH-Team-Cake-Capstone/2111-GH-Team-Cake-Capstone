@@ -1,8 +1,12 @@
-import { Appbar } from "react-native-paper";
+import * as React from 'react';
+import { Appbar, Text } from "react-native-paper";
+import { StyleSheet } from 'react-native';
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useDog } from "../context/DogContext";
-import { Alert } from "react-native";
+import { Alert } from "react-native"
+import { useFonts } from 'expo-font';
+
 
 export default function CustomNavigationBar({ route, navigation, back }) {
   const currentDog = useDog();
@@ -20,10 +24,18 @@ export default function CustomNavigationBar({ route, navigation, back }) {
     }
   }
 
+  const [loaded] = useFonts({
+    Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Appbar.Header>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
-      <Appbar.Content title="Leashed" />
+      <Appbar.Content title={<Text style={styles.text}>Leashed</Text>} />
       <Appbar.Action
         icon="dog"
         onPress={toProfile}
@@ -52,3 +64,11 @@ export default function CustomNavigationBar({ route, navigation, back }) {
     </Appbar.Header>
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    color: "#ffffff",
+    fontFamily: 'Lobster',
+    fontSize: 30,
+  }
+});

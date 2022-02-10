@@ -6,7 +6,6 @@ import {
   Text,
   ImageBackground,
   Alert,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Button, Avatar, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";

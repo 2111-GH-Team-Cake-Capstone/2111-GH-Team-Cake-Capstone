@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform, ImageBackground } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform, ImageBackground, Dimensions } from 'react-native';
 import { Headline, Button, TextInput, HelperText} from 'react-native-paper';
 import { createUserWithEmailAndPassword,
          signInWithEmailAndPassword,
@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword,
         } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import db, { auth } from '../firebase';
-import { useFirebaseAuth } from "../context/FirebaseAuthContext"
+import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -54,35 +54,39 @@ export default function Login({ navigation }) {
     }
   }
   return (
-    <KeyboardAvoidingView enabled={Platform.OS === "ios"}
-      style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
         style={styles.bgImage}
       >
-        <Headline style={styles.heading}>Leashed Logo</Headline>
-        <TextInput
-            style={styles.input}
-            mode="outlined"
-            label="Email"
-            value={email}
-            onChangeText={text => setEmail(text)}
-        />
-        <TextInput
-            style={styles.input}
-            mode="outlined"
-            label="Password"
-            value={password}
-            onChangeText={text => setPassword(text)}
-            secureTextEntry
-        />
-        <HelperText type="error" visible={!!error}>Error: {error.slice(5).replace(/-/g, " ")}</HelperText>
-        <Button style={styles.input} mode="contained" onPress={() => handleSignup()}>
-          sign up
-        </Button>
-        <Button style={styles.input} mode="outlined" onPress={() => handleLogin()}>
-          Log in
-        </Button>
+        <View style={styles.container}>
+          <Headline style={styles.heading}>Leashed Logo</Headline>
+          <TextInput
+              style={styles.input}
+              mode="outlined"
+              label="Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+          />
+          <TextInput
+              style={styles.input}
+              mode="outlined"
+              label="Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+              secureTextEntry
+          />
+          <HelperText type="error" visible={!!error}>Error: {error.slice(5).replace(/-/g, " ")}</HelperText>
+          <Button style={styles.input} mode="contained" onPress={() => handleSignup()}>
+            sign up
+          </Button>
+          <Button style={styles.input} mode="outlined" onPress={() => handleLogin()}>
+            Log in
+          </Button>
+        </View>
       </ImageBackground>
     </KeyboardAvoidingView>
   );
@@ -91,19 +95,19 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    height: Dimensions.get('window').height,
+    justifyContent: 'center'
   },
   input: {
-    margin: 12,
+    margin: "2%",
+    marginHorizontal: "4%"
   },
   heading: {
     alignSelf: 'center',
   },
   bgImage: {
-    flex: 1,
-    justifyContent: 'center',
+    width: "100%",
     height: "100%",
-    resizeMode: "stretch",
     padding: 0,
     margin: 0,
   },

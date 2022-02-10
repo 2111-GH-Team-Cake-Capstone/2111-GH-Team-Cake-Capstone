@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
 import {
 	StyleSheet,
 	View,
@@ -20,22 +19,22 @@ import {
 	query,
 	serverTimestamp,
 } from "firebase/firestore";
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
+import { useDog } from "../context/DogContext";
 import ChatReceiverMessage from "./ChatReceiverMessage";
 import ChatSenderMessage from "./ChatSenderMessage";
 import db from "../firebase";
 
-// THINGS THAT NEED TO BE COMPLETED:
-// 1. Display match name up in header, or display each name directly above every message
-
-export default function ChatMessage() {
-	const currentUser = useFirebaseAuth();
+export default function ChatMessage(props) {
+	const currentDog = useDog();
 	const [input, setInput] = useState("");
 	const [messages, setMessages] = useState([]);
-	const { params } = useRoute();
 
-	const { match } = params;
+	const user = props.route.params.user;
+	const match = props.route.params.match;
+
 	// console.log("MATCH PARAMS", match);
+	// console.log("USER PARAMS", user);
+	// console.log("CURRENT DOG", currentDog);
 
 	useEffect(
 		() =>
@@ -54,7 +53,7 @@ export default function ChatMessage() {
 					)
 			),
 
-		[match, db]
+		[user, db]
 	);
 	// console.log("TIFF MESSAGES LOOK HERE!!!", messages);
 
@@ -63,7 +62,7 @@ export default function ChatMessage() {
 
 		addDoc(collection(db, "matches", match.id, "messages"), {
 			timestamp: serverTimestamp(),
-			sender: currentUser.uid,
+			sender: currentDog.uid,
 			message: input,
 		});
 
@@ -88,10 +87,14 @@ export default function ChatMessage() {
 							style={{ paddingLeft: 4 }}
 							keyExtractor={(item) => item.id}
 							renderItem={({ item: message }) =>
-								message.sender === currentUser.uid ? (
+								message.sender === currentDog.uid ? (
 									<ChatSenderMessage key={message.id} message={message} />
 								) : (
-									<ChatReceiverMessage key={message.id} message={message} />
+									<ChatReceiverMessage
+										key={message.id}
+										message={message}
+										user={user}
+									/>
 								)
 							}
 						/>
