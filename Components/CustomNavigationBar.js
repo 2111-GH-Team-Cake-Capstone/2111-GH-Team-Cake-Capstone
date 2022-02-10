@@ -10,7 +10,6 @@ import { useFonts } from 'expo-font';
 
 export default function CustomNavigationBar({ route, navigation, back }) {
   const currentDog = useDog();
-  console.log("currentDog", typeof currentDog, currentDog);
 
   const toProfile = () => navigation.navigate("ViewProfile");
   const toBrowseUsers = () => navigation.navigate("BrowseUsers");
@@ -28,7 +27,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
     Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
   });
 
-  if (!loaded) {
+  if (!loaded || !currentDog) {
     return null;
   }
 
