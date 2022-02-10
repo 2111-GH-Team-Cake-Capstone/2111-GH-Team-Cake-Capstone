@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace("ViewProfile");
+        navigation.replace("Home");
       }
     });
     return unsubscribe;
@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
         uid: user.uid,
         swipes: [],
         potential_matches: [],
-        picture: "placeholder.jpg"
+        //picture: "placeholder.jpg"
       });
       navigation.replace("EditProfile")
     } catch (error) {
