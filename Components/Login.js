@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   bgImage: {
     width: "100%",
     height: "100%",
-    //resizeMode: "stretch",
     padding: 0,
     margin: 0,
   },
