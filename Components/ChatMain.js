@@ -14,16 +14,13 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
-
-// THINGS THAT NEED TO BE COMPLETED:
-// 1. Add "last message" if possible
+import { useDog } from "../context/DogContext";
 
 export default function ChatMain({ navigation }) {
+	const currentDog = useDog();
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
 	// const [lastMessage, setLastMessage] = useState("");
-	const currentUser = useFirebaseAuth();
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -44,10 +41,10 @@ export default function ChatMain({ navigation }) {
 
 	// useEffect below has an implicit return to serve as cleanup
 	useEffect(() => {
-		if (currentUser) {
+		if (currentDog.uid) {
 			//for navBar logout
 			onSnapshot(
-				query(collection(db, "matches"), where("dog_a", "==", currentUser.uid)),
+				query(collection(db, "matches"), where("dog_a", "==", currentDog.uid)),
 				(snapshot) => {
 					const matchesDogA = snapshot.docs.map((doc) => ({
 						id: doc.id,
@@ -56,7 +53,7 @@ export default function ChatMain({ navigation }) {
 					onSnapshot(
 						query(
 							collection(db, "matches"),
-							where("dog_b", "==", currentUser.uid)
+							where("dog_b", "==", currentDog.uid)
 						),
 						(snapshot) => {
 							const matchesDogB = snapshot.docs.map((doc) => ({
@@ -70,16 +67,16 @@ export default function ChatMain({ navigation }) {
 				}
 			);
 		}
-	}, [currentUser]);
+	}, [currentDog]);
 	// console.log("MATCHES LOOK HERE", matches);
 
 	//for navBar logout:
-	if (!currentUser) {
+	if (!currentDog.uid) {
 		return null;
 	}
 
 	const matchesList = matches.map((match) => {
-		return match.dog_a === currentUser.uid
+		return match.dog_a === currentDog.uid
 			? { id: match.id, matchedDog: match.dog_b }
 			: { id: match.id, matchedDog: match.dog_a };
 	});
@@ -95,20 +92,20 @@ export default function ChatMain({ navigation }) {
 					users.map((user) =>
 						matchesList.map((match) =>
 							match.matchedDog === user.uid ? (
-								<TouchableOpacity key={user.id}>
+								<TouchableOpacity
+									key={user.id}
+									mode="contained"
+									onPress={() =>
+										navigation.navigate("ChatMessage", { user, match })
+									}
+								>
 									<Avatar.Image
 										style={styles.avatarImg}
 										source={{
 											uri: user.picture,
 										}}
 									/>
-									<Text
-										style={styles.chats}
-										mode="contained"
-										onPress={() =>
-											navigation.navigate("ChatMessage", { match })
-										}
-									>
+									<Text style={styles.chats}>
 										<Title>{user.name}</Title>
 									</Text>
 									<Paragraph style={styles.chats}>Say hi!</Paragraph>
