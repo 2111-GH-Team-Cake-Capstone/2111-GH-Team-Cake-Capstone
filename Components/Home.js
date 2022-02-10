@@ -1,7 +1,9 @@
+import * as React from 'react';
 import { StyleSheet, View, ImageBackground } from "react-native";
-import { Headline, Button } from "react-native-paper";
+import { Headline, Button, Subheading } from "react-native-paper";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useFonts } from 'expo-font';
 
 export default function Home({ navigation }) {
   async function handleLogout() {
@@ -12,13 +14,24 @@ export default function Home({ navigation }) {
       console.log("signout error", error);
     }
   }
+
+  const [loaded] = useFonts({
+    Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
         style={styles.bgImage}
       >
-        <Headline style={styles.heading}>Welcome to Leashed!</Headline>
+        <Headline style={styles.heading}>
+          Welcome to Leashed!
+        </Headline>
         <Button
           style={styles.button}
           mode="contained"
@@ -51,6 +64,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     alignSelf: "center",
+    color: "#995768",
+    fontFamily: 'Lobster',
+    fontSize: 40,
+    padding: "5%"
   },
   bgImage: {
     flex: 1,
