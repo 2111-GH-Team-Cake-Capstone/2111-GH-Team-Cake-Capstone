@@ -6,9 +6,11 @@ import {
   Text,
   ImageBackground,
   Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Button, Avatar, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import * as ImagePicker from "expo-image-picker";
 import { storage } from "../firebase";
@@ -130,7 +132,9 @@ export default function EditProfile({ navigation }) {
   };
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <ImageBackground
         source={require("../assets/capstone_bg.gif")}
         style={styles.bgImage}
@@ -228,7 +232,7 @@ export default function EditProfile({ navigation }) {
           </Button>
         </View>
       </ImageBackground>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
