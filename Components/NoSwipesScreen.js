@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { Button, Headline } from "react-native-paper";
+import { useFonts } from 'expo-font';
 
 export default function NoSwipesScreen({navigation}) {
   const handleExit = () => {
    navigation.goBack();
    navigation.navigate("EditProfile")
+  }
+  const [loaded] = useFonts({
+    Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
   }
   return (
       <View style={styles.centeredView}>
