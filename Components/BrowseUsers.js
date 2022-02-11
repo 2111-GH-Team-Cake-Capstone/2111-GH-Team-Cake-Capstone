@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ImageBackground, Text, Pressable } from "react-native";
 import Swiper, { onSwipedLeft, onSwipedRight } from 'react-native-deck-swiper';
+import { Headline, Paragraph } from 'react-native-paper';
 import Icon from 'react-native-ico';
 import TinderCard from './TinderCard';
 import { collection, doc, getDocs, snapshot, query, where, addDoc, updateDoc, getDoc, arrayUnion, serverTimestamp } from "firebase/firestore"; 
 import db from '../firebase.js';
 import { useDog } from "../context/DogContext";
-import MatchModal from "./MatchModal";
+import NoSwipesScreen from "./NoSwipesScreen";
 
 const iconHeight = 75;
 const iconWidth = 75;
@@ -78,9 +79,20 @@ export default function BrowseUsers({navigation}) {
       }
     })
   }
+  const noSwipes = () => {
+    navigation.navigate("NoSwipesScreen")
+  }
+
   if(users.length <= 0) {
     return (
-    <Text>loading...</Text>
+      <View style={styles.container}>
+        <ImageBackground
+       source={require("../assets/capstone_bg.gif")}
+       style={styles.bgImage}>
+        <Headline style={styles.noSwipesHeadline}>You've run out of users to swipe!</Headline>
+        <Text style={styles.noSwipesText}>Come back later or <Text style={styles.link} onPress={() => navigation.navigate("EditProfile")}>update</Text> your city to browse more users.</Text>
+        </ImageBackground>
+      </View>
     )
   }
   return (
@@ -101,6 +113,7 @@ export default function BrowseUsers({navigation}) {
          cardIndex={0}
          onSwipedLeft={(cardIndex) => swipeLeft(cardIndex)}
          onSwipedRight={(cardIndex) => swipeRight(cardIndex)}
+         onSwipedAll={() => noSwipes()}
          stackSize= {3}
          stackSeparation={15}
          animateCardOpacity
@@ -177,8 +190,26 @@ const styles = StyleSheet.create({
       position: "absolute",
       bottom: "10%",
     },
+    link: {
+      fontWeight: "bold",
+      fontSize: 15,
+      color: "#8D6CB3",
+    },
     swiper: {
       flex:1,
       backgroundColor: "black"
+    },
+    noSwipesText: {
+      fontSize: 16,
+      justifyContent: "center",
+      textAlign: "center",
+      marginVertical: '5%'
+    },
+    noSwipesHeadline: {
+      fontFamily: 'Lobster',
+      marginTop: 220,
+      justifyContent: "center",
+      textAlign: "center",
+      marginVertical: '5%'
     }
   })
