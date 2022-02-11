@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#ffffff",
     fontFamily: 'Lobster',
-    fontSize: 30,
+    fontSize: 25,
   }
 });
