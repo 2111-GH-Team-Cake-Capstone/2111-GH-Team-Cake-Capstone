@@ -4,19 +4,19 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { collection, doc, getDocs, onSnapshot } from "firebase/firestore"; 
 import db from '../firebase.js';
 
-export default function TinderCard(user, {navigation}) {
+export default function TinderCard(props) {
     return (
       <View style={styles.container}>
           <Card style={styles.card}>
-            <Card.Cover style={styles.picture} source={require('../assets/placeholder.jpg')} />
+            <Card.Cover style={styles.picture} source={{uri: props.user.picture}} />
             <Card.Content>
-              <Title style={styles.title}>{user.user.name}</Title>
-              <Paragraph style={styles.breed}>{user.user.breed}</Paragraph>
-              <Paragraph style={styles.bio}>{user.user.bio}</Paragraph>
+              <View style={styles.topLine}>
+              <Text style={styles.title}>{props.user.name}, {props.user.age}</Text>
+              <Text style={styles.link} onPress={() => props.navigation.navigate("MatchProfile", { user: props.user})}>View Profile</Text>
+              </View>
+              <Paragraph style={styles.breed}>{props.user.breed}</Paragraph>
+              <Paragraph style={styles.bio}>"{props.user.bio}"</Paragraph>
             </Card.Content>
-            <Card.Actions style={styles.viewButton}>
-              <Button icon="dog" onPress={() => user.navigation.navigate("MatchProfile", { user: user.user})}>View Profile</Button>
-            </Card.Actions>
           </Card>
       </View>
     );
@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: 'transparent'
+  },
+  topLine: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   card: {
     position: "absolute",
@@ -42,22 +46,27 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    top: "10%",
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   bio: {
-    top: "10%",
+    top: "5%",
     fontSize: 16,
     fontStyle: "italic",
   },
   breed: {
-    top: "10%",
+    top: "2%",
     fontSize: 14,
   },
   viewButton: {
     top: "10%",
     paddingLeft: "45%"
+  },
+  link: {
+    fontWeight: "bold",
+    fontSize: 16,
+    top: "1%",
+    color: "#8D6CB3",
   },
   bgImage: {
     width: "100%",

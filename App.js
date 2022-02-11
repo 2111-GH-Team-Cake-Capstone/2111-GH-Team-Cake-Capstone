@@ -30,6 +30,7 @@ import BrowseUsers from "./Components/BrowseUsers";
 import MatchProfile from "./Components/MatchProfile";
 import MatchModal from "./Components/MatchModal";
 import TinderCard from "./Components/TinderCard";
+import NoSwipesScreen from "./Components/NoSwipesScreen";
 import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
@@ -64,6 +65,9 @@ function App() {
               <Stack.Screen name="TinderCard" component={TinderCard} />
               <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false}}>
                 <Stack.Screen name="MatchModal" component={MatchModal} />
+              </Stack.Group>
+              <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false }}>
+                <Stack.Screen name="NoSwipesScreen" component={NoSwipesScreen} />
               </Stack.Group>
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
