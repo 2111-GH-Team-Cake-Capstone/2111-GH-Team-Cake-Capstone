@@ -43,7 +43,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
       {!currentDog.name ? (
         <Appbar.Action
           icon="heart"
-          onPress={() => Alert.alert("Put your user info")}
+          onPress={() => Alert.alert("Please complete your profile")}
           disabled={!!(route.name === "BrowseUsers")}
         />
       ) : (
@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#ffffff",
     fontFamily: 'Lobster',
-    fontSize: 30,
+    fontSize: 25,
   }
 });
