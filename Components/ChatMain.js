@@ -16,11 +16,13 @@ import {
 } from "firebase/firestore";
 import { useDog } from "../context/DogContext";
 
-export default function ChatMain({ navigation }) {
+export default function ChatMain({ navigation }, props) {
 	const currentDog = useDog();
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
-	// const [lastMessage, setLastMessage] = useState("");
+
+	const lastMessage = useLastMessage(props);
+	console.log("LAST MESSAGE TIFF", lastMessage);
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -37,12 +39,9 @@ export default function ChatMain({ navigation }) {
 
 		getUsers();
 	}, []);
-	// console.log("USERS LOOK HERE", users);
 
-	// useEffect below has an implicit return to serve as cleanup
 	useEffect(() => {
 		if (currentDog.uid) {
-			//for navBar logout
 			onSnapshot(
 				query(collection(db, "matches"), where("dog_a", "==", currentDog.uid)),
 				(snapshot) => {
@@ -68,7 +67,6 @@ export default function ChatMain({ navigation }) {
 			);
 		}
 	}, [currentDog]);
-	// console.log("MATCHES LOOK HERE", matches);
 
 	//for navBar logout:
 	if (!currentDog.uid) {
@@ -80,7 +78,6 @@ export default function ChatMain({ navigation }) {
 			? { id: match.id, matchedDog: match.dog_b }
 			: { id: match.id, matchedDog: match.dog_a };
 	});
-	// console.log("MATCHES LIST LOOK HERE", matchesList);
 
 	return (
 		<ImageBackground
@@ -115,10 +112,10 @@ export default function ChatMain({ navigation }) {
 										)}
 										<View style={styles.chats}>
 											<Title>{user.name}</Title>
-											<Paragraph>Say hi!</Paragraph>
+											<Paragraph>{lastMessage}</Paragraph>
 										</View>
 									</View>
-									<Divider style={styles.divider} />
+									<Divider />
 								</TouchableOpacity>
 							) : null
 						)

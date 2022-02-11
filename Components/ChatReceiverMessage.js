@@ -20,7 +20,6 @@ export default function ChatReceiverMessage({ message, user }) {
 
 			<View style={styles.receiverMessageContainer}>
 				<Text style={styles.name}>{user.name}</Text>
-				<Text style={styles.name}>{message.timestamp.seconds}</Text>
 				<Text style={styles.receiverMessage}>{message.message}</Text>
 			</View>
 		</View>

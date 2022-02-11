@@ -32,9 +32,21 @@ export default function ChatMessage(props) {
 	const user = props.route.params.user;
 	const match = props.route.params.match;
 
-	// console.log("MATCH PARAMS", match);
-	// console.log("USER PARAMS", user);
-	// console.log("CURRENT DOG", currentDog);
+	function useLastMessage() {
+		const [lastMessage, setLastMessage] = useState("Say hi!");
+
+		onSnapshot(
+			query(
+				collection(db, "matches", match.id, "messages"),
+				orderBy("timestamp", "desc")
+			),
+			(snapshot) => setLastMessage(snapshot.docs[0]?.data()?.message)
+		);
+
+		return lastMessage;
+	}
+
+	// console.log("USELASTMESSAGE", useLastMessage());
 
 	useEffect(
 		() =>
@@ -55,7 +67,6 @@ export default function ChatMessage(props) {
 
 		[user, db]
 	);
-	// console.log("TIFF MESSAGES LOOK HERE!!!", messages);
 
 	const sendMessage = (evt) => {
 		evt.preventDefault();
