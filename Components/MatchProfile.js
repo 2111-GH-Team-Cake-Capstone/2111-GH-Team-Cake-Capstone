@@ -35,7 +35,6 @@ export default function MatchProfile(props, { navigation }) {
 
           <Card style={styles.card}>
             <Card.Content style={styles.fontContainer}>
-              <Badge style={styles.badge}>♥</Badge>
               <Title style={{ fontSize: 25 }}>{potentialMatch.name}</Title>
               <Text style={styles.font}>Gender</Text>
               <Text style={{ paddingBottom: 10, fontSize: 16 }}>
@@ -56,7 +55,9 @@ export default function MatchProfile(props, { navigation }) {
                 {potentialMatch.weight}
               </Text>
               <Text style={styles.font}>Biography</Text>
-              <Text style={{ paddingBottom: 10, fontSize: 16 }}>
+              <Text
+                style={{ paddingBottom: 10, fontSize: 16, textAlign: "center" }}
+              >
                 {potentialMatch.bio}
               </Text>
             </Card.Content>
@@ -94,10 +95,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
-  badge: {
-    right: 170,
-    top: 27,
-  },
+
   fontContainer: {
     flex: 1,
     alignItems: "center",
