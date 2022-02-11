@@ -23,11 +23,11 @@ const MatchModal = (props) => {
           <View style={styles.avatars}>
             <Avatar.Image
                 size={120}
-                source={require("../assets/placeholder.jpg")}
+                source={{uri: currentUser.picture}}
               />
               <Avatar.Image
                 size={120}
-                source={require("../assets/ZeldaTinderPic.jpg")}
+                source={{uri: swipedUser.picture}}
               />
           </View>
           <Button onPress={() => handleMessage()}>

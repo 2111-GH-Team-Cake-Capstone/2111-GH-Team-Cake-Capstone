@@ -8,7 +8,7 @@ export default function TinderCard(user, {navigation}) {
     return (
       <View style={styles.container}>
           <Card style={styles.card}>
-            <Card.Cover style={styles.picture} source={require('../assets/placeholder.jpg')} />
+            <Card.Cover style={styles.picture} source={{uri: user.user.picture}} />
             <Card.Content>
               <Title style={styles.title}>{user.user.name}</Title>
               <Paragraph style={styles.breed}>{user.user.breed}</Paragraph>
