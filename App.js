@@ -66,9 +66,7 @@ function App() {
               <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false}}>
                 <Stack.Screen name="MatchModal" component={MatchModal} />
               </Stack.Group>
-              <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false }}>
-                <Stack.Screen name="NoSwipesScreen" component={NoSwipesScreen} />
-              </Stack.Group>
+              <Stack.Screen name="NoSwipesScreen" component={NoSwipesScreen} />
               <Stack.Screen name="MatchProfile" component={MatchProfile} />
               <Stack.Screen name="ChatMain" component={ChatMain} />
               <Stack.Screen name="ChatMessage" component={ChatMessage} />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Alert, Modal } from "react-native";
+import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { Button, Headline } from "react-native-paper";
 
 const MatchModal = ({navigation}) => {
@@ -8,14 +8,16 @@ const MatchModal = ({navigation}) => {
    navigation.navigate("EditProfile")
   }
   return (
-    <Modal transparent={true}>
-      <View style={styles.centeredView}> 
-        <View style={styles.modalView}>
+      <View style={styles.centeredView}>
+        <ImageBackground
+       source={require("../assets/capstone_bg.gif")}
+       style={styles.bgImage}>
+        <View>
         <Headline style={styles.noSwipesHeadline}>You've run out of users to swipe!</Headline>
         <Text style={styles.noSwipesText}>Come back later or <Text style={styles.link} onPress={() => handleExit()}>update</Text> your city to browse more users.</Text>
       </View>
+      </ImageBackground> 
       </View>
-    </Modal> 
     )   
 } 
 
@@ -24,11 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  modalView: {
-    backgroundColor: "transparent",
-    width: "80%",
-    height: "50%"
   },
   link: {
     fontWeight: "bold",
@@ -48,6 +45,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     marginVertical: '5%'
+  },
+  bgImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "stretch",
+    padding: 0,
+    margin: 0,
   }
 })
 export default MatchModal;

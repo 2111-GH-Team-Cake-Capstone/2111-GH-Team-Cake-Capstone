@@ -80,19 +80,12 @@ export default function BrowseUsers({navigation}) {
     })
   }
   const noSwipes = () => {
-    navigation.navigate("NoSwipesScreen")
+    navigation.replace("NoSwipesScreen")
   }
 
   if(users.length <= 0) {
     return (
-      <View style={styles.container}>
-        <ImageBackground
-       source={require("../assets/capstone_bg.gif")}
-       style={styles.bgImage}>
-        <Headline style={styles.noSwipesHeadline}>You've run out of users to swipe!</Headline>
-        <Text style={styles.noSwipesText}>Come back later or <Text style={styles.link} onPress={() => navigation.navigate("EditProfile")}>update</Text> your city to browse more users.</Text>
-        </ImageBackground>
-      </View>
+      <NoSwipesScreen />
     )
   }
   return (

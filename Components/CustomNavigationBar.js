@@ -50,7 +50,7 @@ export default function CustomNavigationBar({ route, navigation, back }) {
         <Appbar.Action
           icon="heart"
           onPress={toBrowseUsers}
-          disabled={!!(route.name === "BrowseUsers")}
+          disabled={!!(route.name === "BrowseUsers" || route.name === "NoSwipesScreen")}
         />
       )}
 
