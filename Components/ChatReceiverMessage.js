@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, Text } from "react-native-paper";
 
 export default function ChatReceiverMessage({ message, user }) {
-	console.log(message);
+	// console.log(message);
 
 	return (
 		<View style={styles.container}>
