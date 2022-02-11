@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, ImageBackground } from "react-native";
 import { Button, Headline } from "react-native-paper";
 
-const MatchModal = ({navigation}) => {
+export default function NoSwipesScreen({navigation}) {
   const handleExit = () => {
    navigation.goBack();
    navigation.navigate("EditProfile")
@@ -54,4 +54,3 @@ const styles = StyleSheet.create({
     margin: 0,
   }
 })
-export default MatchModal;

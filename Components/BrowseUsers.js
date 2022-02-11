@@ -27,7 +27,6 @@ const matchesCollectionRef = collection(
 const swiperRef = React.createRef();
 
 export default function BrowseUsers({navigation}) {
-  //current user hardcoded in for now
   const currentUser = useDog();
   const [users, setUsers] = useState([]);
 
@@ -85,7 +84,7 @@ export default function BrowseUsers({navigation}) {
 
   if(users.length <= 0) {
     return (
-      <NoSwipesScreen />
+      <NoSwipesScreen navigation={navigation}/>
     )
   }
   return (
