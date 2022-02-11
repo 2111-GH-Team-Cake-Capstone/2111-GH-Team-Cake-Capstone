@@ -45,8 +45,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
+    top: "2%"
   },
   bio: {
     top: "5%",
@@ -64,8 +65,8 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     fontSize: 16,
-    top: "1%",
-    color: "#8D6CB3",
+    top: "2%",
+    color: "#995768"
   },
   bgImage: {
     width: "100%",

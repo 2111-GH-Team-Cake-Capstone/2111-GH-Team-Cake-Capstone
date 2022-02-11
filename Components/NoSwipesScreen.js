@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     fontSize: 15,
-    color: "#8D6CB3",
+    color: "#995768",
   },
   noSwipesText: {
     fontSize: 16,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   noSwipesHeadline: {
     fontFamily: 'Lobster',
-    color: "#8D6CB3",
+    color: "#995768",
     marginTop: 220,
     justifyContent: "center",
     textAlign: "center",
