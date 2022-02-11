@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Alert, Modal, Pressable, Image } from "react-native";
 import { Button, Avatar, Headline } from "react-native-paper";
+import { useFonts } from 'expo-font';
 
 const MatchModal = (props) => {
   const swipedUser = props.route.params.swipedUser;
@@ -14,12 +15,19 @@ const MatchModal = (props) => {
     props.navigation.goBack();
     props.navigation.navigate("ChatMain")
   }
+  const [loaded] = useFonts({
+    Lobster: require('../assets/fonts/LobsterTwo-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
   return (
     <Modal transparent={true} animationType="slide">
       <View style={styles.centeredView}> 
         <View style={styles.modalView}>
-          <Headline style={{textAlign: "center", fontWeight: "bold", marginVertical: '5%'}}>Puppy Love!</Headline>
-          <Text style={{textAlign: "center", fontSize: 14}}>{currentUser.name} and {swipedUser.name} have matched</Text>
+          <Headline style={styles.headline}>Puppy Love!</Headline>
+          <Text style={{textAlign: "center", fontSize: 16}}>{currentUser.name} and {swipedUser.name} have matched</Text>
           <View style={styles.avatars}>
             <Avatar.Image
                 size={120}
@@ -30,12 +38,12 @@ const MatchModal = (props) => {
                 source={{uri: swipedUser.picture}}
               />
           </View>
-          <Button onPress={() => handleMessage()}>
+          <Text style={styles.link} onPress={() => handleMessage()}>
             Message {swipedUser.name}
-          </Button>
-          <Pressable style={[styles.button, styles.buttonClose]} onPress={() => handleExit()}>
-            <Text style={{textAlign: "center", marginVertical:"5%"}}>Exit</Text>
-          </Pressable>
+          </Text>
+          <Text style={styles.link} onPress={() => handleExit()}>
+            Exit
+            </Text>
         </View>
       </View>
     </Modal> 
@@ -49,6 +57,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
+  link: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#8D6CB3",
+    alignSelf: "center",
+    marginVertical: "3%"
+  },
   modalView: {
     backgroundColor: "white",
     shadowColor: "#000",
@@ -58,6 +73,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.12,
     shadowRadius: 60,
+  },
+  headline: {
+    textAlign: "center",
+    fontFamily: 'Lobster',
+    color: "#8D6CB3",
+    marginVertical: '5%'
   },
   avatars: {
     position: "relative",

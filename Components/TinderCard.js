@@ -34,10 +34,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   card: {
-    position: "absolute",
-    top: "2%",
-    height: "65%",
-    width: "85%",
+    bottom: "15%",
+    height: 450,
+    width: 300,
     backgroundColor: "#f6f6f6",
   },
   picture: {
