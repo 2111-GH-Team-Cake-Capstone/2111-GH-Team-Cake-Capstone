@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     fontSize: 15,
-    color: "#8D6CB3",
+    color: "#995768",
     alignSelf: "center",
     marginVertical: "3%"
   },
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   headline: {
     textAlign: "center",
     fontFamily: 'Lobster',
-    color: "#8D6CB3",
+    color: "#995768",
     marginVertical: '5%'
   },
   avatars: {
