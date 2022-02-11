@@ -95,10 +95,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
-  badge: {
-    right: 170,
-    top: 27,
-  },
+
   fontContainer: {
     flex: 1,
     alignItems: "center",

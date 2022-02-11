@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  ImageBackground,
+  Dimensions,
+} from "react-native";
 import { Button, Avatar, Card, Title, Paragraph } from "react-native-paper";
 import { useDog } from "../context/DogContext";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
+import { useFonts } from "expo-font";
 
 const ViewProfile = ({ navigation }) => {
   const currentDog = useDog();
   const [currentUser, setCurrentUser] = useState(null);
   const firebaseUser = useFirebaseAuth();
+
+  const [loaded] = useFonts({
+    Lobster: require("../assets/fonts/LobsterTwo-Bold.ttf"),
+  });
 
   useEffect(() => {
     setCurrentUser(firebaseUser);
@@ -24,25 +35,25 @@ const ViewProfile = ({ navigation }) => {
         style={styles.bgImage}
         resizeMode="cover"
       >
-        <View style={styles.container}>
-          <View style={{ alignItems: "center", paddingTop: 20 }}>
-            <Avatar.Image size={160} source={{ uri: currentDog.picture }} />
-            <Button
-              icon="heart"
-              onPress={() => navigation.navigate("BrowseUsers")}
-            >
-              Browse Users
-            </Button>
-            <Button
-              icon="message-processing"
-              onPress={() => navigation.navigate("ChatMain")}
-            >
-              Message
-            </Button>
-          </View>
-          <Card
-            style={{ alignItems: "center", marginTop: 10, textAlign: "center" }}
+        <Title style={styles.heading}>Welcome</Title>
+        <View style={{ alignItems: "center" }}>
+          <Avatar.Image size={160} source={{ uri: currentDog.picture }} />
+          <Button
+            icon="heart"
+            onPress={() => navigation.navigate("BrowseUsers")}
+            style={{ marginTop: 10 }}
           >
+            Browse Users
+          </Button>
+          <Button
+            icon="message-processing"
+            onPress={() => navigation.navigate("ChatMain")}
+          >
+            Message
+          </Button>
+        </View>
+        <View style={{ margin: 30 }}>
+          <Card style={{ alignItems: "center", textAlign: "center" }}>
             <Card.Content>
               <Title style={{ textAlign: "center", fontWeight: "bold" }}>
                 Name
@@ -100,11 +111,7 @@ const ViewProfile = ({ navigation }) => {
           <Button
             mode="contained"
             onPress={() => navigation.navigate("EditProfile")}
-            style={{
-              width: 100,
-              marginTop: 10,
-              left: 120,
-            }}
+            style={styles.button}
           >
             Edit
           </Button>
@@ -117,12 +124,27 @@ const ViewProfile = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 30,
+    margin: 25,
   },
-
+  button: {
+    width: "50%",
+    marginTop: 20,
+    left: 90,
+  },
   bgImage: {
+    height: Dimensions.get("window").height,
     width: "100%",
-    height: "100%",
+    resizeMode: "stretch",
+    padding: 0,
+    margin: 0,
+  },
+  heading: {
+    alignSelf: "center",
+    color: "#995768",
+    fontFamily: "Lobster",
+    fontSize: 40,
+    padding: "5%",
+    marginTop: 10,
   },
 });
 

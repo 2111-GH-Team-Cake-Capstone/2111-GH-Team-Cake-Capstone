@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  ScrollView,
   View,
   Text,
   ImageBackground,
@@ -110,7 +109,7 @@ export default function EditProfile({ navigation }) {
   };
 
   const editUpdate = () => {
-    if (!name || !age || !breed || !gender || !city_location) {
+    if (!name || !age || !breed || !gender || !city_location || !image) {
       Alert.alert("Please fill out all the * fields");
       return;
     }
@@ -140,21 +139,19 @@ export default function EditProfile({ navigation }) {
       >
         <View style={styles.container}>
           <View style={{ alignItems: "center" }}>
-            <Avatar.Image size={150} source={{ uri: image }} />
+            <Avatar.Image size={180} source={{ uri: image }} />
             <Button onPress={pickImage} title="PickImage" icon="camera">
-              <Text> Select Your Image</Text>
+              <Text>*Select Your Image</Text>
             </Button>
           </View>
           <Dropdown
             style={styles.dropdown}
             containerStyle={styles.shadow}
             data={genderData}
-            search
-            searchPlaceholder="Search"
             labelField="label"
             valueField="value"
             label="Dropdown"
-            placeholder="Select Your Gender"
+            placeholder="* Select Your Gender"
             value={gender}
             onChange={e => {
               setGender(e.value);
@@ -169,7 +166,7 @@ export default function EditProfile({ navigation }) {
             labelField="label"
             valueField="value"
             label="Dropdown"
-            placeholder="Select Your City"
+            placeholder="* Select Your City"
             value={city_location}
             onChange={e => {
               setCity(e.value);
@@ -241,14 +238,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 40,
-    height: Dimensions.get("window").height,
-    justifyContent: "center",
   },
   dropdown: {
     backgroundColor: "white",
     borderBottomColor: "gray",
     borderBottomWidth: 0.5,
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 5,
   },
   shadow: {
     shadowColor: "#000",
@@ -266,5 +262,6 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     padding: 0,
     margin: 0,
+    height: Dimensions.get("window").height,
   },
 });
