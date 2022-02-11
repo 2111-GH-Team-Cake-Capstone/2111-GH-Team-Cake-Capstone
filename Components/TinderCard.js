@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   breed: {
-    top: "5%",
+    top: "2%",
     fontSize: 14,
   },
   viewButton: {
