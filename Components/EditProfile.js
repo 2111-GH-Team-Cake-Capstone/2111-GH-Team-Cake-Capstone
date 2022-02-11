@@ -6,6 +6,7 @@ import {
   Text,
   ImageBackground,
   Alert,
+  Dimensions,
 } from "react-native";
 import { Button, Avatar, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -138,8 +139,8 @@ export default function EditProfile({ navigation }) {
         style={styles.bgImage}
       >
         <View style={styles.container}>
-          <View style={{ alignItems: "center", paddingTop: 30 }}>
-            <Avatar.Image size={120} source={{ uri: image }} />
+          <View style={{ alignItems: "center" }}>
+            <Avatar.Image size={150} source={{ uri: image }} />
             <Button onPress={pickImage} title="PickImage" icon="camera">
               <Text> Select Your Image</Text>
             </Button>
@@ -185,6 +186,7 @@ export default function EditProfile({ navigation }) {
             label="*Breed"
             value={breed}
             onChangeText={e => setBreed(e)}
+            maxLength={100}
           />
 
           <TextInput
@@ -208,6 +210,7 @@ export default function EditProfile({ navigation }) {
             label="Bio"
             value={bio}
             onChangeText={e => setBio(e)}
+            maxLength={300}
           />
 
           <Button
@@ -238,6 +241,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 40,
+    height: Dimensions.get("window").height,
+    justifyContent: "center",
   },
   dropdown: {
     backgroundColor: "white",
