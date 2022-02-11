@@ -83,6 +83,7 @@ export default function Login({ navigation }) {
           style={styles.logo}
           source={require("../assets/leashed.png")}
         ></Image>
+
         <View>
           <TextInput
             style={styles.input}
@@ -140,8 +141,9 @@ const styles = StyleSheet.create({
     width: "40%",
     height: "40%",
     resizeMode: "contain",
-    left: 130,
-    top: 110,
+    position: "relative",
+    left: 120,
+    top: 50,
   },
   bgImage: {
     width: "100%",
