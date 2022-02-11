@@ -25,8 +25,8 @@ const ViewProfile = ({ navigation }) => {
         resizeMode="cover"
       >
         <View style={styles.container}>
-          <View style={{ alignItems: "center", paddingTop: 20 }}>
-            <Avatar.Image size={160} source={{ uri: currentDog.picture }} />
+          <View style={{ alignItems: "center", paddingTop: 30 }}>
+            <Avatar.Image size={170} source={{ uri: currentDog.picture }} />
             <Button
               icon="heart"
               onPress={() => navigation.navigate("BrowseUsers")}
@@ -121,8 +121,13 @@ const styles = StyleSheet.create({
   },
 
   bgImage: {
-    width: "100%",
+    flex: 1,
+    justifyContent: "center",
     height: "100%",
+    width: "100%",
+    resizeMode: "stretch",
+    padding: 0,
+    margin: 0,
   },
 });
 
