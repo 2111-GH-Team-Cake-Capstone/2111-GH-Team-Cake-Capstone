@@ -99,16 +99,25 @@ export default function ChatMain({ navigation }) {
 										navigation.navigate("ChatMessage", { user, match })
 									}
 								>
-									<Avatar.Image
-										style={styles.avatarImg}
-										source={{
-											uri: user.picture,
-										}}
-									/>
-									<Text style={styles.chats}>
-										<Title>{user.name}</Title>
-									</Text>
-									<Paragraph style={styles.chats}>Say hi!</Paragraph>
+									<View style={styles.container}>
+										{user.picture ? (
+											<Avatar.Image
+												style={styles.avatarImg}
+												source={{
+													uri: user.picture,
+												}}
+											/>
+										) : (
+											<Avatar.Image
+												style={styles.avatarImg}
+												source={require("../assets/placeholder.jpg")}
+											/>
+										)}
+										<View style={styles.chats}>
+											<Title>{user.name}</Title>
+											<Paragraph>Say hi!</Paragraph>
+										</View>
+									</View>
 									<Divider style={styles.divider} />
 								</TouchableOpacity>
 							) : null
@@ -142,18 +151,18 @@ const styles = StyleSheet.create({
 		padding: 0,
 		margin: 0,
 	},
+	container: {
+		alignSelf: "flex-start",
+		flexDirection: "row",
+	},
 	avatarImg: {
-		borderRadius: 60,
-		height: 1,
-		width: 1,
 		marginLeft: 15,
 		marginBottom: 10,
-		marginTop: 12,
+		marginTop: 15,
 	},
 	chats: {
-		marginLeft: 90,
-		alignSelf: "flex-start",
-		justifyContent: "space-between",
+		marginLeft: 10,
+		justifyContent: "center",
 	},
 	noMessages: {
 		alignItems: "center",
