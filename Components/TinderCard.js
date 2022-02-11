@@ -15,7 +15,7 @@ export default function TinderCard(props) {
               <Text style={styles.link} onPress={() => props.navigation.navigate("MatchProfile", { user: props.user})}>View Profile</Text>
               </View>
               <Paragraph style={styles.breed}>{props.user.breed}</Paragraph>
-              <Paragraph style={styles.bio}>{props.user.bio}</Paragraph>
+              <Paragraph style={styles.bio}>"{props.user.bio}"</Paragraph>
             </Card.Content>
           </Card>
       </View>

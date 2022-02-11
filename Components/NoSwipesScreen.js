@@ -11,7 +11,7 @@ const MatchModal = ({navigation}) => {
     <Modal transparent={true}>
       <View style={styles.centeredView}> 
         <View style={styles.modalView}>
-        <Headline style={styles.noSwipesHeadline}>Uh oh! You've run out of users to swipe!</Headline>
+        <Headline style={styles.noSwipesHeadline}>You've run out of users to swipe!</Headline>
         <Text style={styles.noSwipesText}>Come back later or <Text style={styles.link} onPress={() => handleExit()}>update</Text> your city to browse more users.</Text>
       </View>
       </View>
