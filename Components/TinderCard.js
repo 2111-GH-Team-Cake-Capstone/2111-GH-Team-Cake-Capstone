@@ -34,10 +34,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   card: {
-    position: "absolute",
-    top: "2%",
-    height: "65%",
-    width: "85%",
+    bottom: "15%",
+    height: 450,
+    width: 300,
     backgroundColor: "#f6f6f6",
   },
   picture: {
@@ -46,8 +45,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
+    top: "2%"
   },
   bio: {
     top: "5%",
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: "bold",
     fontSize: 16,
-    top: "1%",
-    color: "#8D6CB3",
+    top: "2%",
+    color: "#995768"
   },
   bgImage: {
     width: "100%",

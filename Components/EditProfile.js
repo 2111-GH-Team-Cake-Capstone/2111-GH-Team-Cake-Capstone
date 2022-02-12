@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  ScrollView,
   View,
   Text,
   ImageBackground,
   Alert,
+  Dimensions,
 } from "react-native";
 import { Button, Avatar, TextInput } from "react-native-paper";
 import { Dropdown } from "react-native-element-dropdown";
@@ -109,7 +109,7 @@ export default function EditProfile({ navigation }) {
   };
 
   const editUpdate = () => {
-    if (!name || !age || !breed || !gender || !city_location) {
+    if (!name || !age || !breed || !gender || !city_location || !image) {
       Alert.alert("Please fill out all the * fields");
       return;
     }
@@ -138,22 +138,20 @@ export default function EditProfile({ navigation }) {
         style={styles.bgImage}
       >
         <View style={styles.container}>
-          <View style={{ alignItems: "center", paddingTop: 30 }}>
-            <Avatar.Image size={120} source={{ uri: image }} />
+          <View style={{ alignItems: "center" }}>
+            <Avatar.Image size={180} source={{ uri: image }} />
             <Button onPress={pickImage} title="PickImage" icon="camera">
-              <Text> Select Your Image</Text>
+              <Text>*Select Your Image</Text>
             </Button>
           </View>
           <Dropdown
             style={styles.dropdown}
             containerStyle={styles.shadow}
             data={genderData}
-            search
-            searchPlaceholder="Search"
             labelField="label"
             valueField="value"
             label="Dropdown"
-            placeholder="Select Your Gender"
+            placeholder="* Select Your Gender"
             value={gender}
             onChange={e => {
               setGender(e.value);
@@ -168,7 +166,7 @@ export default function EditProfile({ navigation }) {
             labelField="label"
             valueField="value"
             label="Dropdown"
-            placeholder="Select Your City"
+            placeholder="* Select Your City"
             value={city_location}
             onChange={e => {
               setCity(e.value);
@@ -185,6 +183,7 @@ export default function EditProfile({ navigation }) {
             label="*Breed"
             value={breed}
             onChangeText={e => setBreed(e)}
+            maxLength={100}
           />
 
           <TextInput
@@ -208,6 +207,7 @@ export default function EditProfile({ navigation }) {
             label="Bio"
             value={bio}
             onChangeText={e => setBio(e)}
+            maxLength={300}
           />
 
           <Button
@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomColor: "gray",
     borderBottomWidth: 0.5,
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 5,
   },
   shadow: {
     shadowColor: "#000",
@@ -261,5 +262,6 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     padding: 0,
     margin: 0,
+    height: Dimensions.get("window").height,
   },
 });

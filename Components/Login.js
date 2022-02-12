@@ -1,39 +1,52 @@
-import * as React from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform, ImageBackground, Dimensions } from 'react-native';
-import { Headline, Button, TextInput, HelperText} from 'react-native-paper';
-import { createUserWithEmailAndPassword,
-         signInWithEmailAndPassword,
-         onAuthStateChanged
-        } from "firebase/auth";
+import * as React from "react";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  ImageBackground,
+  Dimensions,
+  Image,
+} from "react-native";
+import { Headline, Button, TextInput, HelperText } from "react-native-paper";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
-import db, { auth } from '../firebase';
+import db, { auth } from "../firebase";
 import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState("")
+  const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
         navigation.replace("Home");
       }
     });
     return unsubscribe;
-  }, [])
+  }, []);
 
-  async function handleSignup(){
+  async function handleSignup() {
     try {
-      const createdUser =  await createUserWithEmailAndPassword(auth, email, password)
+      const createdUser = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       // Signed in
       const user = createdUser.user;
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         swipes: [],
-        potential_matches: []
+        potential_matches: [],
       });
-      navigation.replace("EditProfile")
+      navigation.replace("EditProfile");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -41,12 +54,16 @@ export default function Login({ navigation }) {
     }
   }
 
-  async function handleLogin (){
+  async function handleLogin() {
     try {
-      const loggedInUser =  await signInWithEmailAndPassword(auth, email, password)
+      const loggedInUser = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       // Signed in
       const user = loggedInUser.user;
-      navigation.replace("Home")
+      navigation.replace("Home");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -62,28 +79,42 @@ export default function Login({ navigation }) {
         source={require("../assets/capstone_bg.gif")}
         style={styles.bgImage}
       >
-        <View style={styles.container}>
-          <Headline style={styles.heading}>Leashed Logo</Headline>
+        <Image
+          style={styles.logo}
+          source={require("../assets/leashed.png")}
+        ></Image>
+
+        <View>
           <TextInput
-              style={styles.input}
-              mode="outlined"
-              label="Email"
-              value={email}
-              onChangeText={text => setEmail(text)}
+            style={styles.input}
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
           <TextInput
-              style={styles.input}
-              mode="outlined"
-              label="Password"
-              value={password}
-              onChangeText={text => setPassword(text)}
-              secureTextEntry
+            style={styles.input}
+            mode="outlined"
+            label="Password"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            secureTextEntry
           />
-          <HelperText type="error" visible={!!error}>Error: {error.slice(5).replace(/-/g, " ")}</HelperText>
-          <Button style={styles.input} mode="contained" onPress={() => handleSignup()}>
+          <HelperText type="error" visible={!!error}>
+            Error: {error.slice(5).replace(/-/g, " ")}
+          </HelperText>
+          <Button
+            style={styles.input}
+            mode="contained"
+            onPress={() => handleSignup()}
+          >
             sign up
           </Button>
-          <Button style={styles.input} mode="outlined" onPress={() => handleLogin()}>
+          <Button
+            style={styles.input}
+            mode="outlined"
+            onPress={() => handleLogin()}
+          >
             Log in
           </Button>
         </View>
@@ -95,15 +126,24 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: Dimensions.get('window').height,
-    justifyContent: 'center'
+    height: Dimensions.get("window").height,
+    justifyContent: "center",
   },
   input: {
     margin: "2%",
-    marginHorizontal: "4%"
+    marginHorizontal: "4%",
   },
-  heading: {
-    alignSelf: 'center',
+
+  imageContainer: {
+    flex: 1,
+  },
+  logo: {
+    width: "40%",
+    height: "40%",
+    resizeMode: "contain",
+    position: "relative",
+    left: 120,
+    top: 50,
   },
   bgImage: {
     width: "100%",
