@@ -58,3 +58,10 @@
   - medications
 
 </details>
+
+## Try it!
+
+1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
+
+2. Scan the QR Code:
+   ![Expo Go QR Code](/assets/expo-go.svg)
