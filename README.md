@@ -65,3 +65,4 @@
 
 2. Scan the QR Code:
    ![Expo Go QR Code](/assets/expo-go.svg)
+   Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.
