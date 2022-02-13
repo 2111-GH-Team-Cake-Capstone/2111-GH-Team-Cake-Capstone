@@ -16,13 +16,10 @@ import {
 } from "firebase/firestore";
 import { useDog } from "../context/DogContext";
 
-export default function ChatMain({ navigation }, props) {
+export default function ChatMain({ navigation }) {
 	const currentDog = useDog();
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
-
-	const lastMessage = useLastMessage(props);
-	console.log("LAST MESSAGE TIFF", lastMessage);
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -112,7 +109,7 @@ export default function ChatMain({ navigation }, props) {
 										)}
 										<View style={styles.chats}>
 											<Title>{user.name}</Title>
-											<Paragraph>{lastMessage}</Paragraph>
+											<Paragraph>Say Hi!</Paragraph>
 										</View>
 									</View>
 									<Divider />

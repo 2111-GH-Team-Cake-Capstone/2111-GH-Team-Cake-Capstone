@@ -9,6 +9,7 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
+	Dimensions,
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import {
@@ -31,22 +32,6 @@ export default function ChatMessage(props) {
 
 	const user = props.route.params.user;
 	const match = props.route.params.match;
-
-	function useLastMessage() {
-		const [lastMessage, setLastMessage] = useState("Say hi!");
-
-		onSnapshot(
-			query(
-				collection(db, "matches", match.id, "messages"),
-				orderBy("timestamp", "desc")
-			),
-			(snapshot) => setLastMessage(snapshot.docs[0]?.data()?.message)
-		);
-
-		return lastMessage;
-	}
-
-	// console.log("USELASTMESSAGE", useLastMessage());
 
 	useEffect(
 		() =>
@@ -88,7 +73,7 @@ export default function ChatMessage(props) {
 			>
 				<KeyboardAvoidingView
 					enabled={Platform.OS === "ios" ? "padding" : "height"}
-					style={{ flex: 1 }}
+					style={{ flex: 1, height: Dimensions.get("window").height }}
 					keyboardVerticalOffset={10}
 				>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
