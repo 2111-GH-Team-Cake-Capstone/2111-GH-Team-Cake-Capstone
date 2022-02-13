@@ -48,7 +48,6 @@ export default function Login({ navigation }) {
       navigation.replace("EditProfile");
     } catch (error) {
       const errorCode = error.code;
-      //const errorMessage = error.message;
       setError(errorCode);
     }
   }
@@ -65,7 +64,6 @@ export default function Login({ navigation }) {
       navigation.replace("Home");
     } catch (error) {
       const errorCode = error.code;
-      //const errorMessage = error.message;
       setError(errorCode);
     }
   }
