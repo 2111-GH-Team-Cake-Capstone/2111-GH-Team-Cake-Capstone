@@ -9,7 +9,6 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
-	Dimensions
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import {
