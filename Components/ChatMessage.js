@@ -75,6 +75,11 @@ export default function ChatMessage(props) {
 				source={require("../assets/capstone_bg.gif")}
 				style={styles.bgImage}
 			>
+				<KeyboardAvoidingView
+					enabled={Platform.OS === "ios" ? "padding" : "height"}
+					style={{ flex: 1 }}
+					keyboardVerticalOffset={10}
+				>
 					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 						<FlatList
 							data={messages}
@@ -108,6 +113,7 @@ export default function ChatMessage(props) {
 							Send
 						</Button>
 					</View>
+				</KeyboardAvoidingView>
 			</ImageBackground>
 		</SafeAreaView>
 	);
