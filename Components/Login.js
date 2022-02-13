@@ -8,7 +8,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { Headline, Button, TextInput, HelperText } from "react-native-paper";
+import { Button, TextInput, HelperText } from "react-native-paper";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -16,7 +16,6 @@ import {
 } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import db, { auth } from "../firebase";
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -49,7 +48,7 @@ export default function Login({ navigation }) {
       navigation.replace("EditProfile");
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      //const errorMessage = error.message;
       setError(errorCode);
     }
   }
@@ -66,7 +65,7 @@ export default function Login({ navigation }) {
       navigation.replace("Home");
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
+      //const errorMessage = error.message;
       setError(errorCode);
     }
   }
