@@ -1,13 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import {
-	Text,
-	DarkTheme as PaperDarkTheme,
 	DefaultTheme as PaperDefaultTheme,
 	Provider as PaperProvider,
 } from "react-native-paper";
 import {
 	NavigationContainer,
-	DarkTheme as NavigationDarkTheme,
 	DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -34,17 +31,16 @@ import NoSwipesScreen from "./Components/NoSwipesScreen";
 import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-//const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 const theme = {
 	...CombinedDefaultTheme,
 	colors: {
 		...CombinedDefaultTheme.colors,
 		primary: "#f04c64",
-		//accent: '#f1c40f',
 	},
 };
 const Stack = createNativeStackNavigator();
 LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
+//LogBox.ignoreAllLogs();//Hide all warning notifications on front-end *FOR DEMO DAY?*
 
 function App() {
   return (
