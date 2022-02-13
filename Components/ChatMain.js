@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
+	ScrollView,
 	ImageBackground,
 	TouchableOpacity,
 } from "react-native";
@@ -87,7 +88,7 @@ export default function ChatMain({ navigation }) {
 			source={require("../assets/capstone_bg.gif")}
 			style={styles.bgImage}
 		>
-			<View>
+			<ScrollView>
 				{matchesList.length > 0 ? (
 					users.map((user) =>
 						matchesList.map((match) =>
@@ -137,7 +138,7 @@ export default function ChatMain({ navigation }) {
 						</Text>
 					</View>
 				)}
-			</View>
+			</ScrollView>
 		</ImageBackground>
 	);
 }
