@@ -74,7 +74,7 @@ export default function ChatMessage(props) {
 		<KeyboardAvoidingView
 				behavior={Platform.OS === "ios" ? "padding" : "height"}
 				style={{ flex: 1 }}
-				keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 170}
+				keyboardVerticalOffset={Platform.OS === "ios" ? 100 : "65%"}
 		>
 			<SafeAreaView style={styles.container}>
 				<ImageBackground

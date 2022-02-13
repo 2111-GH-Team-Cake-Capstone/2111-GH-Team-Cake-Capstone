@@ -79,7 +79,7 @@ function App() {
           </NavigationContainer>
         </DogProvider>
       </FirebaseAuthProvider>
-      {/* <StatusBar style="auto" /> //comment in for expo warnings */}
+      <StatusBar style="auto" />
     </PaperProvider>
   );
 }
