@@ -67,15 +67,12 @@ export default function ChatMessage(props) {
 	};
 
 	return (
-		<KeyboardAvoidingView
-			enabled={Platform.OS === "ios" ? "padding" : "height"}
-			style={{
-				flex: 1,
-				height: Dimensions.get("window").height,
-				justifyContent: "center",
-			}}
-			keyboardVerticalOffset={10}
+		<KeyboardAvoidingView       
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+				style={{ flex: 1 }}
+				keyboardVerticalOffset={Platform.OS === "ios" ? 100 : "65%"}
 		>
+			<SafeAreaView style={styles.container}>
 			<ImageBackground
 				source={require("../assets/capstone_bg.gif")}
 				style={styles.bgImage}
@@ -117,7 +114,9 @@ export default function ChatMessage(props) {
 					</Button>
 				</View>
 			</ImageBackground>
+</SafeAreaView>
 		</KeyboardAvoidingView>
+
 	);
 }
 

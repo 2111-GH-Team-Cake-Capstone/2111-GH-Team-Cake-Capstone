@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	View,
+	ScrollView,
 	ImageBackground,
 	TouchableOpacity,
 } from "react-native";
@@ -81,34 +82,38 @@ export default function ChatMain({ navigation }) {
 			source={require("../assets/capstone_bg.gif")}
 			style={styles.bgImage}
 		>
-			{matchesList.length > 0 ? (
-				users.map((user) =>
-					matchesList.map((match) =>
-						match.matchedDog === user.uid ? (
-							<TouchableOpacity
-								key={user.id}
-								mode="contained"
-								onPress={() =>
-									navigation.navigate("ChatMessage", { user, match })
-								}
-							>
-								<View style={styles.container}>
-									{user.picture ? (
-										<Avatar.Image
-											style={styles.avatarImg}
-											source={{
-												uri: user.picture,
-											}}
-										/>
-									) : (
-										<Avatar.Image
-											style={styles.avatarImg}
-											source={require("../assets/placeholder.jpg")}
-										/>
-									)}
-									<View style={styles.chats}>
-										<Title>{user.name}</Title>
-										<Paragraph>Say Hi!</Paragraph>
+
+			<ScrollView>
+				{matchesList.length > 0 ? (
+					users.map((user) =>
+						matchesList.map((match) =>
+							match.matchedDog === user.uid ? (
+								<TouchableOpacity
+									key={user.id}
+									mode="contained"
+									onPress={() =>
+										navigation.navigate("ChatMessage", { user, match })
+									}
+								>
+									<View style={styles.container}>
+										{user.picture ? (
+											<Avatar.Image
+												style={styles.avatarImg}
+												source={{
+													uri: user.picture,
+												}}
+											/>
+										) : (
+											<Avatar.Image
+												style={styles.avatarImg}
+												source={require("../assets/placeholder.jpg")}
+											/>
+										)}
+										<View style={styles.chats}>
+											<Title>{user.name}</Title>
+											<Paragraph>Say hi!</Paragraph>
+										</View>
+
 									</View>
 								</View>
 								<Divider />
@@ -127,9 +132,11 @@ export default function ChatMain({ navigation }) {
 						>
 							Other Dogs!
 						</Text>
-					</Text>
-				</View>
-			)}
+
+					</View>
+				)}
+			</ScrollView>
+
 		</ImageBackground>
 	);
 }
