@@ -1,36 +1,23 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import React from "react";
 import { useDog } from "../context/DogContext";
-import { Avatar, Text } from "react-native-paper";
+import { Avatar } from "react-native-paper";
+import Moment from "react-moment";
+import moment from "moment/min/moment-with-locales";
 
 export default function ChatSenderMessage({ message }) {
 	const currentDog = useDog();
-	const getFirebaseTimeStamp = message.timestamp.toDate();
-	const convertedTimestamp = new Date(getFirebaseTimeStamp);
-
-	const year = convertedTimestamp.getFullYear();
-	const month = convertedTimestamp.getMonth() + 1;
-	const day = convertedTimestamp.getDate();
-	const hour =
-		convertedTimestamp.getHours() == 0
-			? "12"
-			: convertedTimestamp.getHours() > 12
-			? convertedTimestamp.getHours() - 12
-			: convertedTimestamp.getHours();
-	const minutes =
-		convertedTimestamp.getMinutes() < 10
-			? `0${convertedTimestamp.getMinutes()}`
-			: convertedTimestamp.getMinutes();
-	const aMpM = convertedTimestamp.getHours() < 12 ? "AM" : "PM";
-
-	const messageTimestamp = `${month}/${day}/${year} ${hour}:${minutes} ${aMpM}`;
+	Moment.globalMoment = moment;
+	Moment.globalFormat = "MM/DD/YYYY hh:mm a";
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.senderMessageContainer}>
 				<Text style={styles.name}>
-					{currentDog.name} {messageTimestamp}
+					{currentDog.name}{" "}
+					<Moment element={Text}>{message.timestamp?.toDate()}</Moment>
 				</Text>
+
 				<Text style={styles.senderMessage}>{message.message}</Text>
 			</View>
 
