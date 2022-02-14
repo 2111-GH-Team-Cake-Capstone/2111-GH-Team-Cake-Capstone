@@ -8,8 +8,9 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Platform,
+	TextInput,
 } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { Button } from "react-native-paper";
 import {
 	addDoc,
 	collection,
@@ -101,8 +102,10 @@ export default function ChatMessage(props) {
 				<View>
 					<TextInput
 						style={styles.textInput}
-						label="Message..."
-						mode="outlined"
+						placeholder="Message..."
+						mode="flat"
+						multiline
+						editable
 						value={input}
 						onChangeText={setInput}
 						onSubmitEditing={sendMessage}
@@ -124,8 +127,13 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	textInput: {
-		height: 60,
 		backgroundColor: "white",
+		height: 50,
+		margin: 5,
+		padding: 10,
+		borderWidth: 1,
+		borderRadius: 10,
+		borderColor: "grey",
 	},
 	button: {
 		marginTop: 20,
