@@ -112,7 +112,9 @@ export default function Login({ navigation }) {
           </Button>
           <Button
             style={styles.input}
-            mode="outlined"
+            color="white"
+            labelStyle={styles.button}
+            mode="contained"
             onPress={() => handleLogin()}
           >
             Log in
@@ -133,7 +135,9 @@ const styles = StyleSheet.create({
     margin: "2%",
     marginHorizontal: "4%",
   },
-
+  button: {
+    color: "#f04c64",
+  },
   imageContainer: {
     flex: 1,
   },
