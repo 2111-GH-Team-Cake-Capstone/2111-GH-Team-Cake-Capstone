@@ -1,36 +1,36 @@
 import * as React from "react";
 import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  ImageBackground,
-  Dimensions,
-  Image,
+	StyleSheet,
+	View,
+	KeyboardAvoidingView,
+	Platform,
+	ImageBackground,
+	Dimensions,
+	Image,
 } from "react-native";
-import { Headline, Button, TextInput, HelperText } from "react-native-paper";
+import { Button, TextInput, HelperText } from "react-native-paper";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
 } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import db, { auth } from "../firebase";
-import { useFirebaseAuth } from "../context/FirebaseAuthContext";
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState("");
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
+	const [error, setError] = React.useState("");
 
-  React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        navigation.replace("Home");
-      }
-    });
-    return unsubscribe;
-  }, []);
+	React.useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				navigation.replace("Home");
+			}
+		});
+		return unsubscribe;
+	}, []);
+
 
   async function handleSignup() {
     try {
@@ -49,7 +49,6 @@ export default function Login({ navigation }) {
       navigation.replace("EditProfile");
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
       setError(errorCode);
     }
   }
@@ -66,7 +65,6 @@ export default function Login({ navigation }) {
       navigation.replace("Home");
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
       setError(errorCode);
     }
   }
@@ -112,7 +110,9 @@ export default function Login({ navigation }) {
           </Button>
           <Button
             style={styles.input}
-            mode="outlined"
+            color="white"
+            labelStyle={styles.button}
+            mode="contained"
             onPress={() => handleLogin()}
           >
             Log in
@@ -133,7 +133,9 @@ const styles = StyleSheet.create({
     margin: "2%",
     marginHorizontal: "4%",
   },
-
+  button: {
+    color: "#f04c64",
+  },
   imageContainer: {
     flex: 1,
   },
@@ -151,4 +153,5 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
+
 });

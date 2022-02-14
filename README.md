@@ -1,6 +1,6 @@
-# Dog Health and Wellness Tiers
+# Leashed: Tinder for Dogs
 
-## Tier 1: Dog Tinder
+## MVP
 
 ### As a user, I want to be able to:
 
@@ -19,7 +19,11 @@
   - questions/get to know you
 - swipe/view other profiles
 - matches
+  - when two dogs swipe right on each other, a match is made
+  - for the user who swiped last, a modal pops up to alert them
+  - both dogs are able to chat with each other
 - chat
+  - in realtime, matched dogs can send each other messages with text and emojis
 
 ### As an engineer, I want to:
 
@@ -27,13 +31,14 @@
 - user data to be secure so that no one can illegitimately manipulate information.
 - have deployed site
 
-## TIER 2: Extras & Add Ons
+## Extras & Add Ons
 
 <details><summary>Click Here To Open</summary>
 
 ### Chat Feature:
-  - as a user, i want to be able to delete a message of mine
-  - have timestamps displayed when messages are sent
+
+- as a user, i want to be able to delete a message of mine
+- have timestamps displayed when messages are sent
 
 ### Community Chat:
 
@@ -47,9 +52,19 @@
 - create/view vet info. If no vet, we want to enable location search.
 
 - create/view calendar:
-  - push notifications (pwa?)
+  - push notifications
   - grooming
   - vaccines
   - medications
 
 </details>
+
+## Try it!
+
+1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
+
+2. Scan the QR Code:
+
+   ![Expo Go QR Code](/assets/expo-go.svg)
+
+   Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.

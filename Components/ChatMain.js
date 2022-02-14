@@ -21,7 +21,6 @@ export default function ChatMain({ navigation }) {
 	const currentDog = useDog();
 	const [matches, setMatches] = useState([]);
 	const [users, setUsers] = useState([]);
-	// const [lastMessage, setLastMessage] = useState("");
 
 	useEffect(() => {
 		const getUsers = async () => {
@@ -38,12 +37,9 @@ export default function ChatMain({ navigation }) {
 
 		getUsers();
 	}, []);
-	// console.log("USERS LOOK HERE", users);
 
-	// useEffect below has an implicit return to serve as cleanup
 	useEffect(() => {
 		if (currentDog.uid) {
-			//for navBar logout
 			onSnapshot(
 				query(collection(db, "matches"), where("dog_a", "==", currentDog.uid)),
 				(snapshot) => {
@@ -69,7 +65,6 @@ export default function ChatMain({ navigation }) {
 			);
 		}
 	}, [currentDog]);
-	// console.log("MATCHES LOOK HERE", matches);
 
 	//for navBar logout:
 	if (!currentDog.uid) {
@@ -81,13 +76,13 @@ export default function ChatMain({ navigation }) {
 			? { id: match.id, matchedDog: match.dog_b }
 			: { id: match.id, matchedDog: match.dog_a };
 	});
-	// console.log("MATCHES LIST LOOK HERE", matchesList);
 
 	return (
 		<ImageBackground
 			source={require("../assets/capstone_bg.gif")}
 			style={styles.bgImage}
 		>
+
 			<ScrollView>
 				{matchesList.length > 0 ? (
 					users.map((user) =>
@@ -118,27 +113,30 @@ export default function ChatMain({ navigation }) {
 											<Title>{user.name}</Title>
 											<Paragraph>Say hi!</Paragraph>
 										</View>
+
 									</View>
-									<Divider style={styles.divider} />
-								</TouchableOpacity>
-							) : null
-						)
+								</View>
+								<Divider />
+							</TouchableOpacity>
+						) : null
 					)
-				) : (
-					<View style={styles.noMessages}>
-						<Title>No Messages :(</Title>
-						<Text>
-							Go Match With{" "}
-							<Text
-								style={styles.link}
-								onPress={() => navigation.navigate("BrowseUsers")}
-							>
-								Other Dogs!
-							</Text>
+				)
+			) : (
+				<View style={styles.noMessages}>
+					<Title>No Messages :(</Title>
+					<Text>
+						Go Match With{" "}
+						<Text
+							style={styles.link}
+							onPress={() => navigation.navigate("BrowseUsers")}
+						>
+							Other Dogs!
 						</Text>
+
 					</View>
 				)}
 			</ScrollView>
+
 		</ImageBackground>
 	);
 }
