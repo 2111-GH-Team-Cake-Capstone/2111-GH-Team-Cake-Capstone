@@ -1,18 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import {
-	DefaultTheme as PaperDefaultTheme,
-	Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
 } from "react-native-paper";
 import {
-	NavigationContainer,
-	DefaultTheme as NavigationDefaultTheme,
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import merge from "deepmerge";
 import { LogBox } from "react-native";
 import {
-	FirebaseAuthProvider,
-	useFirebaseAuth,
+  FirebaseAuthProvider,
+  useFirebaseAuth,
 } from "./context/FirebaseAuthContext";
 import { DogProvider, useDog } from "./context/DogContext";
 
@@ -32,15 +32,15 @@ import CustomNavigationBar from "./Components/CustomNavigationBar";
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const theme = {
-	...CombinedDefaultTheme,
-	colors: {
-		...CombinedDefaultTheme.colors,
-		primary: "#f04c64",
-	},
+  ...CombinedDefaultTheme,
+  colors: {
+    ...CombinedDefaultTheme.colors,
+    primary: "#f04c64",
+  },
 };
 const Stack = createNativeStackNavigator();
 LogBox.ignoreLogs(["AsyncStorage"]); // Ignore log notification by message
-//LogBox.ignoreAllLogs();//Hide all warning notifications on front-end *FOR DEMO DAY?*
+LogBox.ignoreAllLogs(); //Hide all warning notifications on front-end *FOR DEMO DAY?*
 
 function App() {
   return (
@@ -59,7 +59,12 @@ function App() {
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="BrowseUsers" component={BrowseUsers} />
               <Stack.Screen name="TinderCard" component={TinderCard} />
-              <Stack.Group screenOptions={{ presentation: "transparentModal", headerShown: false}}>
+              <Stack.Group
+                screenOptions={{
+                  presentation: "transparentModal",
+                  headerShown: false,
+                }}
+              >
                 <Stack.Screen name="MatchModal" component={MatchModal} />
               </Stack.Group>
               <Stack.Screen name="NoSwipesScreen" component={NoSwipesScreen} />
