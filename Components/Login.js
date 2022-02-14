@@ -1,35 +1,36 @@
 import * as React from "react";
 import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  ImageBackground,
-  Dimensions,
-  Image,
+	StyleSheet,
+	View,
+	KeyboardAvoidingView,
+	Platform,
+	ImageBackground,
+	Dimensions,
+	Image,
 } from "react-native";
 import { Button, TextInput, HelperText } from "react-native-paper";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
 } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import db, { auth } from "../firebase";
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState("");
+	const [email, setEmail] = React.useState("");
+	const [password, setPassword] = React.useState("");
+	const [error, setError] = React.useState("");
 
-  React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        navigation.replace("Home");
-      }
-    });
-    return unsubscribe;
-  }, []);
+	React.useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				navigation.replace("Home");
+			}
+		});
+		return unsubscribe;
+	}, []);
+
 
   async function handleSignup() {
     try {
@@ -152,4 +153,5 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
+
 });
