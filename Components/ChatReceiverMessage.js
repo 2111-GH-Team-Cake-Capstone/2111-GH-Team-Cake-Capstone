@@ -1,27 +1,12 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import React from "react";
-import { Avatar, Text } from "react-native-paper";
+import { Avatar } from "react-native-paper";
+import Moment from "react-moment";
+import moment from "moment/min/moment-with-locales";
 
 export default function ChatReceiverMessage({ message, user }) {
-	const getFirebaseTimeStamp = message.timestamp.toDate();
-	const convertedTimestamp = new Date(getFirebaseTimeStamp);
-
-	const year = convertedTimestamp.getFullYear();
-	const month = convertedTimestamp.getMonth() + 1;
-	const day = convertedTimestamp.getDate();
-	const hour =
-		convertedTimestamp.getHours() == 0
-			? "12"
-			: convertedTimestamp.getHours() > 12
-			? convertedTimestamp.getHours() - 12
-			: convertedTimestamp.getHours();
-	const minutes =
-		convertedTimestamp.getMinutes() < 10
-			? `0${convertedTimestamp.getMinutes()}`
-			: convertedTimestamp.getMinutes();
-	const aMpM = convertedTimestamp.getHours() < 12 ? "AM" : "PM";
-
-	const messageTimestamp = `${month}/${day}/${year} ${hour}:${minutes} ${aMpM}`;
+	Moment.globalMoment = moment;
+	Moment.globalFormat = "MM/DD/YYYY hh:mm a";
 
 	return (
 		<View style={styles.container}>
@@ -38,7 +23,8 @@ export default function ChatReceiverMessage({ message, user }) {
 
 			<View style={styles.receiverMessageContainer}>
 				<Text style={styles.name}>
-					{user.name} {messageTimestamp}
+					{user.name}{" "}
+					<Moment element={Text}>{message.timestamp?.toDate()}</Moment>
 				</Text>
 
 				<Text style={styles.receiverMessage}>{message.message}</Text>
@@ -69,7 +55,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginBottom: 5,
 		marginLeft: 5,
-		marginRight: 30,
+		marginRight: 40,
 		color: "white",
 		fontSize: 17,
 	},
