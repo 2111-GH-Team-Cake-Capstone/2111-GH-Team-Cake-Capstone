@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, ImageBackground } from "react-native";
-import { Headline, Button, Subheading } from "react-native-paper";
+import { Headline, Button } from "react-native-paper";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useFonts } from 'expo-font';
