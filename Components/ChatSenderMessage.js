@@ -71,5 +71,7 @@ const styles = StyleSheet.create({
 		marginRight: 5,
 		color: "white",
 		fontSize: 17,
+		textAlign: "right",
+		marginLeft: "auto",
 	},
 });

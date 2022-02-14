@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginBottom: 5,
 		marginLeft: 5,
-		marginRight: 5,
+		marginRight: 30,
 		color: "white",
 		fontSize: 17,
 	},

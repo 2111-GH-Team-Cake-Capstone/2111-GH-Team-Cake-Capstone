@@ -81,57 +81,55 @@ export default function ChatMain({ navigation }) {
 			source={require("../assets/capstone_bg.gif")}
 			style={styles.bgImage}
 		>
-			<View>
-				{matchesList.length > 0 ? (
-					users.map((user) =>
-						matchesList.map((match) =>
-							match.matchedDog === user.uid ? (
-								<TouchableOpacity
-									key={user.id}
-									mode="contained"
-									onPress={() =>
-										navigation.navigate("ChatMessage", { user, match })
-									}
-								>
-									<View style={styles.container}>
-										{user.picture ? (
-											<Avatar.Image
-												style={styles.avatarImg}
-												source={{
-													uri: user.picture,
-												}}
-											/>
-										) : (
-											<Avatar.Image
-												style={styles.avatarImg}
-												source={require("../assets/placeholder.jpg")}
-											/>
-										)}
-										<View style={styles.chats}>
-											<Title>{user.name}</Title>
-											<Paragraph>Say Hi!</Paragraph>
-										</View>
-									</View>
-									<Divider />
-								</TouchableOpacity>
-							) : null
-						)
-					)
-				) : (
-					<View style={styles.noMessages}>
-						<Title>No Messages :(</Title>
-						<Text>
-							Go Match With{" "}
-							<Text
-								style={styles.link}
-								onPress={() => navigation.navigate("BrowseUsers")}
+			{matchesList.length > 0 ? (
+				users.map((user) =>
+					matchesList.map((match) =>
+						match.matchedDog === user.uid ? (
+							<TouchableOpacity
+								key={user.id}
+								mode="contained"
+								onPress={() =>
+									navigation.navigate("ChatMessage", { user, match })
+								}
 							>
-								Other Dogs!
-							</Text>
+								<View style={styles.container}>
+									{user.picture ? (
+										<Avatar.Image
+											style={styles.avatarImg}
+											source={{
+												uri: user.picture,
+											}}
+										/>
+									) : (
+										<Avatar.Image
+											style={styles.avatarImg}
+											source={require("../assets/placeholder.jpg")}
+										/>
+									)}
+									<View style={styles.chats}>
+										<Title>{user.name}</Title>
+										<Paragraph>Say Hi!</Paragraph>
+									</View>
+								</View>
+								<Divider />
+							</TouchableOpacity>
+						) : null
+					)
+				)
+			) : (
+				<View style={styles.noMessages}>
+					<Title>No Messages :(</Title>
+					<Text>
+						Go Match With{" "}
+						<Text
+							style={styles.link}
+							onPress={() => navigation.navigate("BrowseUsers")}
+						>
+							Other Dogs!
 						</Text>
-					</View>
-				)}
-			</View>
+					</Text>
+				</View>
+			)}
 		</ImageBackground>
 	);
 }
