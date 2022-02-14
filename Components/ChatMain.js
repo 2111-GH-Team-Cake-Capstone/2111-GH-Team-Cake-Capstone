@@ -82,7 +82,6 @@ export default function ChatMain({ navigation }) {
 			source={require("../assets/capstone_bg.gif")}
 			style={styles.bgImage}
 		>
-
 			<ScrollView>
 				{matchesList.length > 0 ? (
 					users.map((user) =>
@@ -113,30 +112,27 @@ export default function ChatMain({ navigation }) {
 											<Title>{user.name}</Title>
 											<Paragraph>Say hi!</Paragraph>
 										</View>
-
 									</View>
-								</View>
-								<Divider />
-							</TouchableOpacity>
-						) : null
+									<Divider />
+								</TouchableOpacity>
+							) : null
+						)
 					)
-				)
-			) : (
-				<View style={styles.noMessages}>
-					<Title>No Messages :(</Title>
-					<Text>
-						Go Match With{" "}
-						<Text
-							style={styles.link}
-							onPress={() => navigation.navigate("BrowseUsers")}
-						>
-							Other Dogs!
+				) : (
+					<View style={styles.noMessages}>
+						<Title>No Messages :(</Title>
+						<Text>
+							Go Match With{" "}
+							<Text
+								style={styles.link}
+								onPress={() => navigation.navigate("BrowseUsers")}
+							>
+								Other Dogs!
+							</Text>
 						</Text>
-
 					</View>
 				)}
 			</ScrollView>
-
 		</ImageBackground>
 	);
 }
