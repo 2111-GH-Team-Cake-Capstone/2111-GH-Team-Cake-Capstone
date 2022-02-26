@@ -1,5 +1,5 @@
 ## Leashed: Tinder for Dogs!
-<img align="left" width="450" height="400" src="/assets/leashed.png">
+<img align="left" width="400" height="350" src="/assets/leashed.png">
 <p>Leashed is a cross-platform mobile application that connects dog owners to other local dog owners through Tinder-style matching and realtime chat!</p>
 
 
