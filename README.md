@@ -1,8 +1,9 @@
 ## Leashed: Tinder for Dogs!
+<img align="right" width="350" height="300" src="/assets/leashed.png">
 <p align="left">Leashed is a cross-platform mobile application that connects dog owners to other local dog owners through Tinder-style matching and realtime chat </p>
 <p align="left">Upon signing up for an account, users are directed to create a profile for their dog. They can upload a profile picture, add a personalized tagline, select their city, and enter in other details such as weight, breed, and age! Once they're ready to start browsing locals, they can navigate to the explore page where all local dogs will pop up on the card deck. A swipe to the left will ensure the user will never see this dog again. A swipe to the right will give the user the potential to match with this dog, or create a match if the swiped dog has also swiped right! All matches can engage in private, realtime chat with each other. Schedule a playdate, get to know each other, the paw-sibilities are endless on Leashed!</p>
 
-<img align="right" width="350" height="300" src="/assets/leashed.png">
+
 
 --------
 ## Extras & Add Ons
