@@ -1,35 +1,6 @@
-# Leashed: Tinder for Dogs
+# Welcome to Leashed: Tinder for Dogs
+![leashedLogo](/assets//leashed.png)
 
-## MVP
-
-### As a user, I want to be able to:
-
-- log-in or sign-up.
-- create/view profiles
-  - name
-  - bio/temperament
-  - preferences
-  - breed
-  - age
-  - sex
-  - picture
-  - medical info/allergies
-  - weight
-  - calendar for play-dates
-  - questions/get to know you
-- swipe/view other profiles
-- matches
-  - when two dogs swipe right on each other, a match is made
-  - for the user who swiped last, a modal pops up to alert them
-  - both dogs are able to chat with each other
-- chat
-  - in realtime, matched dogs can send each other messages with text and emojis
-
-### As an engineer, I want to:
-
-- have a well-seeded database so that I am able to simulate a number of different scenarios for the user stories below.
-- user data to be secure so that no one can illegitimately manipulate information.
-- have deployed site
 
 ## Extras & Add Ons
 
