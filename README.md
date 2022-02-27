@@ -40,7 +40,7 @@ Leashed was developed by a team of four Software Engineers
 |                      [GitHub](https://github.com/atran56)                          |                       [GitHub](https://github.com/knaso17)                        |                       [GitHub](https://github.com/solichoi)                         |                       [GitHub](https://github.com/tiffmc1)                          |
 |                [LinkedIn](https://www.linkedin.com/in/atran56/)                    |              [LinkedIn](https://www.linkedin.com/in/krista-naso/)                 |                [LinkedIn](https://www.linkedin.com/in/soli-choi/)                   |                [LinkedIn](https://www.linkedin.com/in/tiffanymcnerlin/)             |
 
-...and inspired by a group of four dogs
+...and inspired by a group of four dogs :sparkling_heart:
 
 
 |                                     Zelda                                          |                                  Mooch                                            |                                     Shimo                                           |                                     Moe                                             |                    
