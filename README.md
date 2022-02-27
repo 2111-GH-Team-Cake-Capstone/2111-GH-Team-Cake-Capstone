@@ -26,10 +26,11 @@ Leashed was created using:
 
 ## Try it Out!
 ### For IOS users:
-1. Fork and clone this repo
-2. Run `npm install` in the terminal
-3. Run `expo start` in the terminal
-4. Scan the QR code that appears in the terminal
+1. Download the Expo Go app for IOS: [App Store](https://apps.apple.com/us/app/expo-go/id982107779)
+2. Fork and clone this repo
+3. Run `npm install` in the terminal
+4. Run `expo start` in the terminal
+5. Scan the QR code that appears in the terminal
 
 ### For Android users:
 1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
