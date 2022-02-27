@@ -6,33 +6,17 @@
 
 
 --------
-## Extras & Add Ons
+## Tech Stack:
 
-<details><summary>Click Here To Open</summary>
+Leashed was created using:
+- React Native: To develop a native mobile apps using React features
+- Expo: To build and test Leashed on IOS and Android devices
+- Firebase v9: For user authentication, Firestore NoSQL database, Google storage for user submitted images
+- Node.js: As our JavaScript runtime environment
+- React Native Paper: To assist with our Cohesive and charming UI styling
+- React Native Deck Swiper: For its Animated swiping functionality
 
-### Chat Feature:
 
-- as a user, i want to be able to delete a message of mine
-- have timestamps displayed when messages are sent
-
-### Community Chat:
-
-- message boards
-- product suggestions
-
-### Other Add-Ons:
-
-- weight history
-- breed info and suggestions
-- create/view vet info. If no vet, we want to enable location search.
-
-- create/view calendar:
-  - push notifications
-  - grooming
-  - vaccines
-  - medications
-
-</details>
 
 ## Try it!
 ### For IOS users:
