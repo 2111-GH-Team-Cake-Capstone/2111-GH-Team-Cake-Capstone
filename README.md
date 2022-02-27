@@ -6,15 +6,6 @@
 ## Watch Our Demo Presentation:
 [![Watch the Leashed demo](https://img.youtube.com/vi/SbPc9NiMROo/maxresdefault.jpg)](https://youtu.be/SbPc9NiMROo)
 
-## Tech Stack:
-Leashed was created using:
-- [React Native](https://reactnative.dev/): To develop a native mobile app using React features
-- [Expo](https://expo.dev/): To build and test Leashed on IOS and Android devices
-- [Firebase v9](https://firebase.google.com/): For user authentication, Firestore NoSQL database, and Google storage for user submitted images
-- [Node.js](https://nodejs.org/en/): As our JavaScript runtime environment
-- [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
-- [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its animated swiping functionality
-
 ## Features:
 Users can:
 - Create an account and profile for their dog
@@ -24,6 +15,14 @@ Users can:
 - Match with dogs
 - Engage in a private, realtime chat with matches
 
+## Tech Stack:
+Leashed was created using:
+- [React Native](https://reactnative.dev/): To develop a native mobile app using React features
+- [Expo](https://expo.dev/): To build and test Leashed on IOS and Android devices
+- [Firebase v9](https://firebase.google.com/): For user authentication, Firestore NoSQL database, and Google storage for user submitted images
+- [Node.js](https://nodejs.org/en/): As our JavaScript runtime environment
+- [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
+- [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its animated swiping functionality
 
 ## Try it Out!
 ### For IOS users:
