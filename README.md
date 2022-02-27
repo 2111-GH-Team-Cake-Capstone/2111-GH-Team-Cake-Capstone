@@ -15,12 +15,22 @@ Leashed was created using:
 - [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
 - [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its animated swiping functionality
 
+## Features:
+Users can:
+- Create an account and profile for their dog
+- Browse through all local dogs, based on the city selected (currently serving Chicago, New York City, and Seoul)
+- Swipe left to mark the dog as 'seen'
+- Swipe right to potentially match with the dog
+- Match with dogs
+- Engage in a private, realtime chat with matches
+
+
 ## Try it Out!
 ### For IOS users:
 1. Fork and clone this repo
 2. Run `npm install` in the terminal
 3. Run `expo start` in the terminal
-4. Scan the QR code 
+4. Scan the QR code that appears in the terminal
 
 ### For Android users:
 1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
