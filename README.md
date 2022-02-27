@@ -31,18 +31,9 @@ Leashed was created using:
 ## App Collaborators:
 Leashed was developed by a team of four Software Engineers
 
-Ashley Tran:
-- [GitHub](https://github.com/atran56)
-- [LinkedIn](https://www.linkedin.com/in/atran56/)
 
-Krista Naso:
-- [GitHub](https://github.com/knaso17)
-- [LinkedIn](https://www.linkedin.com/in/krista-naso/)
-
-Soli Choi:
-- [GitHub](https://github.com/solichoi)
-- [LinkedIn](https://www.linkedin.com/in/soli-choi/)
-
-Tiffany McNerlin:
-- [GitHub](https://github.com/tiffmc1)
-- [LinkedIn](https://www.linkedin.com/in/tiffanymcnerlin/)
+|                                     Ashley Tran                                    |                                  Krista Naso                                      |                                     Soli Choi                                       |                                     Tiffany McNerlin                                |                    
+| :--------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="/assets/Ashley.jpeg" alt="Ashley"  width="175" height="175">             | <img  src="/assets/Krista.png" alt="Krista"  width="175" height="175">            | <img src="/assets/soli.jpeg" alt="Soli" width="175" height="175">                   | <img src="/assets/Tiffany.jpeg" alt="Tiffany" width="175" height="175">             |
+|                      [GitHub](https://github.com/atran56)                          |                       [GitHub](https://github.com/knaso17)                        |                       [GitHub](https://github.com/solichoi)                         |                       [GitHub](https://github.com/tiffmc1)                          |
+|                [LinkedIn](https://www.linkedin.com/in/atran56/)                    |              [LinkedIn](https://www.linkedin.com/in/krista-naso/)                 |                [LinkedIn](https://www.linkedin.com/in/soli-choi/)                   |                [LinkedIn](https://www.linkedin.com/in/tiffanymcnerlin/)             |
