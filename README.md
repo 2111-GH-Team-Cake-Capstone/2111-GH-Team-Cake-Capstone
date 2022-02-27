@@ -9,14 +9,12 @@
 ## Tech Stack:
 
 Leashed was created using:
-- React Native: To develop a native mobile apps using React features
-- Expo: To build and test Leashed on IOS and Android devices
-- Firebase v9: For user authentication, Firestore NoSQL database, Google storage for user submitted images
-- Node.js: As our JavaScript runtime environment
-- React Native Paper: To assist with our Cohesive and charming UI styling
-- React Native Deck Swiper: For its Animated swiping functionality
-
-
+- [React Native](https://reactnative.dev/): To develop a native mobile apps using React features
+- [Expo](https://expo.dev/): To build and test Leashed on IOS and Android devices
+- [Firebase v9](https://firebase.google.com/): For user authentication, Firestore NoSQL database, Google storage for user submitted images
+- [Node.js](https://nodejs.org/en/): As our JavaScript runtime environment
+- [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
+- [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its Animated swiping functionality
 
 ## Try it!
 ### For IOS users:
