@@ -3,9 +3,6 @@
 <p align="left">Leashed is a cross-platform mobile application that connects dog owners to other local dog owners through Tinder-style matching and realtime chat </p>
 <p align="left">Upon signing up for an account, users are directed to create a profile for their dog. They can upload a profile picture, add a tagline, select their city, and enter in other details such as weight, breed, and age! Once they're ready to start browsing locals, they can navigate to the explore page where all local dogs will pop up on the card deck. A swipe to the left will ensure the user will never see this dog again. A swipe to the right will give the user the potential to match with this dog, or create a match if the swiped dog has also swiped right! All matches can engage in private, realtime chat with each other. Schedule a playdate, get to know each other, the paw-sibilities are endless on Leashed!</p>
 
-
-
---------
 ## Tech Stack:
 
 Leashed was created using:
@@ -24,16 +21,11 @@ Leashed was created using:
 1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
 
 2. Scan the QR Code:
- <img align="left" width="300" height="300" src="/assets/expo-go.svg">
+ <img width="300" height="300" src="/assets/expo-go.svg">
 
-   
-### For IOS users:
+*Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.*
 
-Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.
-
----
-
-## Collaborators:
+## App Collaborators:
 Leashed was developed by a team of four Software Engineers
 
 Ashley Tran:
