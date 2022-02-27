@@ -30,3 +30,24 @@ Leashed was created using:
 ### For IOS users:
 
 Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.
+
+---
+
+## Collaborators:
+Leashed was developed by a team of four Software Engineers
+
+Ashley Tran:
+- [GitHub](https://github.com/atran56)
+- [LinkedIn](https://www.linkedin.com/in/atran56/)
+
+Krista Naso:
+- [GitHub](https://github.com/knaso17)
+- [LinkedIn](https://www.linkedin.com/in/krista-naso/)
+
+Soli Choi:
+- [GitHub](https://github.com/solichoi)
+- [LinkedIn](https://www.linkedin.com/in/soli-choi/)
+
+Tiffany McNerlin:
+- [GitHub](https://github.com/tiffmc1)
+- [LinkedIn](https://www.linkedin.com/in/tiffanymcnerlin/)
