@@ -28,7 +28,7 @@ Leashed was created using:
 
 *Note: This app is still in testing mode. The dogs featured may not be real. Any data provided is subject to deletion without warning.*
 
-## App Collaborators:
+## App Creators:
 Leashed was developed by a team of four Software Engineers
 
 
