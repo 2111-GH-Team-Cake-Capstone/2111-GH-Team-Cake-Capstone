@@ -17,7 +17,8 @@ Leashed was created using:
 
 ## Try it!
 ### For IOS users:
-
+1. Fork and clone this repo
+2. run `npm install` in the terminal
 
 ### For Android users:
 1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
