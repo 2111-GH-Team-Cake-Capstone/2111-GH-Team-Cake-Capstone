@@ -21,7 +21,7 @@ Leashed was created using:
 - [Expo](https://expo.dev/): To build and test Leashed on IOS and Android devices
 - [Firebase v9](https://firebase.google.com/): For user authentication, Firestore NoSQL database, and Google storage for user submitted images
 - [Node.js](https://nodejs.org/en/): As our JavaScript runtime environment
-- [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
+- [React Native Paper](https://reactnativepaper.com/): To assist with our cohesive and charming UI styling
 - [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its animated swiping functionality
 
 ## Try it Out!
