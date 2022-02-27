@@ -15,10 +15,12 @@ Leashed was created using:
 - [React Native Paper](https://reactnativepaper.com/): To assist with our Cohesive and charming UI styling
 - [React Native Deck Swiper](https://github.com/alexbrillant/react-native-deck-swiper): For its animated swiping functionality
 
-## Try it!
+## Try it Out!
 ### For IOS users:
 1. Fork and clone this repo
-2. run `npm install` in the terminal
+2. Run `npm install` in the terminal
+3. Run `expo start` in the terminal
+4. Scan the QR code 
 
 ### For Android users:
 1. Download the Expo app for Android: [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US)
